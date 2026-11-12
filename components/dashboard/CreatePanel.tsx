@@ -134,7 +134,7 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
         <button
           type="submit"
           disabled={saving}
-          className="mx-auto mt-10 flex h-12 w-[313px] max-w-full items-center justify-center gap-1 rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] font-avenir text-base font-medium text-white shadow-[inset_0_-4px_4px_rgb(179_208_245/0.25)] dash-glow disabled:opacity-70"
+          className="mx-auto mt-10 flex h-12 w-[313px] max-w-full items-center justify-center gap-1 rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] font-avenir text-base font-medium text-white disabled:opacity-70"
         >
           {!entry && <img src="/landing/pin.svg" alt="" width={24} height={24} />}
           {entry ? 'Save changes' : 'Pin your win'}

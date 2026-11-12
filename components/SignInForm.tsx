@@ -19,7 +19,7 @@ function inboxFor(email: string) {
 
 const BUTTON = 'flex h-12 w-full items-center justify-center gap-1 rounded-xl font-avenir text-base font-medium';
 // Desktop's Continue is blue; the phone screens use the dark button.
-const PRIMARY = `${BUTTON} border-t-2 border-r-2 border-[#333] bg-[#1a1a1a] text-white opacity-94 shadow-[inset_0_-4px_4px_rgb(51_51_51/0.25)] drop-shadow-[0_4px_4.15px_rgb(204_204_204/0.14)] lg:border-[#3788f1] lg:bg-[#1568d4] lg:opacity-100 lg:shadow-[inset_0_-4px_4px_rgb(179_208_245/0.25)] disabled:opacity-60`;
+const PRIMARY = `${BUTTON} border-t-2 border-r-2 border-[#333] bg-[#1a1a1a] text-white opacity-94 lg:border-[#3788f1] lg:bg-[#1568d4] lg:opacity-100 disabled:opacity-60`;
 
 function Legal() {
   return (
@@ -85,7 +85,7 @@ export function SignInForm({ initialMode, linkFailed, configured }: { initialMod
             </p>
           </div>
           <div className="flex flex-col items-center gap-[21px]">
-            <a href={inboxFor(sentTo)} target="_blank" rel="noreferrer" className={`${BUTTON} border-t-2 border-r-2 border-[#333] bg-[#1a1a1a] text-white opacity-94 shadow-[inset_0_-4px_4px_rgb(51_51_51/0.25)]`}>Open email app</a>
+            <a href={inboxFor(sentTo)} target="_blank" rel="noreferrer" className={`${BUTTON} border-t-2 border-r-2 border-[#333] bg-[#1a1a1a] text-white opacity-94`}>Open email app</a>
             <p className="text-center text-xs leading-[18px] tracking-[-0.036px] text-[#666]" aria-live="polite">
               {wait ? <>Resend link <span className="text-[#1568d4] underline">{wait}s</span></> : (
                 <button type="button" disabled={sending} onClick={() => sendLink(sentTo)} className="text-[#1568d4] underline">Resend link</button>

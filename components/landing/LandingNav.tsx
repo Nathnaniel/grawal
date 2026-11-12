@@ -88,7 +88,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
         <Link
           href="/sign-in"
-          className="mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white shadow-[inset_0_-4px_4px_rgb(179_208_245/0.25)] drop-shadow-[0_4px_4.15px_rgb(204_204_204/0.14)]"
+          className="mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white"
         >
           Sign In
         </Link>

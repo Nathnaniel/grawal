@@ -33,7 +33,7 @@ export function SideNav() {
         type="button"
         aria-label={creating ? 'Close' : 'Pin a win'}
         onClick={() => (creating ? close() : open({ kind: 'create' }))}
-        className="grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a] dash-lift-add"
+        className="grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a]"
       >
         <img src={creating ? '/app/close.svg' : '/app/add.svg'} alt="" width={24} height={24} className={creating ? 'invert' : ''} />
       </button>
