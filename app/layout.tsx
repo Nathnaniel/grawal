@@ -7,6 +7,7 @@ const serif = Alegreya({ subsets: ['latin'], variable: '--font-alegreya', style:
 const sans = Hanken_Grotesk({ subsets: ['latin'], variable: '--font-hanken' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3002'),
   title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: SITE_PITCH,
   robots: { index: false },
