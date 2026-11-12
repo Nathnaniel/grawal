@@ -31,6 +31,8 @@ export const SCRIPTURES = [
     text: '#fff',
     artTop: 180,
     artHeight: 240,
+    mobileQuoteWidth: 264,
+    mobileArtTop: 136,
   },
   {
     quote: '“O give thanks unto the LORD, for he is good: for his mercy endureth for ever.”',
@@ -41,6 +43,8 @@ export const SCRIPTURES = [
     text: '#fff',
     artTop: 180,
     artHeight: 240,
+    mobileQuoteWidth: 241,
+    mobileArtTop: 136,
   },
   {
     quote: '“In every thing give thanks: for this is the will of God in Christ Jesus concerning you.”',
@@ -51,6 +55,8 @@ export const SCRIPTURES = [
     text: '#1a1a1a',
     artTop: 162.51,
     artHeight: 274.98,
+    mobileQuoteWidth: 316,
+    mobileArtTop: 117,
   },
 ];
 

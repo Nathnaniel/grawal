@@ -36,7 +36,7 @@ function Hero() {
         </div>
       </div>
 
-      <div role="img" aria-label="A Grawal wall with fifteen pinned wins, such as a job offer, a clear test result and a baby’s first steps." className="relative mt-12 px-10 lg:mt-[54px] lg:px-6">
+      <div role="img" aria-label="A Grawal wall with fifteen pinned wins, such as a job offer, a clear test result and a baby’s first steps." className="relative mt-12 px-5 lg:mt-[54px] lg:px-6">
         <div className="hidden lg:block"><DesktopWallPreview /></div>
         <div className="lg:hidden"><MobileWallPreview /></div>
       </div>
@@ -55,21 +55,28 @@ function SectionIntro({ eyebrow, title }: { eyebrow: string; title: string }) {
 
 function WhyWeGiveThanks() {
   return (
-    <section aria-labelledby="why-heading" className="mt-7 px-4 py-10 lg:mt-16 lg:py-[60px]">
-      <div className="mx-auto flex w-[300px] flex-col gap-10 lg:w-auto lg:max-w-[1230px] lg:items-center xl:translate-x-[5px] xl:flex-row xl:gap-5">
+    <section aria-labelledby="why-heading" className="mt-[147px] px-5 py-10 lg:mt-16 lg:py-[60px]">
+      <div className="mx-auto flex w-[353px] max-w-full flex-col gap-10 lg:w-auto lg:max-w-[1230px] lg:items-center xl:translate-x-[5px] xl:flex-row xl:gap-5">
         <div data-reveal className="flex flex-col gap-5 lg:gap-10 xl:w-[286px] xl:shrink-0">
           <h2 id="why-heading" className="w-[281px] font-tusker text-[40px] leading-[42px] font-medium">Why we give thanks</h2>
-          <p className="w-[242px] font-inter text-base leading-[18px] tracking-[-0.048px]">Scripture calls us to remember. These verses are the heart behind every win you pin.</p>
+          <p className="w-[286px] font-inter text-base leading-[18px] tracking-[-0.048px] lg:w-[242px]">Scripture calls us to remember. These verses are the heart behind every win you pin.</p>
         </div>
-        <ul className="flex flex-col gap-3 lg:flex-row">
-          {SCRIPTURES.map((card) => (
-            <li key={card.reference} data-reveal className="relative h-[600px] w-[300px] shrink-0 font-switzer" style={{ background: card.background, color: card.text }}>
-              <blockquote className="absolute top-[52px] left-[30px] w-[241px] tracking-[-0.048px]">
-                <p className="text-base leading-[18px]">{card.quote}</p>
-                <footer className="text-xs leading-[18px]">{card.reference}</footer>
+        <ul className="flex flex-col gap-5 lg:flex-row lg:gap-3">
+          {SCRIPTURES.map((card, index) => (
+            <li
+              key={card.reference}
+              data-reveal
+              // Phones: Figma leaves 40px above the third card, 20px above the second.
+              className={`relative h-[508px] w-full shrink-0 font-switzer lg:h-[600px] lg:w-[300px] ${index === 2 ? 'max-lg:mt-5' : ''}`}
+              style={{ background: card.background, color: card.text, '--quote-w': `${card.mobileQuoteWidth}px`, '--art-top': `${card.artTop}px`, '--art-top-m': `${card.mobileArtTop}px` } as React.CSSProperties}
+            >
+              {/* On phones the reference runs on after the quote; on desktop it sits on its own line. */}
+              <blockquote className="absolute top-10 left-5 w-[var(--quote-w)] max-w-[calc(100%-40px)] tracking-[-0.048px] lg:top-[52px] lg:left-[30px] lg:w-[241px]">
+                <p className="inline text-base leading-[18px] lg:block">{card.quote}</p>{' '}
+                <footer className="inline text-xs leading-[18px] lg:block">{card.reference}</footer>
               </blockquote>
-              <img src={card.art} alt="" className="absolute left-[30px] w-[240px]" style={{ top: card.artTop, height: card.artHeight }} />
-              <h3 className="absolute top-[496px] left-[30px] w-[241px] text-2xl leading-[26px] font-semibold tracking-[-0.072px]">{card.title}</h3>
+              <img src={card.art} alt="" className="absolute top-[var(--art-top-m)] left-1/2 w-[240px] -translate-x-1/2 lg:top-[var(--art-top)]" style={{ height: card.artHeight }} />
+              <h3 className="absolute top-[416px] left-5 w-[241px] text-2xl leading-[26px] font-semibold tracking-[-0.072px] lg:top-[496px] lg:left-[30px]">{card.title}</h3>
             </li>
           ))}
         </ul>
@@ -84,10 +91,15 @@ function HowItWorks() {
       <div className="mx-auto flex w-[321px] flex-col gap-10 lg:w-[1003px] lg:max-w-full">
         <div id="how-heading" data-reveal><SectionIntro eyebrow="How does it work?" title="Three simple steps to never forget what God has done." /></div>
         <ol className="flex flex-col gap-5 lg:flex-row">
-          {STEPS.map((step) => (
-            <li key={step.title} data-reveal className="flex h-[348px] w-[321px] shrink-0 flex-col justify-center rounded-3xl bg-[#f5f5f5] px-5 pb-[48.5px] lg:w-auto lg:flex-1">
+          {STEPS.map((step, index) => (
+            <li
+              key={step.title}
+              data-reveal
+              // Phones: shorter cards with the content from the top. Figma leaves 8px more above the third.
+              className={`flex h-[284px] w-[321px] shrink-0 flex-col rounded-3xl bg-[#f5f5f5] px-5 pt-7 lg:h-[348px] lg:w-auto lg:flex-1 lg:justify-center lg:pt-0 lg:pb-[48.5px] ${index === 2 ? 'max-lg:mt-2' : ''}`}
+            >
               <div className="mx-auto flex w-[281px] max-w-full flex-col gap-10">
-                <img src={step.icon} alt="" width={60} height={60} />
+                <img src={step.icon} alt="" width={60} height={60} className="size-10 lg:size-[60px]" />
                 <div className="flex flex-col gap-3">
                   <h3 className="font-tusker text-2xl leading-[26px] font-medium">{step.title}</h3>
                   <p className="font-avenir text-base leading-[18px] tracking-[-0.048px] text-[#333]">{step.body}</p>

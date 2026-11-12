@@ -229,6 +229,7 @@ html:has(.landing) { scroll-padding-top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .faq-motion { transition: none; }
   .note-fresh, .row-fresh, .sheet[open] { animation: none; }
   .note, .btn, .keepsake-art, .dock-tile { transition: none; }
 }
