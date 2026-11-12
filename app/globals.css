@@ -184,6 +184,10 @@ button:not(:disabled), summary, label:has(input[type="radio"]) { cursor: pointer
 body:has(.landing) { background: #fff; }
 /* The app keeps room for its sticky header when jumping to a section; the landing page has none. */
 html:has(.landing) { scroll-padding-top: 0; }
+/* No outline on the menu panel itself, and no grey flash on tapped links and buttons.
+   Keyboard focus rings still show. */
+.landing dialog:focus-visible { outline: none; }
+.landing { -webkit-tap-highlight-color: transparent; }
 
 /* The stand-in fonts' variables are set on .landing, so the stacks that use them are
    declared here too. On :root those variables don't exist and the stacks would fail. */

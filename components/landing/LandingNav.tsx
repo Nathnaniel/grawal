@@ -17,7 +17,11 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   useEffect(() => {
     const element = dialog.current;
     if (!element) return;
-    if (open && !element.open) element.showModal();
+    if (open && !element.open) {
+      element.showModal();
+      // Focus goes to the menu itself, so the close button isn't outlined the moment it opens.
+      element.focus();
+    }
     if (!open && element.open) element.close();
     // The page behind stays put while the menu covers it.
     const lenis = smoothScroll();
@@ -61,6 +65,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       ref={dialog}
       id="landing-menu"
       aria-label="Menu"
+      tabIndex={-1}
       data-lenis-prevent
       onClose={onClose}
       className="m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-transparent"
@@ -68,7 +73,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       <div className="px-10 pt-[60px]">
         <div className="flex items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
           <Link href="/" onClick={onClose}><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
-          <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={onClose} autoFocus>
+          <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={onClose}>
             <img src="/landing/icon-close.svg" alt="" width={24} height={24} />
           </button>
         </div>
