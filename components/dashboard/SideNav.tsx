@@ -25,7 +25,7 @@ export function SideNav() {
       // Phones: hidden while the create page fills the screen, which has its own close button.
       className={`fixed bottom-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3.5 lg:top-1/2 lg:bottom-auto lg:left-10 lg:w-[65px] lg:translate-x-0 lg:-translate-y-1/2 lg:flex-col ${creating ? 'max-lg:hidden' : ''}`}
     >
-      <div className="flex gap-1 rounded-[40px] bg-[var(--d-surface)] p-1.5 shadow-[0_4px_4px_rgb(204_204_204/0.25)] lg:w-full lg:flex-col lg:items-center">
+      <div className="flex gap-1 rounded-[40px] bg-[var(--d-surface)] p-1.5 dash-lift lg:w-full lg:flex-col lg:items-center">
         {tab(wall, !onHistory, '/app/home.svg', '/app/home-active.svg', 'Wall')}
         {tab(history, onHistory, '/app/history.svg', '/app/history-active.svg', 'History')}
       </div>
@@ -33,7 +33,7 @@ export function SideNav() {
         type="button"
         aria-label={creating ? 'Close' : 'Pin a win'}
         onClick={() => (creating ? close() : open({ kind: 'create' }))}
-        className="grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a] shadow-[0_4px_4px_rgb(204_204_204/0.25),inset_0_4px_4px_rgb(0_0_0/0.25)]"
+        className="grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a] dash-lift-add"
       >
         <img src={creating ? '/app/close.svg' : '/app/add.svg'} alt="" width={24} height={24} className={creating ? 'invert' : ''} />
       </button>

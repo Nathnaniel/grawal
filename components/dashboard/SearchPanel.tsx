@@ -77,7 +77,7 @@ export function SearchPanel() {
   return (
     // Figma: a 400px search box at 94px and a 380px panel 12px below it on desktop; 353px wide on phones.
     <div className="fixed top-[122px] left-1/2 z-50 w-[min(353px,calc(100vw-40px))] -translate-x-1/2 lg:top-[94px] lg:w-[400px]">
-      <div className="panel-in relative h-10 rounded-xl bg-[var(--d-surface)] shadow-[0_12px_14.1px_rgb(0_0_0/0.08)]">
+      <div className="panel-in relative h-10 rounded-xl bg-[var(--d-surface)] dash-pop">
         <img src="/app/search-sm.svg" alt="" width={20} height={20} className="dash-icon absolute top-2.5 left-3" />
         <input
           ref={input}
@@ -96,7 +96,7 @@ export function SearchPanel() {
         </span>
       </div>
 
-      <div className="panel-in relative mt-3 h-[380px] rounded-xl bg-[var(--d-surface)] p-3 shadow-[0_12px_14.1px_rgb(0_0_0/0.08)]">
+      <div className="panel-in relative mt-3 h-[380px] rounded-xl bg-[var(--d-surface)] p-3 dash-pop">
         {empty ? (
           <div className="flex h-[300px] flex-col items-center justify-center gap-2 text-center">
             <span className="grid size-10 place-items-center rounded-xl bg-[var(--d-field)]"><img src="/app/search-empty.svg" alt="" width={20} height={20} className="dash-icon" /></span>

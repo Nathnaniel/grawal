@@ -19,7 +19,7 @@ export function NoteDetail({ entry }: { entry: Entry }) {
       <div className="pointer-events-auto panel-in w-[min(400px,100%)]">
         <StickyNote note={{ category: heading, story, colour: noteColour(entry.id) }} className="w-full" />
       </div>
-      <div className="pointer-events-auto flex items-center gap-2 rounded-xl bg-[var(--d-surface)] px-2 py-1.5 font-avenir text-sm shadow-[0_12px_14.1px_rgb(0_0_0/0.08)]">
+      <div className="pointer-events-auto flex items-center gap-2 rounded-xl bg-[var(--d-surface)] px-2 py-1.5 font-avenir text-sm dash-pop">
         {confirming ? (
           <>
             <span className="px-2 text-[var(--d-soft)]">Delete this win? This can’t be undone.</span>

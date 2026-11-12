@@ -16,7 +16,7 @@ export function AccountMenu() {
       role="menu"
       aria-label="Account"
       // Figma: 280 by 304, its left edge 197px right of centre on desktop; under the avatar on phones.
-      className="panel-in fixed top-[122px] right-5 z-50 w-[280px] rounded-[20px] bg-[var(--d-surface)] px-5 pt-6 pb-5 shadow-[0_12px_14.1px_rgb(0_0_0/0.08)] lg:top-[94px] lg:right-auto lg:left-[calc(50%+197px)]"
+      className="panel-in fixed top-[122px] right-5 z-50 w-[280px] rounded-[20px] bg-[var(--d-surface)] px-5 pt-6 pb-5 dash-pop lg:top-[94px] lg:right-auto lg:left-[calc(50%+197px)]"
     >
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
