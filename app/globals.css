@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
-/* A desktop in the sky: every colour and font the app uses is defined here. */
-/* The landing page's typefaces. Tusker Grotesk and Avenir are licensed fonts, so
-   they're used when installed on the visitor's device and never bundled. Oswald and
-   Nunito Sans are the free stand-ins everyone else sees. */
+/* Tusker Grotesk and Avenir are licensed fonts, so they're used when installed on
+   the visitor's device and never bundled. Oswald and Nunito Sans are the free
+   stand-ins everyone else sees. */
 @font-face { font-family: "Tusker Local"; font-weight: 500; src: local("Tusker Grotesk 4500 Medium"), local("TuskerGrotesk-4500Medium"); }
 @font-face { font-family: "Avenir Local"; font-weight: 400; src: local("Avenir Roman"), local("Avenir-Roman"), local("Avenir Book"), local("Avenir-Book"); }
 @font-face { font-family: "Avenir Local"; font-weight: 500; src: local("Avenir Medium"), local("Avenir-Medium"); }
@@ -14,171 +13,46 @@
   --font-avenir: "Avenir Local", var(--font-nunito), -apple-system, sans-serif;
   --font-inter: var(--font-inter-face), -apple-system, sans-serif;
   --font-switzer: var(--font-switzer-face), -apple-system, sans-serif;
-  --font-serif: var(--font-alegreya), Georgia, serif;
-  --font-sans: var(--font-hanken), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --color-panel: #dcebfa;
-  --color-note: #fffdf8;
-  --color-ink: #10294d;
-  --color-soft: #35506f;
-  --color-deep: #12468a;
-  --color-deep-dark: #0d3468;
-  --color-mid: #2a70bd;
-  --color-marigold: #e0a02a;
-  --color-line: #b9d0e8;
-  --color-field: #5f7a99;
-  --color-error: #a11d1d;
+  --font-sans: var(--font-avenir);
 }
 
-html { color-scheme: light; scroll-padding-top: 6rem; -webkit-text-size-adjust: 100%; }
-body {
-  min-height: 100dvh;
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.5;
-  background: #6fa3d8 url("/sky.jpg") center bottom / cover no-repeat fixed;
-  -webkit-font-smoothing: antialiased;
-}
-
-@layer base {
-  h1, h2, h3 { font-family: var(--font-serif); text-wrap: balance; }
-  h1 { font-size: clamp(1.875rem, 1.6rem + 1.2vw, 2.5rem); font-weight: 500; line-height: 1.15; }
-  h2 { font-size: 1.375rem; font-weight: 500; line-height: 1.2; }
-}
-p { text-wrap: pretty; }
-
-:focus-visible { outline: 3px solid var(--color-deep); outline-offset: 2px; border-radius: 2px; }
-main:focus { outline: none; }
+html { -webkit-text-size-adjust: 100%; }
+body { min-height: 100dvh; margin: 0; font-family: var(--font-avenir); color: #1a1a1a; background: #fff; -webkit-font-smoothing: antialiased; }
 button:not(:disabled), summary, label:has(input[type="radio"]) { cursor: pointer; }
+:focus-visible { outline: 2px solid #1568d4; outline-offset: 2px; }
+main:focus, dialog:focus-visible { outline: none; }
 
-@layer components {
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    min-height: 2.75rem; padding: 0.5rem 1.125rem; border-radius: 0.5rem;
-    font-weight: 500; transition: background-color 150ms, border-color 150ms;
-  }
-  .btn-primary { background: var(--color-deep); color: #fff; }
-  .btn-primary:hover { background: var(--color-deep-deep); }
-  .btn-primary:disabled { opacity: 0.6; }
-  .btn-quiet { border: 1px solid var(--color-field); color: var(--color-ink); }
-  .btn-quiet:hover { background: rgb(18 70 138 / 0.1); }
-  .btn-danger { background: var(--color-error); color: #fff; }
-
-  .text-link { color: var(--color-deep); text-decoration: underline; text-underline-offset: 3px; }
-
-  .field {
-    width: 100%; min-height: 2.75rem; padding: 0.5rem 0.75rem; border-radius: 0.5rem;
-    border: 1px solid var(--color-field); background: #fff; color: var(--color-ink);
-  }
-  .field-label { display: block; margin-bottom: 0.25rem; font-weight: 500; }
-
-  /* Radio pills, for categories and reminder choices. */
-  .pill { display: inline-flex; }
-  .pill > span {
-    display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0.25rem 0.875rem;
-    border-radius: 999px; border: 1px solid var(--color-field); background: #fff;
-  }
-  .pill:has(input:checked) > span { background: var(--color-deep); border-color: var(--color-deep); color: #fff; }
-  .pill:has(input:focus-visible) > span { outline: 3px solid var(--color-deep); outline-offset: 2px; }
-
-  /* A win, pinned to the wall. --tilt comes from the entry's id, so it never changes. */
-  .note {
-    position: relative; display: flex; flex-direction: column; gap: 0.5rem;
-    padding: 1.25rem 1.25rem 0.75rem; border-radius: 3px;
-    background: color-mix(in oklab, var(--cat, #fff) 7%, var(--color-note));
-    box-shadow: 0 1px 1px rgb(13 52 104 / 0.1), 0 10px 18px -12px rgb(13 52 104 / 0.4);
-    rotate: var(--tilt, 0deg);
-    transition: rotate 200ms ease-out;
-  }
-  .note:focus-within { rotate: 0deg; }
-  .note-fresh { animation: pin-drop 420ms cubic-bezier(0.2, 0.9, 0.3, 1.1); }
-
-  .pin-head {
-    position: absolute; top: -0.625rem; left: 50%; width: 1.25rem; height: 1.25rem; margin-left: -0.625rem;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #f6d58a, var(--color-marigold) 55%, #b97c12);
-    box-shadow: 1px 3px 3px rgb(13 52 104 / 0.35);
-  }
-
-
-  /* The desktop window. Below lg it dissolves and the page simply scrolls. */
-  .window { display: flex; flex-direction: column; min-height: 100dvh; background: linear-gradient(180deg, var(--color-deep) 0%, var(--color-mid) 68%, #8dbde9 100%); }
-  .menubar {
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.5rem; padding: 0.25rem 1rem;
-    color: #fff; font-size: 0.875rem; background: rgb(255 255 255 / 0.14); border-bottom: 1px solid rgb(255 255 255 / 0.18);
-  }
-  @media (min-width: 1024px) {
-    .desk { padding: 2rem; }
-    .window {
-      position: relative; height: calc(100dvh - 4rem); min-height: 36rem; max-width: 86rem; margin-inline: auto;
-      border-radius: 0.75rem; overflow: hidden; box-shadow: 0 30px 60px -20px rgb(13 52 104 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.25);
-    }
-  }
-
-  /* Frosted panels: the history, the widgets and any page of reading. */
-  .glass { background: rgb(220 235 250 / 0.88); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 0 0 1px rgb(255 255 255 / 0.45); }
-  .widget { border-radius: 0.875rem; padding: 0.875rem; }
-  .page-sheet { margin: 1rem; padding: 1.5rem 1rem 7rem; border-radius: 0.875rem; }
-  @media (min-width: 1024px) {
-    .page-sheet { height: calc(100% - 2rem); padding: 2rem 2rem 7rem; overflow-y: auto; }
-  }
-
-  /* A pinned win, sitting on the desktop like an object. The grid fits as many
-     as the space allows, so captions never get squeezed. */
-  .keepsake-grid { display: grid; align-items: start; gap: 2rem 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); }
-  .keepsake { position: relative; display: flex; flex-direction: column; align-items: center; }
-  .keepsake-open { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 100%; padding: 0.5rem 0.25rem; border-radius: 0.75rem; }
-  .keepsake-art { filter: drop-shadow(0 10px 8px rgb(13 40 80 / 0.4)); transition: transform 160ms ease-out; }
-  .keepsake-open:hover .keepsake-art { transform: translateY(-3px); }
-  .keepsake-label { max-width: 100%; padding: 0.125rem 0.5rem 0.25rem; border-radius: 0.375rem; background: rgb(13 52 104 / 0.72); color: #fff; text-align: center; }
-  :is(.window, .keepsake) :focus-visible { outline-color: #fff; }
-  .glass :focus-visible, .sheet :focus-visible { outline-color: var(--color-deep); }
-
-  .history-row { display: grid; grid-template-columns: 1fr auto; align-items: start; border-radius: 0.5rem; }
-  .history-row:hover { background: rgb(18 70 138 / 0.08); }
-  .row-fresh { animation: pin-drop 420ms cubic-bezier(0.2, 0.9, 0.3, 1.1); }
-
-  .dock {
-    position: fixed; inset-inline: 0; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-around; gap: 0.25rem;
-    padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
-  }
-  .dock-tile { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; color: #fff; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 3px 6px rgb(13 40 80 / 0.3); transition: transform 140ms ease-out; }
-  .dock-item { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.125rem; font-size: 0.75rem; }
-  .dock-item:hover .dock-tile { transform: translateY(-3px); }
-  .dock-item[aria-current="page"]::after { content: ""; width: 0.25rem; height: 0.25rem; border-radius: 50%; background: var(--color-deep); }
-  @media (min-width: 1024px) {
-    .dock { position: absolute; inset-inline: auto; left: 50%; bottom: 0.875rem; translate: -50% 0; gap: 0.625rem; padding: 0.5rem 0.75rem; border-radius: 1.125rem; }
-    .dock-tile { width: 3rem; height: 3rem; }
-    .dock-label {
-      position: absolute; bottom: calc(100% + 0.5rem); padding: 0.125rem 0.5rem; border-radius: 0.375rem; white-space: nowrap;
-      background: var(--color-ink); color: #fff; opacity: 0; pointer-events: none;
-    }
-    .dock-item:hover .dock-label, .dock-item:focus-visible .dock-label { opacity: 1; }
-  }
-
-  .wall-grid {
-    display: grid; align-items: start; gap: 2rem 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
-  }
-
-  .sheet {
-    width: min(100%, 34rem); max-width: 100%; max-height: 92dvh; margin: auto auto 0;
-    padding: 1.5rem 1rem calc(1.5rem + env(safe-area-inset-bottom));
-    border-radius: 1rem 1rem 0 0; background: var(--color-note); color: var(--color-ink);
-  }
-  .sheet[open] { animation: sheet-up 220ms ease-out; }
-  .sheet::backdrop { background: rgb(13 52 104 / 0.5); }
-  @media (min-width: 640px) {
-    .sheet { margin: auto; padding: 2rem; border-radius: 0.75rem; }
+/* The signed-in dashboard (Figma "Web app"). Light is the design; dark is built
+   from it, since the file has no dark screens. */
+.dash {
+  --d-bg: #f5f5f5; --d-surface: #fff; --d-field: #f5f5f5; --d-chip: #eaeaea; --d-icon-bg: #e1e1e1;
+  --d-text: #1a1a1a; --d-soft: #333; --d-mid: #666; --d-muted: #999; --d-faint: #ccc; --d-line: #eaeaea;
+  --d-icon: none; --d-danger: #f0322a;
+  color-scheme: light; background: var(--d-bg); color: var(--d-text); min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+:root[data-theme="dark"] .dash {
+  --d-bg: #121212; --d-surface: #1e1e1e; --d-field: #2a2a2a; --d-chip: #333; --d-icon-bg: #3a3a3a;
+  --d-text: #f2f2f2; --d-soft: #d9d9d9; --d-mid: #b3b3b3; --d-muted: #8f8f8f; --d-faint: #5e5e5e; --d-line: #333;
+  --d-icon: invert(1) brightness(1.5); --d-danger: #ff6159; color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] .dash {
+    --d-bg: #121212; --d-surface: #1e1e1e; --d-field: #2a2a2a; --d-chip: #333; --d-icon-bg: #3a3a3a;
+    --d-text: #f2f2f2; --d-soft: #d9d9d9; --d-mid: #b3b3b3; --d-muted: #8f8f8f; --d-faint: #5e5e5e; --d-line: #333;
+    --d-icon: invert(1) brightness(1.5); --d-danger: #ff6159; color-scheme: dark;
   }
 }
+/* Dark line icons from Figma flip to light in the dark theme. */
+.dash-icon { filter: var(--d-icon); }
+body:has(.dash) { background: #f5f5f5; }
+:root[data-theme="dark"] body:has(.dash) { background: #121212; }
+@media (prefers-color-scheme: dark) { :root[data-theme="system"] body:has(.dash) { background: #121212; } }
 
-@keyframes pin-drop {
-  from { opacity: 0; transform: translateY(-14px) scale(1.04); rotate: 0deg; }
-}
-@keyframes sheet-up {
-  from { opacity: 0; transform: translateY(1.5rem); }
-}
+@keyframes pin-drop { from { opacity: 0; transform: translateY(-16px) scale(1.04); } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } }
+.note-fresh { animation: pin-drop 450ms cubic-bezier(0.2, 0.9, 0.3, 1.1); }
+.panel-in { animation: rise-in 180ms ease-out; }
 
 /* The landing page has its own white canvas instead of the app's sky. */
 /* The page stays white; the blue behind it shows when the page is pulled past the
@@ -192,14 +66,6 @@ html:has(.landing) { scroll-padding-top: 0; }
 .landing dialog:focus-visible { outline: none; }
 .landing { -webkit-tap-highlight-color: transparent; }
 
-/* The stand-in fonts' variables are set on .landing, so the stacks that use them are
-   declared here too. On :root those variables don't exist and the stacks would fail. */
-.landing {
-  --font-tusker: "Tusker Local", var(--font-oswald), "Arial Narrow", sans-serif;
-  --font-avenir: "Avenir Local", var(--font-nunito), -apple-system, sans-serif;
-  --font-inter: var(--font-inter-face), -apple-system, sans-serif;
-  --font-switzer: var(--font-switzer-face), -apple-system, sans-serif;
-}
 /* The app's base heading font and balanced wrapping would change Figma's line breaks.
    In the base layer, so font utilities on a heading still win. */
 @layer base {
@@ -233,6 +99,14 @@ html:has(.landing) { scroll-padding-top: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .faq-motion { transition: none; }
-  .note-fresh, .row-fresh, .sheet[open] { animation: none; }
-  .note, .btn, .keepsake-art, .dock-tile { transition: none; }
+  .note-fresh, .panel-in { animation: none; }
+}
+
+/* Two versions of the logo: dark text for the light theme, light text for dark. */
+.dash .logo-dark { display: none; }
+:root[data-theme="dark"] .dash .logo-light { display: none; }
+:root[data-theme="dark"] .dash .logo-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] .dash .logo-light { display: none; }
+  :root[data-theme="system"] .dash .logo-dark { display: block; }
 }

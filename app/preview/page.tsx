@@ -1,9 +1,8 @@
-import { WallView } from '@/components/WallView';
-import { wallOrder } from '@/lib/order';
-import { sampleEntries, sampleSummary, SAMPLE_WALL_SIZE } from '@/lib/sample';
+import { WallView } from '@/components/dashboard/WallView';
+import { sampleEntries } from '@/lib/sample';
 
-export default function PreviewWall() {
-  const sorted = [...sampleEntries].sort(wallOrder);
-  const recent = sorted.filter((entry) => !entry.is_pinned);
-  return <WallView pinned={sorted.filter((entry) => entry.is_pinned)} recent={recent.slice(0, SAMPLE_WALL_SIZE)} hasMore={recent.length > SAMPLE_WALL_SIZE} summary={sampleSummary()} />;
+export default async function PreviewWall({ searchParams }: { searchParams: Promise<{ empty?: string }> }) {
+  // /preview?empty shows the empty wall.
+  const empty = 'empty' in (await searchParams);
+  return <WallView entries={empty ? [] : sampleEntries} hasMore={false} />;
 }

@@ -2,22 +2,20 @@
 // signed-in person, so none of these need to filter by user.
 import { cache } from 'react';
 import { todayIn, yearOf } from './dates';
-import { likePattern, type SearchFilters } from './search';
 import { createClient } from './supabase/server';
-import { ENTRY_COLUMNS, WALL_PAGE_SIZE, type Category, type Entry, type Profile, type WallSummary } from './types';
+import { ENTRY_COLUMNS, PROFILE_COLUMNS, WALL_PAGE_SIZE, type Category, type Entry, type Profile, type WallSummary } from './types';
 
-export const getUserId = cache(async () => {
+export const getClaims = cache(async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getClaims();
-  return data?.claims.sub ?? null;
+  return data?.claims ?? null;
 });
+
+export const getUserId = cache(async () => (await getClaims())?.sub ?? null);
 
 export const getProfile = cache(async (): Promise<Profile | null> => {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('id, name, timezone, reminder_frequency, reminder_time, onboarded_at')
-    .maybeSingle();
+  const { data, error } = await supabase.from('profiles').select(PROFILE_COLUMNS).maybeSingle();
   if (error) throw error;
   return data;
 });
@@ -33,23 +31,25 @@ export const getCategories = cache(async (): Promise<Category[]> => {
   return data;
 });
 
-export async function getWall(): Promise<{ pinned: Entry[]; recent: Entry[]; hasMore: boolean }> {
+/** A short-lived link to the profile photo, which lives in a private bucket. */
+export async function getAvatarUrl(path: string | null): Promise<string | null> {
+  if (!path) return null;
   const supabase = await createClient();
-  const sorted = (pinned: boolean) => supabase
+  const { data } = await supabase.storage.from('avatars').createSignedUrl(path, 60 * 60 * 24);
+  return data?.signedUrl ?? null;
+}
+
+/** The newest page of the wall. */
+export async function getWall(): Promise<{ entries: Entry[]; hasMore: boolean }> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
     .from('entries')
     .select(ENTRY_COLUMNS)
-    .eq('is_pinned', pinned)
     .order('entry_date', { ascending: false })
-    .order('created_at', { ascending: false });
-
-  const [pinned, recent] = await Promise.all([sorted(true), sorted(false).limit(WALL_PAGE_SIZE + 1)]);
-  if (pinned.error) throw pinned.error;
-  if (recent.error) throw recent.error;
-  return {
-    pinned: pinned.data,
-    recent: recent.data.slice(0, WALL_PAGE_SIZE),
-    hasMore: recent.data.length > WALL_PAGE_SIZE,
-  };
+    .order('created_at', { ascending: false })
+    .limit(WALL_PAGE_SIZE + 1);
+  if (error) throw error;
+  return { entries: data.slice(0, WALL_PAGE_SIZE), hasMore: data.length > WALL_PAGE_SIZE };
 }
 
 export async function getYearCounts() {
@@ -63,20 +63,20 @@ export async function getWallSummary(timezone: string): Promise<WallSummary> {
   const supabase = await createClient();
   const today = todayIn(timezone);
   const year = yearOf(today);
-  const [counts, categories, onThisDay] = await Promise.all([
+  const [counts, onThisDay, latest] = await Promise.all([
     supabase.rpc('entry_year_counts'),
-    supabase.rpc('year_category_counts', { p_year: year }),
     supabase.rpc('entries_on_this_day', { p_day: today }),
+    supabase.from('entries').select('entry_date').order('entry_date', { ascending: false }).limit(1).maybeSingle(),
   ]);
   if (counts.error) throw counts.error;
-  if (categories.error) throw categories.error;
   if (onThisDay.error) throw onThisDay.error;
+  if (latest.error) throw latest.error;
   return {
     year,
     yearWins: counts.data.find((row) => row.year === year)?.wins ?? 0,
     allWins: counts.data.reduce((total, row) => total + row.wins, 0),
-    topCategories: categories.data,
     onThisDay: onThisDay.data,
+    lastWinDay: latest.data?.entry_date ?? null,
   };
 }
 
@@ -89,20 +89,6 @@ export async function getYear(year: number): Promise<Entry[]> {
     .lte('entry_date', `${year}-12-31`)
     .order('entry_date', { ascending: false })
     .order('created_at', { ascending: false });
-  if (error) throw error;
-  return data;
-}
-
-export async function searchEntries({ q, category, year }: SearchFilters): Promise<Entry[]> {
-  const supabase = await createClient();
-  let query = supabase.from('entries').select(ENTRY_COLUMNS);
-  if (q.trim()) query = query.like('search_text', likePattern(q));
-  if (category) query = query.eq('category_id', category);
-  if (year) query = query.gte('entry_date', `${year}-01-01`).lte('entry_date', `${year}-12-31`);
-  const { data, error } = await query
-    .order('entry_date', { ascending: false })
-    .order('created_at', { ascending: false })
-    .limit(200);
   if (error) throw error;
   return data;
 }

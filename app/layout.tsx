@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from 'next';
-import { Alegreya, Hanken_Grotesk } from 'next/font/google';
 import { SITE_NAME, SITE_PITCH } from '@/lib/site';
+import { fontVariables } from './fonts';
 import './globals.css';
-
-const serif = Alegreya({ subsets: ['latin'], variable: '--font-alegreya', style: ['normal', 'italic'] });
-const sans = Hanken_Grotesk({ subsets: ['latin'], variable: '--font-hanken' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3002'),
@@ -13,11 +10,17 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-export const viewport: Viewport = { themeColor: '#12468a', viewportFit: 'cover' };
+export const viewport: Viewport = { themeColor: '#f5f5f5', viewportFit: 'cover' };
+
+// Applies the saved Light, Dark or System choice before the page draws, so it never flashes.
+const THEME_SCRIPT = `try{document.documentElement.dataset.theme=localStorage.getItem('grawal-theme')||'light'}catch(e){document.documentElement.dataset.theme='light'}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>{children}</body>
     </html>
   );

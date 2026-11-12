@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="command">
+<path id="Path / command / 01" d="M7.5 4.5V7.5H4.5V4.5H7.5Z" stroke-width="0.75" stroke-linejoin="round" stroke="#999999"/>
+<path id="Path / command / 02" d="M7.5 7.5H9C9.82845 7.5 10.5 8.17155 10.5 9C10.5 9.82845 9.82845 10.5 9 10.5C8.17155 10.5 7.5 9.82845 7.5 9V7.5Z" stroke-width="0.75" stroke-linejoin="round" stroke="#999999"/>
+<path id="Path / command / 03" d="M4.5 7.50099H3C2.17158 7.50099 1.5 8.17254 1.5 9.00099C1.5 9.82939 2.17158 10.501 3 10.501C3.82842 10.501 4.5 9.82939 4.5 9.00099V7.50099Z" stroke-width="0.75" stroke-linejoin="round" stroke="#999999"/>
+<path id="Path / command / 04" d="M7.5 4.5V3C7.5 2.17158 8.17155 1.5 9 1.5C9.82845 1.5 10.5 2.17158 10.5 3C10.5 3.82842 9.82845 4.5 9 4.5H7.5Z" stroke-width="0.75" stroke-linejoin="round" stroke="#999999"/>
+<path id="Path / command / 05" d="M4.5 4.5V3C4.5 2.17158 3.82842 1.5 3 1.5C2.17158 1.5 1.5 2.17158 1.5 3C1.5 3.82842 2.17158 4.5 3 4.5H4.5Z" stroke-width="0.75" stroke-linejoin="round" stroke="#999999"/>
+</g>
+</svg>

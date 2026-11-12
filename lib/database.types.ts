@@ -9,6 +9,8 @@ export type ProfileRow = {
   reminder_frequency: 'off' | 'daily' | 'weekly';
   reminder_time: string;
   onboarded_at: string | null;
+  avatar_path: string | null;
+  notify_on_this_day: boolean;
   created_at: string;
 };
 

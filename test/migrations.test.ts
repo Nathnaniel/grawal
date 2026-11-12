@@ -53,9 +53,9 @@ test('a new sign-in gets a profile named from Google or the email', async () => 
   assert.deepEqual(rows.map((r) => r.name), ['Ada', 'bola']);
 });
 
-test('the seven default categories are readable by anyone signed in', async () => {
-  const { rows } = await as(B, 'select id from public.categories');
-  assert.equal(rows.length, 7);
+test('the ten default categories are readable by anyone signed in', async () => {
+  const { rows } = await as(B, 'select id from public.categories where user_id is null');
+  assert.equal(rows.length, 10);
 });
 
 test('saving an entry fills in its owner from the session', async () => {
@@ -163,6 +163,22 @@ test('sharing only works on your own entries and can be revoked', async () => {
 
 test('nobody can change the slug on a share', async () => {
   await assert.rejects(as(A, `update public.shares set public_slug = 'zzzzzzzzzzzzzzzz'`), /permission denied/);
+});
+
+test('people can set their own photo and On this day switch, not anyone else\'s', async () => {
+  await as(A, `update public.profiles set avatar_path = $1, notify_on_this_day = false where id = $2`, [`${A}/me.jpg`, A]);
+  const own = await db.query<{ avatar_path: string; notify_on_this_day: boolean }>('select avatar_path, notify_on_this_day from public.profiles where id = $1', [A]);
+  assert.deepEqual(own.rows, [{ avatar_path: `${A}/me.jpg`, notify_on_this_day: false }]);
+  const other = await as(A, `update public.profiles set avatar_path = 'x' where id = $1 returning id`, [B]);
+  assert.equal(other.rows.length, 0);
+});
+
+test('profile photos are private and limited to your own folder', async () => {
+  await as(A, `insert into storage.objects (bucket_id, name) values ('avatars', $1)`, [`${A}/me.jpg`]);
+  await assert.rejects(as(B, `insert into storage.objects (bucket_id, name) values ('avatars', $1)`, [`${A}/planted.jpg`]), /row-level security/);
+  assert.equal((await as(B, `select id from storage.objects where bucket_id = 'avatars'`)).rows.length, 0);
+  const { rows } = await db.query<{ public: boolean }>(`select public from storage.buckets where id = 'avatars'`);
+  assert.equal(rows[0].public, false);
 });
 
 test('photos are limited to your own folder', async () => {

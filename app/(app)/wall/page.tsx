@@ -1,8 +1,9 @@
-import { WallView } from '@/components/WallView';
-import { getProfile, getWall, getWallSummary } from '@/lib/queries';
+import type { Metadata } from 'next';
+import { WallView } from '@/components/dashboard/WallView';
+import { getWall } from '@/lib/queries';
+
+export const metadata: Metadata = { title: 'Your wall' };
 
 export default async function Wall() {
-  const profile = await getProfile();
-  const [wall, summary] = await Promise.all([getWall(), getWallSummary(profile?.timezone ?? 'UTC')]);
-  return <WallView {...wall} summary={summary} />;
+  return <WallView {...await getWall()} />;
 }
