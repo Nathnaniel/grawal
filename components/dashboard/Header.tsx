@@ -12,7 +12,7 @@ export function Header() {
   const raised = panel && ['search', 'notifications', 'account'].includes(panel.kind);
 
   return (
-    <header className={`sticky top-0 bg-[var(--d-bg)] px-5 pt-12 pb-[26px] lg:px-6 lg:py-[26px] ${raised ? 'z-[45]' : 'z-30'}`}>
+    <header className={`sticky top-0 px-5 pt-12 pb-[26px] lg:px-6 lg:py-[26px] ${raised ? 'z-[45]' : 'z-30'}`}>
       <div className="relative mx-auto flex h-12 max-w-[353px] items-center justify-between lg:max-w-[748px]">
         <Link href={basePath || '/wall'} aria-label="Grawal, your wall">
           <img src="/app/logo.svg" alt="" width={97} height={24} className="logo-light" />
