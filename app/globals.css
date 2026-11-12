@@ -181,6 +181,9 @@ button:not(:disabled), summary, label:has(input[type="radio"]) { cursor: pointer
 }
 
 /* The landing page has its own white canvas instead of the app's sky. */
+/* The page stays white; the blue behind it shows when the page is pulled past the
+   top or bottom, where it meets the hero and the footer. */
+html:has(.landing) { background: #1568d4; }
 body:has(.landing) { background: #fff; }
 /* The app keeps room for its sticky header when jumping to a section; the landing page has none. */
 html:has(.landing) { scroll-padding-top: 0; }
