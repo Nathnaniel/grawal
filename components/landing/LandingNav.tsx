@@ -13,6 +13,9 @@ const LINKS = [
 // page whose grey header bar sits exactly where the closed header's white bar was.
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
+  // Closing hands focus back to the menu button. Keyboard users need that, but after
+  // a tap it would leave the button outlined, so it's only kept for the keyboard.
+  const byKeyboard = useRef(false);
 
   useEffect(() => {
     const element = dialog.current;
@@ -22,7 +25,11 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       // Focus goes to the menu itself, so the close button isn't outlined the moment it opens.
       element.focus();
     }
-    if (!open && element.open) element.close();
+    if (!open && element.open) {
+      element.close();
+      if (!byKeyboard.current) (document.activeElement as HTMLElement | null)?.blur();
+    }
+    if (!open) byKeyboard.current = false;
     // The page behind stays put while the menu covers it.
     const lenis = smoothScroll();
     if (open) lenis?.stop();
@@ -67,13 +74,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       aria-label="Menu"
       tabIndex={-1}
       data-lenis-prevent
+      onCancel={() => { byKeyboard.current = true; }}
       onClose={onClose}
       className="m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-transparent"
     >
       <div className="px-5 pt-[60px]">
         <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
           <Link href="/" onClick={onClose}><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
-          <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={onClose}>
+          <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={(event) => { byKeyboard.current = event.detail === 0; onClose(); }}>
             <img src="/landing/icon-close.svg" alt="" width={24} height={24} />
           </button>
         </div>
@@ -88,6 +96,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
         <Link
           href="/sign-in"
+          onClick={onClose}
           className="mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white"
         >
           Sign In
@@ -99,12 +108,9 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 export function LandingNav() {
   const [open, setOpen] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
 
-  function close() {
-    setOpen(false);
-    menuButton.current?.focus();
-  }
+  // The menu itself returns focus to the button when that helps; see MobileMenu.
+  const close = () => setOpen(false);
 
   return (
     <header className="absolute inset-x-0 top-0 z-20 px-5 pt-[60px] lg:px-6 lg:pt-10">
@@ -120,7 +126,7 @@ export function LandingNav() {
       {/* Mobile: logo and a menu button that opens the full-screen menu. */}
       <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-white px-5 lg:hidden">
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
-        <button ref={menuButton} type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
+        <button type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
           <img src="/landing/icon-menu.svg" alt="" width={24} height={24} />
         </button>
       </div>

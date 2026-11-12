@@ -58,8 +58,14 @@ export function SignInForm({ initialMode, linkFailed, configured }: { initialMod
     setSending(false);
     if (failed) {
       const missing = /signup|not allowed|not found/i.test(failed.message);
+      // Supabase limits how often sign-in emails can go out; say so plainly.
+      const limited = failed.status === 429 || /rate limit|seconds/i.test(failed.message);
       setNoAccount(missing);
-      setError(missing ? 'There’s no account for that email yet.' : 'The link didn’t send. Check the address, wait a minute and try again.');
+      setError(
+        missing ? 'There’s no account for that email yet.'
+          : limited ? 'Too many sign-in emails were sent just now. Wait a few minutes, then try again.'
+            : 'The link didn’t send. Check the address, wait a minute and try again.',
+      );
       return false;
     }
     setSentTo(address);
