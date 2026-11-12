@@ -6,6 +6,11 @@ import { StickyNote } from './StickyNote';
 
 const u = (n: number) => `calc(var(--u) * ${n})`;
 
+// Figma's phone preview leaves these notes out (Family, Work, Finances, Health), so the
+// wall reads as a few pinned wins with space between them. Their spots stay empty, so
+// every other note keeps its place.
+const MOBILE_GAPS = new Set([1, 2, 4, 5]);
+
 function SearchAndBell({ scale }: { scale: number }) {
   return (
     <div className="flex items-center rounded-full bg-white" style={{ padding: u(9.333 * scale), gap: u(10.889 * scale) }}>
@@ -72,7 +77,11 @@ export function MobileWallPreview() {
           </div>
 
           <div className="absolute grid grid-cols-2" style={{ left: k(15.63), top: k(83.36), width: k(241.74), gap: k(8.336) }}>
-            {WALL_NOTES.map((note, index) => <StickyNote key={index} note={note} style={{ width: k(116.702) }} />)}
+            {WALL_NOTES.map((note, index) => (
+              MOBILE_GAPS.has(index)
+                ? <div key={index} aria-hidden="true" className="sticky-note" style={{ width: k(116.702) }} />
+                : <StickyNote key={index} note={note} style={{ width: k(116.702) }} />
+            ))}
           </div>
 
           <div className="absolute flex items-center" style={{ left: k(79.19), top: k(522.38), gap: k(9.725) }}>

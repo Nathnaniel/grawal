@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { SCRIPTURES, STEPS, WALL_NOTES } from '@/components/landing/content';
 import { Faq } from '@/components/landing/Faq';
+import { FooterWordmark } from '@/components/landing/FooterWordmark';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { LandingNav } from '@/components/landing/LandingNav';
 import { StickyNote } from '@/components/landing/StickyNote';
@@ -127,7 +128,7 @@ function Questions() {
 function StartCard() {
   const [first, second] = [WALL_NOTES[8], WALL_NOTES[5]];
   return (
-    <div aria-hidden="true" data-reveal className="relative h-[359px] w-[353px] shrink-0 overflow-hidden bg-[#f5f5f5] lg:h-[400px] lg:w-[616px]">
+    <div aria-hidden="true" data-reveal className="relative h-[359px] w-full shrink-0 overflow-hidden bg-[#f5f5f5] lg:h-[400px] lg:w-[616px]">
       <img src="/landing/start-card.jpg" alt="" className="absolute inset-0 size-full object-cover" />
       <img src="/landing/start-texture.svg" alt="" className="absolute top-1/2 left-1/2 h-[554.828px] w-[616px] max-w-none -translate-x-1/2 -translate-y-1/2" />
       <StickyNote note={first} className="!absolute top-[21.7px] left-[33.73px] w-[143.715px] lg:top-[70px] lg:left-[87px] lg:w-[186.667px]" />
@@ -139,7 +140,7 @@ function StartCard() {
 function StartYourWall() {
   return (
     <section aria-labelledby="start-heading" className="mt-7 px-5 py-5 lg:mt-16 lg:py-[60px]">
-      <div className="mx-auto flex w-[353px] flex-col gap-5 lg:w-[922px] lg:flex-row-reverse lg:items-center lg:justify-between lg:gap-[25px]">
+      <div className="mx-auto flex w-full max-w-[353px] flex-col gap-5 lg:w-[922px] lg:max-w-none lg:flex-row-reverse lg:items-center lg:justify-between lg:gap-[25px]">
         <StartCard />
         <div data-reveal className="flex flex-col items-start gap-10">
           <div className="flex flex-col gap-5">
@@ -157,9 +158,9 @@ const FOOTER_LINK = 'p-2.5 whitespace-nowrap font-avenir text-base leading-4 fon
 
 function Footer() {
   return (
-    <footer className="relative mt-7 h-[439px] overflow-hidden lg:mt-16 lg:h-[470px]">
+    <footer className="relative mt-7 h-[439px] overflow-hidden px-5 lg:mt-16 lg:h-[470px] lg:px-0">
       <img src="/landing/footer-satin.svg" alt="" className="absolute inset-0 size-full max-w-none object-cover" />
-      <div className="relative mx-auto flex w-[353px] flex-col gap-5 pt-[60px] lg:w-[800px] lg:pt-[62px]">
+      <div className="relative mx-auto flex w-full max-w-[353px] flex-col gap-5 pt-[60px] lg:w-[800px] lg:max-w-none lg:pt-[62px]">
         <div data-reveal className="flex w-[242px] flex-wrap items-end gap-10 lg:w-auto">
           <div className="flex flex-col gap-1">
             <div className="flex"><a href="#how-it-works" className={FOOTER_LINK}>How it works</a><a href="#faq" className={FOOTER_LINK}>FAQs</a></div>
@@ -170,12 +171,8 @@ function Footer() {
           <div className="flex"><span className={FOOTER_LINK}>Tiktok</span><span className={FOOTER_LINK}>Instagram</span><span className={FOOTER_LINK}>Youtube</span><span className={FOOTER_LINK}>X</span></div>
         </div>
         <div data-reveal className="flex flex-col items-center gap-5">
-          <img src="/landing/footer-logo-mobile.svg" alt="Grawal" className="h-[84.72px] w-[353px] lg:hidden" />
-          <div className="hidden w-full items-center gap-[30.769px] lg:flex">
-            <img src="/landing/footer-mark.svg" alt="" className="h-[192px] w-[184px]" />
-            <img src="/landing/footer-wordmark.svg" alt="Grawal" className="h-[130px] w-[584px]" />
-          </div>
-          <p className="p-2.5 font-avenir text-base leading-[18px] font-medium text-white">© 2026 Grawal. All rights reserved</p>
+          <FooterWordmark />
+          <p className="relative z-10 p-2.5 font-avenir text-base leading-[18px] font-medium text-white">© 2026 Grawal. All rights reserved</p>
         </div>
       </div>
     </footer>

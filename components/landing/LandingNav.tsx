@@ -70,15 +70,15 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       onClose={onClose}
       className="m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-transparent"
     >
-      <div className="px-10 pt-[60px]">
-        <div className="flex items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
+      <div className="px-5 pt-[60px]">
+        <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
           <Link href="/" onClick={onClose}><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
           <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={onClose}>
             <img src="/landing/icon-close.svg" alt="" width={24} height={24} />
           </button>
         </div>
 
-        <nav aria-label="Main" className="mt-[55px] flex flex-col items-start gap-5">
+        <nav aria-label="Main" className="mt-[55px] flex flex-col items-start gap-5 px-5">
           {LINKS.map(({ href, label }) => (
             <a key={href} href={href} className="flex h-9 items-center p-2.5 font-avenir text-base leading-4 font-medium text-[#1a1a1a]" onClick={(event) => goTo(event, href)}>
               {label}
@@ -88,7 +88,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
         <Link
           href="/sign-in"
-          className="mt-7 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white shadow-[inset_0_-4px_4px_rgb(179_208_245/0.25)] drop-shadow-[0_4px_4.15px_rgb(204_204_204/0.14)]"
+          className="mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white shadow-[inset_0_-4px_4px_rgb(179_208_245/0.25)] drop-shadow-[0_4px_4.15px_rgb(204_204_204/0.14)]"
         >
           Sign In
         </Link>
@@ -107,7 +107,7 @@ export function LandingNav() {
   }
 
   return (
-    <header className="absolute inset-x-0 top-0 z-20 px-10 pt-[60px] lg:px-6 lg:pt-10">
+    <header className="absolute inset-x-0 top-0 z-20 px-5 pt-[60px] lg:px-6 lg:pt-10">
       {/* Desktop: a white bar 1218px wide, its content inset 242px and 222px as in Figma. */}
       <nav aria-label="Main" className="mx-auto hidden h-12 max-w-[1218px] items-center rounded-xl bg-white pr-[clamp(24px,18vw,222px)] pl-[clamp(24px,19.5vw,242px)] lg:flex">
         <Link href="/" className="shrink-0"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
@@ -118,7 +118,7 @@ export function LandingNav() {
       </nav>
 
       {/* Mobile: logo and a menu button that opens the full-screen menu. */}
-      <div className="flex items-center justify-between rounded-xl bg-white px-5 lg:hidden">
+      <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-white px-5 lg:hidden">
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <button ref={menuButton} type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
           <img src="/landing/icon-menu.svg" alt="" width={24} height={24} />
