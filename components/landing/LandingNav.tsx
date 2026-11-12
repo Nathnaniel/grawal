@@ -76,7 +76,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       data-lenis-prevent
       onCancel={() => { byKeyboard.current = true; }}
       onClose={onClose}
-      className="m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-transparent"
+      className="landing-menu m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-transparent"
     >
       <div className="px-5 pt-[60px]">
         <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
@@ -87,8 +87,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </div>
 
         <nav aria-label="Main" className="mt-[55px] flex flex-col items-start gap-5 px-5">
-          {LINKS.map(({ href, label }) => (
-            <a key={href} href={href} className="flex h-9 items-center p-2.5 font-avenir text-base leading-4 font-medium text-[#1a1a1a]" onClick={(event) => goTo(event, href)}>
+          {LINKS.map(({ href, label }, index) => (
+            <a key={href} href={href} style={{ '--i': index } as React.CSSProperties} className="menu-item flex h-9 items-center p-2.5 font-avenir text-base leading-4 font-medium text-[#1a1a1a]" onClick={(event) => goTo(event, href)}>
               {label}
             </a>
           ))}
@@ -97,7 +97,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         <Link
           href="/sign-in"
           onClick={onClose}
-          className="mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white"
+          style={{ '--i': LINKS.length } as React.CSSProperties}
+          className="menu-item mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white"
         >
           Sign In
         </Link>

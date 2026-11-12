@@ -70,6 +70,27 @@ html:has(.landing) { scroll-padding-top: 0; }
 /* No outline on the menu panel itself, and no grey flash on tapped links and buttons.
    Keyboard focus rings still show. */
 .landing dialog:focus-visible { outline: none; }
+
+/* The phone menu fades in slowly while its links drift up one after another, and
+   leaves the same way. The grey bar holds still: it lines up with the header below. */
+.landing-menu {
+  --menu-ease: cubic-bezier(0.45, 0, 0.15, 1);
+  opacity: 0;
+  transition: opacity 700ms var(--menu-ease), overlay 700ms allow-discrete, display 700ms allow-discrete;
+}
+.landing-menu[open] { opacity: 1; }
+.landing-menu .menu-item {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 600ms var(--menu-ease), transform 800ms var(--menu-ease);
+}
+.landing-menu[open] .menu-item {
+  opacity: 1; transform: none;
+  transition-delay: calc(150ms + var(--i, 0) * 90ms);
+}
+@starting-style {
+  .landing-menu[open] { opacity: 0; }
+  .landing-menu[open] .menu-item { opacity: 0; transform: translateY(14px); }
+}
 .landing { -webkit-tap-highlight-color: transparent; }
 
 /* The app's base heading font and balanced wrapping would change Figma's line breaks.
@@ -104,6 +125,7 @@ html:has(.landing) { scroll-padding-top: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .faq-motion { transition: none; }
+  .landing-menu, .landing-menu .menu-item { transition: none; transform: none; }
   .note-fresh, .panel-in { animation: none; }
 }
 

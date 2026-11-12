@@ -30,6 +30,8 @@ const config: NextConfig = {
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
   devIndicators: { position: 'top-right' },
+  // Lets the dev server also be opened at 127.0.0.1, e.g. to see the site signed out.
+  allowedDevOrigins: ['127.0.0.1'],
   turbopack: { root: process.cwd() },
   async headers() {
     return [
