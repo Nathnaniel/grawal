@@ -6,10 +6,12 @@ import { StickyNote } from './StickyNote';
 
 const u = (n: number) => `calc(var(--u) * ${n})`;
 
-// Figma's phone preview leaves these notes out (Family, Work, Finances, Health), so the
-// wall reads as a few pinned wins with space between them. Their spots stay empty, so
-// every other note keeps its place.
-const MOBILE_GAPS = new Set([1, 2, 4, 5]);
+// Figma's phone preview pins two wins, staggered, with open wall between them
+// (Mobile / Wall / Populated, 2941:2688). Positions are in the card's 313px space.
+const MOBILE_NOTES = [
+  { index: 0, left: 17.92, top: 95.57 },
+  { index: 3, left: 161.28, top: 291.42 },
+];
 
 function SearchAndBell({ scale }: { scale: number }) {
   return (
@@ -67,7 +69,7 @@ export function MobileWallPreview() {
     <div className="mx-auto w-full max-w-[353px] [container-type:inline-size]">
       <div className="relative overflow-hidden bg-[#f5f5f5] [--u:calc(100cqw/353)]" style={{ height: u(612) }}>
         <img src="/landing/wave-texture.svg" alt="" className="absolute max-w-none" style={{ left: u(-274.05), top: u(-46.07), width: u(902.24), height: u(812.01) }} />
-        <div className="absolute overflow-hidden bg-[#f5f5f5]" style={{ left: u(20), top: u(20), width: u(313), height: u(678) }}>
+        <div className="absolute overflow-hidden bg-[#f5f5f5]" style={{ left: u(20), top: u(20), width: u(313), height: u(592) }}>
           <div className="absolute left-1/2 -translate-x-1/2" style={{ top: k(33.344), width: k(245.214), height: k(33.344) }}>
             <img src="/landing/logo-app.svg" alt="" className="absolute left-0" style={{ top: k(7.99), width: k(67.382) }} />
             <div className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center" style={{ gap: k(8.336) }}>
@@ -76,15 +78,11 @@ export function MobileWallPreview() {
             </div>
           </div>
 
-          <div className="absolute grid grid-cols-2" style={{ left: k(15.63), top: k(83.36), width: k(241.74), gap: k(8.336) }}>
-            {WALL_NOTES.map((note, index) => (
-              MOBILE_GAPS.has(index)
-                ? <div key={index} aria-hidden="true" className="sticky-note" style={{ width: k(116.702) }} />
-                : <StickyNote key={index} note={note} style={{ width: k(116.702) }} />
-            ))}
-          </div>
+          {MOBILE_NOTES.map(({ index, left, top }) => (
+            <StickyNote key={index} note={WALL_NOTES[index]} className="!absolute" style={{ left: u(left), top: u(top), width: u(133.8) }} />
+          ))}
 
-          <div className="absolute flex items-center" style={{ left: k(79.19), top: k(522.38), gap: k(9.725) }}>
+          <div className="absolute flex items-center" style={{ left: u(90.79), top: u(506.92), gap: k(9.725) }}>
             <div className="flex items-center rounded-full bg-white" style={{ padding: k(4.168), boxShadow: `0 ${k(2.779)} ${k(2.779)} rgb(204 204 204 / 0.25)` }}>
               <span className="grid place-items-center rounded-full bg-[#1568d4]" style={{ width: k(33.344), height: k(33.344) }}>
                 <img src="/landing/icon-home.svg" alt="" style={{ width: k(16.672) }} />
