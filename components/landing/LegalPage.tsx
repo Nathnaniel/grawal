@@ -1,7 +1,11 @@
+import type { Viewport } from 'next';
 import { CONTACT_EMAIL, LEGAL_UPDATED, SITE_NAME } from '@/lib/site';
 import { Footer } from './Footer';
 import { LandingNav } from './LandingNav';
 import { LegalContents } from './LegalContents';
+
+// These pages start white, not blue, so the browser's bar matches them.
+export const legalViewport: Viewport = { themeColor: '#ffffff', viewportFit: 'cover' };
 
 export const ContactEmail = () => <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
 
@@ -21,23 +25,23 @@ export type LegalPart = { id: string; title: string; body: React.ReactNode };
 export type LegalSection = LegalPart & { parts?: LegalPart[] };
 
 /**
- * The privacy policy and terms of service share this layout: a short blue header like
- * the home page's, then a sticky list of sections beside the text on desktop (a
+ * The privacy policy and terms of service share this layout: a plain white header with
+ * a grey floating nav, then a sticky list of sections beside the text on desktop (a
  * fold-out list above it on phones). Sections are numbered in order.
  */
 export function LegalPage({ title, intro, sections }: { title: string; intro: string; sections: LegalSection[] }) {
   return (
     <>
-      <header className="relative overflow-hidden bg-[#1568d4]">
-        <img src="/landing/hero-glow.svg" alt="" aria-hidden className="absolute inset-0 size-full max-w-none object-fill" />
-        <LandingNav base="/" floating />
-        <div className="relative mx-auto flex max-w-[353px] flex-col items-center gap-5 pt-[172px] pb-16 text-center lg:max-w-[720px] lg:pt-[176px] lg:pb-20">
-          <div className="flex gap-2 font-avenir text-sm leading-4 font-medium text-white">
-            <span className="rounded-lg bg-white/15 px-3 py-2">{SITE_NAME}</span>
-            <span className="rounded-lg bg-white/15 px-3 py-2">Updated {LEGAL_UPDATED}</span>
+      {/* Outside the header, so it can stay stuck to the top for the whole page. */}
+      <LandingNav base="/" floating grey />
+      <header className="relative bg-white">
+        <div className="relative mx-auto flex max-w-[353px] flex-col items-center gap-5 pt-[52px] pb-10 text-center lg:max-w-[720px] lg:pt-[72px] lg:pb-14">
+          <div className="flex gap-2 font-avenir text-sm leading-4 font-medium text-[#1a1a1a]">
+            <span className="rounded-lg bg-[#f5f5f5] px-3 py-2">{SITE_NAME}</span>
+            <span className="rounded-lg bg-[#f5f5f5] px-3 py-2">Updated {LEGAL_UPDATED}</span>
           </div>
-          <h1 className="font-tusker text-[40px] leading-[44px] font-medium tracking-[1.6px] text-white uppercase lg:text-[56px] lg:leading-[64px] lg:tracking-[2.24px]">{title}</h1>
-          <p className="font-avenir text-base leading-[22px] text-white/90">{intro}</p>
+          <h1 className="font-tusker text-[40px] leading-[44px] font-medium tracking-[1.6px] text-[#1a1a1a] uppercase lg:text-[56px] lg:leading-[64px] lg:tracking-[2.24px]">{title}</h1>
+          <p className="font-avenir text-base leading-[22px] text-[#4d4d4d]">{intro}</p>
         </div>
       </header>
 

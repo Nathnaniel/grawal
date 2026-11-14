@@ -208,10 +208,13 @@ html:has(.landing) { scroll-padding-top: 0; }
 }
 
 /* The privacy policy and terms of service (components/landing/LegalPage.tsx). */
+:root { --legal-top: max(12px, env(safe-area-inset-top)); }
+/* Desktop keeps the bar where it starts, 40px down; only phones slide it up to the top. */
+@media (min-width: 1024px) { :root { --legal-top: 40px; } }
 .legal { font-family: var(--font-avenir); font-size: 16px; line-height: 26px; color: #333; }
-.legal section { scroll-margin-top: 104px; padding-top: 40px; margin-top: 40px; border-top: 1px solid #e5e5e5; }
-.legal section > div[id] { scroll-margin-top: 104px; }
-@media (max-width: 1023px) { .legal section, .legal section > div[id] { scroll-margin-top: 200px; } }
+.legal section { scroll-margin-top: calc(var(--legal-top) + 84px); padding-top: 40px; margin-top: 40px; border-top: 1px solid #e5e5e5; }
+.legal section > div[id] { scroll-margin-top: calc(var(--legal-top) + 84px); }
+@media (max-width: 1023px) { .legal section, .legal section > div[id] { scroll-margin-top: calc(var(--legal-top) + 132px); } }
 .legal h2 { font-family: var(--font-tusker); font-weight: 500; font-size: 28px; line-height: 34px; letter-spacing: 0.56px; text-transform: uppercase; color: #1a1a1a; margin: 0 0 16px; }
 .legal h3 { font-weight: 800; font-size: 18px; line-height: 24px; color: #1a1a1a; margin: 28px 0 10px; }
 .legal p { margin: 0 0 14px; }

@@ -124,16 +124,17 @@ function MobileMenu({ open, onClose, account, base }: { open: boolean; onClose: 
 
 /**
  * `base` is '/' on pages other than the home page, so the section links lead back to it.
- * `floating` keeps the bar on screen while the page scrolls under it.
+ * `floating` lets the bar scroll up with the page until it reaches the top, then stay there. `grey` makes the
+ * bar #f5f5f5 for pages with a white background.
  */
-export function LandingNav({ base = '', floating = false }: { base?: string; floating?: boolean }) {
+export function LandingNav({ base = '', floating = false, grey = false }: { base?: string; floating?: boolean; grey?: boolean }) {
   const [open, setOpen] = useState(false);
   const account = useAccountLink();
   // A floating bar frosts the page behind it once the page has scrolled under it.
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     if (!floating) return;
-    const check = () => setScrolled(window.scrollY > 8);
+    const check = () => setScrolled(window.scrollY > 40);
     check();
     const late = window.setTimeout(check, 300);
     window.addEventListener('scroll', check, { passive: true });
@@ -145,20 +146,20 @@ export function LandingNav({ base = '', floating = false }: { base?: string; flo
   const close = () => setOpen(false);
 
   return (
-    <header className={`${floating ? `fixed pb-5 transition-[background-color,backdrop-filter] duration-300 lg:pb-4 ${scrolled ? 'bg-white/80 backdrop-blur-xl' : ''}` : 'absolute'} inset-x-0 top-0 z-20 px-5 pt-[60px] lg:px-6 lg:pt-10`}>
+    <header className={`${floating ? `sticky top-[calc(var(--legal-top)-60px)] pt-[60px] pb-3 transition-[background-color,backdrop-filter] duration-300 lg:top-[calc(var(--legal-top)-40px)] lg:pt-10 lg:pb-4 ${scrolled ? 'bg-white/80 backdrop-blur-xl' : ''}` : 'absolute pt-[60px] lg:pt-10'} inset-x-0 top-0 z-20 px-5 lg:px-6`}>
       {/* Desktop: a white bar 1218px wide, its content inset 242px and 222px as in Figma. */}
-      <nav aria-label="Main" className="mx-auto hidden h-12 max-w-[1218px] items-center rounded-xl bg-white pr-[clamp(24px,18vw,222px)] pl-[clamp(24px,19.5vw,242px)] lg:flex">
+      <nav aria-label="Main" className={`mx-auto hidden h-12 max-w-[1218px] items-center rounded-xl ${grey ? 'bg-[#f5f5f5]' : 'bg-white'} pr-[clamp(24px,18vw,222px)] pl-[clamp(24px,19.5vw,242px)] lg:flex`}>
         <Link href="/" className="shrink-0"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <div className="ml-[58px] flex items-center font-avenir text-base leading-4 font-medium">
           {LINKS.map(({ href, label }) => <a key={href} href={base + href} className="p-2.5">{label}</a>)}
         </div>
         {/* A 40px button with 12px corners inside the 48px bar, grey on hover. The extra right margin keeps the
             text exactly where Figma puts it now the padding is smaller. */}
-        <Link href={account.href} className="mr-4 ml-auto flex h-10 items-center rounded-xl px-6 font-avenir text-base font-medium transition-colors duration-200 hover:bg-[#f5f5f5]">{account.label}</Link>
+        <Link href={account.href} className={`mr-4 ml-auto flex h-10 items-center rounded-xl px-6 font-avenir text-base font-medium transition-colors duration-200 ${grey ? 'hover:bg-white' : 'hover:bg-[#f5f5f5]'}`}>{account.label}</Link>
       </nav>
 
       {/* Mobile: logo and a menu button that opens the full-screen menu. */}
-      <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-white px-5 lg:hidden">
+      <div className={`mx-auto flex max-w-[353px] items-center justify-between rounded-xl px-5 lg:hidden ${grey ? 'bg-[#f5f5f5]' : 'bg-white'}`}>
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <button type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
           <img src="/landing/icon-menu.svg" alt="" width={24} height={24} />

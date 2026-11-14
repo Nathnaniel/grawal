@@ -18,7 +18,7 @@ export function LegalContents({ sections }: { sections: Entry[] }) {
     // The section being read is the last one whose top has reached a line just under the
     // floating nav (and the pinned list on phones).
     const pick = () => {
-      const line = window.innerWidth >= 1024 ? 160 : 240;
+      const line = window.innerWidth >= 1024 ? 160 : 200;
       let current = elements[0]?.id;
       for (const element of elements) if (element.getBoundingClientRect().top <= line) current = element.id;
       setActive(current);
@@ -49,14 +49,14 @@ export function LegalContents({ sections }: { sections: Entry[] }) {
   return (
     <>
       {/* Phones: pinned just under the floating nav. Picking a section folds it away again. */}
-      <details ref={fold} className="legal-toc sticky top-[128px] z-10 rounded-2xl border border-[#ebebeb] bg-white shadow-[0_8px_24px_rgba(26,26,26,0.06)] lg:hidden">
+      <details ref={fold} className="legal-toc sticky top-[calc(var(--legal-top)+60px)] z-10 rounded-2xl border border-[#ebebeb] bg-white shadow-[0_8px_24px_rgba(26,26,26,0.06)] lg:hidden">
         <summary className="flex cursor-pointer items-center justify-between px-5 py-4 font-avenir text-base font-medium">
           On this page
           <img src="/app/arrow-down.svg" alt="" width={20} height={20} className="legal-toc-arrow" />
         </summary>
         <nav aria-label="On this page" data-lenis-prevent className="max-h-[calc(100dvh-200px)] overflow-y-auto px-3 pb-4" onClick={(event) => { if ((event.target as HTMLElement).closest('a') && fold.current) fold.current.open = false; }}>{list}</nav>
       </details>
-      <nav aria-label="On this page" className="sticky top-[112px] hidden max-h-[calc(100dvh-136px)] self-start overflow-y-auto pb-4 lg:block" data-lenis-prevent>
+      <nav aria-label="On this page" className="sticky top-[calc(var(--legal-top)+80px)] hidden max-h-[calc(100dvh-var(--legal-top)-104px)] self-start overflow-y-auto pb-4 lg:block" data-lenis-prevent>
         <p className="px-3 pb-2 font-avenir text-sm font-medium text-[#666]">On this page</p>
         {list}
       </nav>

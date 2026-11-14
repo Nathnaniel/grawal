@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ContactEmail as Email, LegalPage, type LegalSection } from '@/components/landing/LegalPage';
+import { ContactEmail as Email, LegalPage, legalViewport, type LegalSection } from '@/components/landing/LegalPage';
 import { SITE_NAME } from '@/lib/site';
+
+export const viewport = legalViewport;
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
