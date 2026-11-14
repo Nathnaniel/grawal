@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
  * down to the shot's screen, so it looks exactly like the drawing it replaces. The
  * drawing stays underneath until the app has loaded.
  */
-export function LiveApp({ width, height, label }: { width: number; height: number; label: string }) {
+export function LiveApp({ width, height, label, src = '/demo' }: { width: number; height: number; label: string; src?: string }) {
   const box = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
   const [ready, setReady] = useState(false);
@@ -28,7 +28,7 @@ export function LiveApp({ width, height, label }: { width: number; height: numbe
     <div ref={box} data-lenis-prevent className="absolute inset-0 overflow-hidden">
       {scale > 0 && (
         <iframe
-          src="/demo"
+          src={src}
           title={label}
           loading="lazy"
           onLoad={() => setReady(true)}

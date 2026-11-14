@@ -84,3 +84,10 @@ export function sampleSummary(): WallSummary {
     lastWinDay: sampleEntries[0]?.entry_date ?? null,
   };
 }
+
+/** The phone shot on the website pins just two wins, as in Figma: Answered Prayer in
+ *  yellow and Faith in pink. Their ids are picked so the note colours come out right. */
+export const samplePhoneEntries: Entry[] = [
+  { ...sampleEntries[0], id: '20000000-0000-4000-8000-000000000002' },
+  { ...sampleEntries[3], id: '20000000-0000-4000-8000-000000000000' },
+];

@@ -99,7 +99,7 @@ export function MobileWallPreview() {
             </span>
           </div>
           {/* The screen is the 393px phone app at 313/393 scale: try it for real. */}
-          <LiveApp width={393} height={744} label="Try Grawal: a live demo with sample wins" />
+          <LiveApp width={393} height={744} src="/demo/phone" label="Try Grawal: a live demo with sample wins" />
         </div>
       </div>
     </div>

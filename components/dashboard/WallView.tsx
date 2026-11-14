@@ -14,7 +14,8 @@ import { WinNote } from './WinNote';
 // (the note's text scales with it). Tablets and up fit as many full notes as they can.
 export const GRID = 'grid justify-center gap-3 [grid-template-columns:repeat(2,minmax(0,168px))] sm:[grid-template-columns:repeat(auto-fill,168px)] lg:gap-5 lg:[grid-template-columns:repeat(auto-fill,186.67px)] xl:justify-start';
 
-export function WallView({ entries: firstPage, hasMore: initialHasMore }: { entries: Entry[]; hasMore: boolean }) {
+/** `stagger` drops the second win lower, as the website's phone shot pins them in Figma. */
+export function WallView({ entries: firstPage, hasMore: initialHasMore, stagger = false }: { entries: Entry[]; hasMore: boolean; stagger?: boolean }) {
   const { store, filter, setFilter } = useApp();
   const [older, setOlder] = useState<Entry[]>([]);
   const [hasMore, setHasMore] = useState(initialHasMore);
@@ -71,7 +72,7 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore }: { entr
         <p className="pt-16 text-center font-avenir text-base text-[var(--d-soft)]">No wins match “{filter.label}”.</p>
       ) : (
         <ul className={GRID}>
-          {shown.map((entry) => <li key={entry.id}><WinNote entry={entry} /></li>)}
+          {shown.map((entry, index) => <li key={entry.id} style={stagger && index === 1 ? { marginTop: 'var(--stagger, 0px)' } : undefined}><WinNote entry={entry} /></li>)}
         </ul>
       )}
       <div ref={sentinel} aria-hidden="true" />

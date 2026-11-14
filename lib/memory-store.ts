@@ -1,11 +1,11 @@
 import { newestFirst } from './order';
 import { matchesSearch } from './search';
 import { sampleEntries, SAMPLE_USER } from './sample';
-import type { AppStore } from './types';
+import type { AppStore, Entry } from './types';
 
 /** Stands in for Supabase on /preview. Changes last until the page reloads. */
-export function createMemoryStore(): AppStore {
-  const entries = new Map(sampleEntries.map((entry) => [entry.id, entry]));
+export function createMemoryStore(initial: Entry[] = sampleEntries): AppStore {
+  const entries = new Map(initial.map((entry) => [entry.id, entry]));
 
   return {
     async saveEntry(entry) {
