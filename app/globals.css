@@ -215,7 +215,8 @@ html:has(.landing) { scroll-padding-top: 0; }
 .legal section { scroll-margin-top: calc(var(--legal-top) + 84px); padding-top: 40px; margin-top: 40px; border-top: 1px solid #e5e5e5; }
 .legal section > div[id] { scroll-margin-top: calc(var(--legal-top) + 84px); }
 @media (max-width: 1023px) { .legal section, .legal section > div[id] { scroll-margin-top: calc(var(--legal-top) + 132px); } }
-.legal h2 { font-family: var(--font-tusker); font-weight: 500; font-size: 28px; line-height: 34px; letter-spacing: 0.56px; text-transform: uppercase; color: #1a1a1a; margin: 0 0 16px; }
+.legal h2 { font-family: var(--font-tusker); font-weight: 500; font-size: 22px; line-height: 26px; letter-spacing: 0.44px; text-transform: uppercase; color: #1a1a1a; margin: 0 0 16px; }
+@media (min-width: 1024px) { .legal h2 { font-size: 26px; line-height: 30px; letter-spacing: 0.52px; } }
 .legal h3 { font-weight: 800; font-size: 18px; line-height: 24px; color: #1a1a1a; margin: 28px 0 10px; }
 .legal p { margin: 0 0 14px; }
 .legal ul { margin: 0 0 14px; padding-left: 22px; list-style: disc; }
