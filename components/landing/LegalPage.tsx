@@ -1,0 +1,70 @@
+import { CONTACT_EMAIL, LEGAL_UPDATED, SITE_NAME } from '@/lib/site';
+import { Footer } from './Footer';
+import { LandingNav } from './LandingNav';
+import { LegalContents } from './LegalContents';
+
+export const ContactEmail = () => <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
+
+/** A table that scrolls sideways on narrow screens instead of squashing. */
+export function LegalTable({ head, rows }: { head: string[]; rows: React.ReactNode[][] }) {
+  return (
+    <div className="legal-table">
+      <table>
+        <thead><tr>{head.map((cell) => <th key={cell} scope="col">{cell}</th>)}</tr></thead>
+        <tbody>{rows.map((row, index) => <tr key={index}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody>
+      </table>
+    </div>
+  );
+}
+
+export type LegalPart = { id: string; title: string; body: React.ReactNode };
+export type LegalSection = LegalPart & { parts?: LegalPart[] };
+
+/**
+ * The privacy policy and terms of service share this layout: a short blue header like
+ * the home page's, then a sticky list of sections beside the text on desktop (a
+ * fold-out list above it on phones). Sections are numbered in order.
+ */
+export function LegalPage({ title, intro, sections }: { title: string; intro: string; sections: LegalSection[] }) {
+  return (
+    <>
+      <header className="relative overflow-hidden bg-[#1568d4]">
+        <img src="/landing/hero-glow.svg" alt="" aria-hidden className="absolute inset-0 size-full max-w-none object-fill" />
+        <LandingNav base="/" floating />
+        <div className="relative mx-auto flex max-w-[353px] flex-col items-center gap-5 pt-[172px] pb-16 text-center lg:max-w-[720px] lg:pt-[176px] lg:pb-20">
+          <div className="flex gap-2 font-avenir text-sm leading-4 font-medium text-white">
+            <span className="rounded-lg bg-white/15 px-3 py-2">{SITE_NAME}</span>
+            <span className="rounded-lg bg-white/15 px-3 py-2">Updated {LEGAL_UPDATED}</span>
+          </div>
+          <h1 className="font-tusker text-[40px] leading-[44px] font-medium tracking-[1.6px] text-white uppercase lg:text-[56px] lg:leading-[64px] lg:tracking-[2.24px]">{title}</h1>
+          <p className="font-avenir text-base leading-[22px] text-white/90">{intro}</p>
+        </div>
+      </header>
+
+      <main className="mx-auto grid max-w-[1218px] gap-6 px-5 pt-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10 lg:px-6 lg:pt-12">
+        <LegalContents sections={sections.map((section, index) => ({
+          id: section.id,
+          label: `${index + 1}. ${section.title}`,
+          parts: section.parts?.map((part, partIndex) => ({ id: part.id, label: `${index + 1}.${partIndex + 1} ${part.title}` })),
+        }))} />
+
+        <article className="legal rounded-3xl bg-[#f5f5f5] px-5 py-8 lg:px-12 lg:py-12">
+          <p><strong>Effective date:</strong> {LEGAL_UPDATED}</p>
+          {sections.map((section, index) => (
+            <section key={section.id} id={section.id} aria-labelledby={`${section.id}-title`}>
+              <h2 id={`${section.id}-title`}>{index + 1}. {section.title}</h2>
+              {section.body}
+              {section.parts?.map((part, partIndex) => (
+                <div key={part.id} id={part.id}>
+                  <h3>{index + 1}.{partIndex + 1} {part.title}</h3>
+                  {part.body}
+                </div>
+              ))}
+            </section>
+          ))}
+        </article>
+      </main>
+      <Footer base="/" />
+    </>
+  );
+}

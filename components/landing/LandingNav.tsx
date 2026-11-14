@@ -26,7 +26,7 @@ const LINKS = [
 
 // Figma: Grawal / Landing Page / Mobile menu (node 2938:1900). A full-screen white
 // page whose grey header bar sits exactly where the closed header's white bar was.
-function MobileMenu({ open, onClose, account }: { open: boolean; onClose: () => void; account: { href: string; label: string } }) {
+function MobileMenu({ open, onClose, account, base }: { open: boolean; onClose: () => void; account: { href: string; label: string }; base: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
   // Closing hands focus back to the menu button. Keyboard users need that, but after
   // a tap it would leave the button outlined, so it's only kept for the keyboard.
@@ -103,7 +103,7 @@ function MobileMenu({ open, onClose, account }: { open: boolean; onClose: () => 
 
         <nav aria-label="Main" className="mt-[55px] flex flex-col items-start gap-5 px-5">
           {LINKS.map(({ href, label }, index) => (
-            <a key={href} href={href} style={{ '--i': index } as React.CSSProperties} className="menu-item flex h-9 items-center p-2.5 font-avenir text-base leading-4 font-medium text-[#1a1a1a]" onClick={(event) => goTo(event, href)}>
+            <a key={href} href={base + href} style={{ '--i': index } as React.CSSProperties} className="menu-item flex h-9 items-center p-2.5 font-avenir text-base leading-4 font-medium text-[#1a1a1a]" onClick={base ? onClose : (event) => goTo(event, href)}>
               {label}
             </a>
           ))}
@@ -122,20 +122,35 @@ function MobileMenu({ open, onClose, account }: { open: boolean; onClose: () => 
   );
 }
 
-export function LandingNav() {
+/**
+ * `base` is '/' on pages other than the home page, so the section links lead back to it.
+ * `floating` keeps the bar on screen while the page scrolls under it.
+ */
+export function LandingNav({ base = '', floating = false }: { base?: string; floating?: boolean }) {
   const [open, setOpen] = useState(false);
   const account = useAccountLink();
+  // A floating bar frosts the page behind it once the page has scrolled under it.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    if (!floating) return;
+    const check = () => setScrolled(window.scrollY > 8);
+    check();
+    const late = window.setTimeout(check, 300);
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('load', check);
+    return () => { window.clearTimeout(late); window.removeEventListener('scroll', check); window.removeEventListener('load', check); };
+  }, [floating]);
 
   // The menu itself returns focus to the button when that helps; see MobileMenu.
   const close = () => setOpen(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-20 px-5 pt-[60px] lg:px-6 lg:pt-10">
+    <header className={`${floating ? `fixed pb-5 transition-[background-color,backdrop-filter] duration-300 lg:pb-4 ${scrolled ? 'bg-white/80 backdrop-blur-xl' : ''}` : 'absolute'} inset-x-0 top-0 z-20 px-5 pt-[60px] lg:px-6 lg:pt-10`}>
       {/* Desktop: a white bar 1218px wide, its content inset 242px and 222px as in Figma. */}
       <nav aria-label="Main" className="mx-auto hidden h-12 max-w-[1218px] items-center rounded-xl bg-white pr-[clamp(24px,18vw,222px)] pl-[clamp(24px,19.5vw,242px)] lg:flex">
         <Link href="/" className="shrink-0"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <div className="ml-[58px] flex items-center font-avenir text-base leading-4 font-medium">
-          {LINKS.map(({ href, label }) => <a key={href} href={href} className="p-2.5">{label}</a>)}
+          {LINKS.map(({ href, label }) => <a key={href} href={base + href} className="p-2.5">{label}</a>)}
         </div>
         {/* A 40px button with 12px corners inside the 48px bar, grey on hover. The extra right margin keeps the
             text exactly where Figma puts it now the padding is smaller. */}
@@ -149,7 +164,7 @@ export function LandingNav() {
           <img src="/landing/icon-menu.svg" alt="" width={24} height={24} />
         </button>
       </div>
-      <MobileMenu open={open} onClose={close} account={account} />
+      <MobileMenu open={open} onClose={close} account={account} base={base} />
     </header>
   );
 }

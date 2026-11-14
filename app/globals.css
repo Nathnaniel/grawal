@@ -206,3 +206,28 @@ html:has(.landing) { scroll-padding-top: 0; }
   :root[data-theme="system"] .dash .logo-light { display: none; }
   :root[data-theme="system"] .dash .logo-dark { display: block; }
 }
+
+/* The privacy policy and terms of service (components/landing/LegalPage.tsx). */
+.legal { font-family: var(--font-avenir); font-size: 16px; line-height: 26px; color: #333; }
+.legal section { scroll-margin-top: 104px; padding-top: 40px; margin-top: 40px; border-top: 1px solid #e5e5e5; }
+.legal section > div[id] { scroll-margin-top: 104px; }
+@media (max-width: 1023px) { .legal section, .legal section > div[id] { scroll-margin-top: 200px; } }
+.legal h2 { font-family: var(--font-tusker); font-weight: 500; font-size: 28px; line-height: 34px; letter-spacing: 0.56px; text-transform: uppercase; color: #1a1a1a; margin: 0 0 16px; }
+.legal h3 { font-weight: 800; font-size: 18px; line-height: 24px; color: #1a1a1a; margin: 28px 0 10px; }
+.legal p { margin: 0 0 14px; }
+.legal ul { margin: 0 0 14px; padding-left: 22px; list-style: disc; }
+.legal li { margin-bottom: 6px; }
+.legal li::marker { color: #1568d4; }
+.legal strong { color: #1a1a1a; font-weight: 800; }
+.legal a { color: #1568d4; text-decoration: underline; text-underline-offset: 3px; }
+.legal .legal-table { overflow-x: auto; margin: 0 0 18px; border-radius: 16px; background: #fff; }
+.legal table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 22px; }
+.legal th { text-align: left; font-weight: 800; color: #1a1a1a; background: #ebebeb; padding: 12px 16px; white-space: nowrap; }
+.legal td { padding: 12px 16px; border-top: 1px solid #ededed; vertical-align: top; }
+.legal td.yes, .legal td.no { text-align: center; font-weight: 800; white-space: nowrap; }
+.legal td.yes { color: #1568d4; }
+.legal td.no { color: #999; }
+.legal-toc[open] .legal-toc-arrow { rotate: 180deg; }
+.legal-toc-arrow { transition: rotate 300ms cubic-bezier(0.32, 0.72, 0, 1); }
+.legal-toc summary::-webkit-details-marker { display: none; }
+.legal-toc summary { list-style: none; }
