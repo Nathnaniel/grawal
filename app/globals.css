@@ -29,10 +29,14 @@ main:focus, dialog:focus-visible { outline: none; }
   --d-text: #1a1a1a; --d-soft: #333; --d-mid: #666; --d-muted: #999; --d-faint: #ccc; --d-line: #eaeaea;
   --d-icon: none; --d-danger: #f0322a;
   --d-lift: 0 4px 4px rgb(204 204 204 / 0.25); --d-pop: 0 12px 14.1px rgb(0 0 0 / 0.08);
-  /* Phone spacing that follows the device: Figma's 48px top and 40px bottom, pushed
-     clear of the notch or Dynamic Island and the home indicator where they're bigger. */
-  --dash-top: max(48px, calc(env(safe-area-inset-top) + 12px));
-  --dash-bottom: max(40px, calc(env(safe-area-inset-bottom) + 16px));
+  /* Phone spacing. Figma's 48px top and 40px bottom are measured from the edges of
+     the whole screen, status bar and home indicator included, which puts the header
+     just under the clock and the nav just above the home bar. In a browser the page
+     already starts below the status bar and ends above the toolbar, so the gaps are
+     taken from the safe edges instead: 12px below the top and 16px above the bottom,
+     or the notch and home-indicator sizes when the app fills the whole screen. */
+  --dash-top: max(12px, env(safe-area-inset-top));
+  --dash-bottom: max(16px, calc(env(safe-area-inset-bottom) + 6px));
   --dash-head: calc(var(--dash-top) + 74px);
   color-scheme: light; background: var(--d-bg); color: var(--d-text); min-height: 100dvh;
   -webkit-tap-highlight-color: transparent;
