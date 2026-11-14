@@ -137,7 +137,9 @@ export function LandingNav() {
         <div className="ml-[58px] flex items-center font-avenir text-base leading-4 font-medium">
           {LINKS.map(({ href, label }) => <a key={href} href={href} className="p-2.5">{label}</a>)}
         </div>
-        <Link href={account.href} className="ml-auto flex h-12 items-center rounded-[40px] px-10 font-avenir text-base font-medium">{account.label}</Link>
+        {/* A 40px button with 12px corners inside the 48px bar, grey on hover. The extra right margin keeps the
+            text exactly where Figma puts it now the padding is smaller. */}
+        <Link href={account.href} className="mr-4 ml-auto flex h-10 items-center rounded-xl px-6 font-avenir text-base font-medium transition-colors duration-200 hover:bg-[#f5f5f5]">{account.label}</Link>
       </nav>
 
       {/* Mobile: logo and a menu button that opens the full-screen menu. */}
