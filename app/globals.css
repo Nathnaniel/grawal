@@ -247,3 +247,8 @@ html:has(.landing) { scroll-padding-top: 0; }
 .legal-toc-arrow { transition: rotate 300ms cubic-bezier(0.32, 0.72, 0, 1); }
 .legal-toc summary::-webkit-details-marker { display: none; }
 .legal-toc summary { list-style: none; }
+
+/* The cookie notice (components/landing/CookieNotice.tsx) rises into place. */
+.cookie-notice { opacity: 0; translate: 0 16px; transition: opacity 400ms cubic-bezier(0.32, 0.72, 0, 1), translate 400ms cubic-bezier(0.32, 0.72, 0, 1); }
+.cookie-notice.is-shown { opacity: 1; translate: 0 0; }
+@media (prefers-reduced-motion: reduce) { .cookie-notice { translate: none; } }
