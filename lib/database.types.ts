@@ -31,6 +31,8 @@ export type EntryRow = {
   scripture_ref: string | null;
   photo_path: string | null;
   is_pinned: boolean;
+  /** False once unpinned: off the wall, still in History. */
+  on_wall: boolean;
   entry_date: string;
   created_at: string;
   updated_at: string;

@@ -48,6 +48,7 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
         scripture_ref: entry?.scripture_ref ?? null,
         photo_path: entry?.photo_path ?? null,
         is_pinned: entry?.is_pinned ?? false,
+        on_wall: entry?.on_wall ?? true,
         entry_date: entry?.entry_date ?? today(),
         created_at: entry?.created_at ?? now,
         updated_at: now,

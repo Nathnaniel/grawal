@@ -4,7 +4,7 @@ import type { Database } from '../database.types';
 import { isSupabaseConfigured, supabaseKey, supabaseUrl } from './config';
 
 const isPublic = (path: string) =>
-  path === '/' || path === '/sign-in' || path.startsWith('/auth/') || path.startsWith('/t/') || path.startsWith('/preview');
+  path === '/' || path === '/sign-in' || path.startsWith('/auth/') || path.startsWith('/t/') || path.startsWith('/preview') || path === '/demo' || path.startsWith('/demo/');
 
 // Refreshes the session on each request and keeps signed-out visitors on public pages.
 export async function updateSession(request: NextRequest) {

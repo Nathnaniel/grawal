@@ -16,7 +16,7 @@ export function createMemoryStore(): AppStore {
       entries.delete(id);
     },
     async entriesBefore(last, limit) {
-      return [...entries.values()].filter((entry) => newestFirst(last, entry) < 0).sort(newestFirst).slice(0, limit);
+      return [...entries.values()].filter((entry) => entry.on_wall && newestFirst(last, entry) < 0).sort(newestFirst).slice(0, limit);
     },
     async search({ q, categoryId }) {
       return [...entries.values()].filter((entry) => matchesSearch(entry, { q, category: categoryId, year: '' })).sort(newestFirst);

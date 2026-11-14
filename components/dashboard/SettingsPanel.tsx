@@ -23,7 +23,7 @@ function Switch({ label, checked, onChange }: { label: string; checked: boolean;
 
 /** "Make Grawal work the way you do." A modal on desktop, a sheet from the right on phones. */
 export function SettingsPanel() {
-  const { profile, email, avatarUrl, updateProfile, setAvatar, close } = useApp();
+  const { profile, email, avatarUrl, updateProfile, setAvatar, close, demo } = useApp();
   const [name, setName] = useState(profile.name);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
@@ -133,6 +133,11 @@ export function SettingsPanel() {
               </div>
             </div>
 
+            {demo ? (
+              <a href="/sign-in" target="_top" className="self-start p-2 font-avenir text-base leading-[18px] font-medium text-[#1568d4]">
+                Create your own wall
+              </a>
+            ) : (
             <div className="flex flex-col gap-2">
               {confirmDelete ? (
                 <div className="flex flex-col gap-2 rounded-xl bg-[var(--d-field)] p-3">
@@ -153,6 +158,7 @@ export function SettingsPanel() {
                 </button>
               </form>
             </div>
+            )}
           </div>
           <p role="status" className="min-h-5 font-avenir text-sm text-[var(--d-soft)]">{message}</p>
         </div>

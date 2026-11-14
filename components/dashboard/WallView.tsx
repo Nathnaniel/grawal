@@ -30,7 +30,8 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore }: { entr
     return () => { current = false; };
   }, [filter, store]);
 
-  const matches = (entry: Entry) => !filter || matchesSearch(entry, { q: filter.q, category: filter.categoryId, year: '' });
+  // Only wins still on the wall; unpinned ones live on in History.
+  const matches = (entry: Entry) => entry.on_wall !== false && (!filter || matchesSearch(entry, { q: filter.q, category: filter.categoryId, year: '' }));
   const shown = useEntries(filter ? results ?? [] : [...firstPage, ...older], matches).sort(newestFirst);
 
   // More of the wall loads as the last row comes into view.

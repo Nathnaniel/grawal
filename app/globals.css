@@ -19,6 +19,19 @@
 html { -webkit-text-size-adjust: 100%; }
 body { min-height: 100dvh; margin: 0; font-family: var(--font-avenir); color: #1a1a1a; background: #fff; -webkit-font-smoothing: antialiased; }
 button:not(:disabled), summary, label:has(input[type="radio"]) { cursor: pointer; }
+/* Taps respond at once: no wait to check for a double-tap zoom, and anything you can
+   press sinks slightly the moment a finger lands, springing back on release. It sits
+   in the base layer with no specificity, so any element's own transition or
+   animation still wins; scale is its own property, so it never fights positioning. */
+a, button, summary, label, input, select, textarea, [role="button"] { touch-action: manipulation; }
+@layer base {
+  :where(a, button, summary, [role="button"], label:has(input[type="radio"], input[type="checkbox"])) {
+    transition: scale 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  :where(a, button, summary, [role="button"], label:has(input[type="radio"], input[type="checkbox"])):active:not(:disabled) {
+    scale: 0.96; transition-duration: 60ms;
+  }
+}
 :focus-visible { outline: 2px solid #1568d4; outline-offset: 2px; }
 main:focus, dialog:focus-visible { outline: none; }
 
@@ -76,6 +89,31 @@ body:has(.dash) { background: #f5f5f5; }
   20%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }
+/* Unpinning: the pin gives, the note tips and drops off the screen, fading as it goes. */
+@keyframes note-fall {
+  0%   { transform: none; opacity: 1; }
+  18%  { transform: translateY(-8px) rotate(-3deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(16deg); opacity: 0; }
+}
+.note-fall { animation: note-fall 850ms cubic-bezier(0.55, 0, 0.8, 0.4) both; transform-origin: 50% 8%; }
+
+/* Hovering a win: a breeze through the paper. It hangs from its pin, so a gust lifts
+   the bottom edge towards you and sways it with a slight ripple, then it settles in
+   smaller and smaller swings. Plays once each time the pointer arrives. */
+@keyframes note-breeze {
+  0%   { transform: perspective(700px) rotateX(0) rotate(0) skewX(0); }
+  14%  { transform: perspective(700px) rotateX(14deg) rotate(-2.2deg) skewX(1.2deg); }
+  32%  { transform: perspective(700px) rotateX(-6deg) rotate(1.6deg) skewX(-0.9deg); }
+  50%  { transform: perspective(700px) rotateX(7deg) rotate(-1deg) skewX(0.5deg); }
+  68%  { transform: perspective(700px) rotateX(-3deg) rotate(0.5deg) skewX(-0.2deg); }
+  84%  { transform: perspective(700px) rotateX(1.2deg) rotate(-0.2deg); }
+  100% { transform: perspective(700px) rotateX(0) rotate(0); }
+}
+.note-breeze { transform-origin: 50% 6%; }
+@media (hover: hover) {
+  .group:hover .note-breeze { animation: note-breeze 1.9s cubic-bezier(0.37, 0, 0.63, 1); }
+}
+.group:focus-visible .note-breeze { animation: note-breeze 1.9s cubic-bezier(0.37, 0, 0.63, 1); }
 .note-unfold { animation: note-unfold 1200ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 50%; }
 .note-actions-in { animation: rise-in 500ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both; }
 
@@ -145,7 +183,8 @@ html:has(.landing) { scroll-padding-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   .faq-motion { transition: none; }
   .landing-menu, .landing-menu .menu-item { transition: none; transform: none; }
-  .note-fresh, .panel-in, .note-unfold, .note-actions-in { animation: none; }
+  .note-fresh, .panel-in, .note-unfold, .note-actions-in, .note-breeze, .note-fall { animation: none !important; }
+  :where(a, button, summary, [role="button"], label):active { scale: none !important; }
 }
 
 /* Two versions of the logo: dark text for the light theme, light text for dark. */

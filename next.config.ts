@@ -47,6 +47,16 @@ const config: NextConfig = {
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
         ],
       },
+      // The try-it demo is the one page that may be framed, and only by this site:
+      // the website shows it inside its phone and desktop shots. (Later entries win.)
+      ...['/demo', '/demo/:path*'].map((source) => ({
+        source,
+        headers: [
+          { key: 'Content-Security-Policy', value: contentSecurityPolicy.replace("frame-ancestors 'none'", "frame-ancestors 'self'") },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
+      })),
       // Someone's wall is private: keep signed-in pages and APIs out of search engines and shared caches.
       ...['/wall', '/history', '/api/:path*', '/auth/:path*', '/preview/:path*'].map((source) => ({
         source,

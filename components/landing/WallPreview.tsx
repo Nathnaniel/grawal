@@ -2,6 +2,7 @@
 // same note artwork the design uses. It scales as one piece: every length is in
 // units of --u, which is 1/1200 of the desktop shot's width (1/313 on mobile).
 import { WALL_NOTES } from './content';
+import { LiveApp } from './LiveApp';
 import { StickyNote } from './StickyNote';
 
 const u = (n: number) => `calc(var(--u) * ${n})`;
@@ -55,6 +56,8 @@ export function DesktopWallPreview() {
           <div className="absolute left-1/2 flex -translate-x-1/2 flex-wrap" style={{ top: u(124.44), width: u(793.333), gap: u(15.556) }}>
             {WALL_NOTES.map((note, index) => <StickyNote key={index} note={note} style={{ width: u(145.185) }} />)}
           </div>
+          {/* The screen is the 1440px desktop app at 1120/1440 scale: try it for real. */}
+          <LiveApp width={1440} height={1024} label="Try Grawal: a live demo with sample wins" />
         </div>
       </div>
     </div>
@@ -95,6 +98,8 @@ export function MobileWallPreview() {
               <img src="/landing/icon-add.svg" alt="" style={{ width: k(16.672) }} />
             </span>
           </div>
+          {/* The screen is the 393px phone app at 313/393 scale: try it for real. */}
+          <LiveApp width={393} height={744} label="Try Grawal: a live demo with sample wins" />
         </div>
       </div>
     </div>

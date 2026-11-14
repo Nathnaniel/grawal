@@ -17,6 +17,7 @@ const STUBS = `
   create schema storage;
   grant usage on schema public, auth, storage to anon, authenticated;
   create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb default '{}');
+  create table auth.audit_log_entries (id uuid primary key default gen_random_uuid(), payload json, created_at timestamptz default now(), ip_address varchar(64) not null default '');
   create function auth.uid() returns uuid language sql stable as
     $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
   create table storage.buckets (id text primary key, name text, public boolean, file_size_limit bigint, allowed_mime_types text[]);
@@ -187,4 +188,21 @@ test('photos are limited to your own folder', async () => {
   assert.equal((await as(B, 'select id from storage.objects')).rows.length, 0);
   const { rows } = await db.query<{ public: boolean }>(`select public from storage.buckets where id = 'entry-photos'`);
   assert.equal(rows[0].public, false);
+});
+
+test('the owner-only sign-in list is closed to visitors and signed-in people', async () => {
+  await db.query(`insert into auth.audit_log_entries (payload, ip_address) values ('{"action":"login","actor_username":"a@example.com","traits":{"provider":"google"}}', '1.2.3.4')`);
+  const { rows } = await db.query<{ event: string; method: string }>('select event, method from admin.sign_ins');
+  assert.deepEqual(rows, [{ event: 'signed in', method: 'google' }]);
+  await assert.rejects(as(null, 'select * from admin.sign_ins'), /permission denied/);
+  await assert.rejects(as(A, 'select * from admin.sign_ins'), /permission denied/);
+});
+
+test('wins start on the wall and can be taken off without deleting them', async () => {
+  const { rows: before } = await as<{ on_wall: boolean }>(A, 'select on_wall from public.entries where id = $1', [ENTRY_A]);
+  assert.deepEqual(before, [{ on_wall: true }]);
+  await as(A, 'update public.entries set on_wall = false where id = $1', [ENTRY_A]);
+  const { rows: after } = await as<{ on_wall: boolean }>(A, 'select on_wall from public.entries where id = $1', [ENTRY_A]);
+  assert.deepEqual(after, [{ on_wall: false }]);
+  await as(A, 'update public.entries set on_wall = true where id = $1', [ENTRY_A]);
 });

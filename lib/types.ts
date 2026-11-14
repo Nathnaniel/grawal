@@ -32,6 +32,6 @@ export interface AppStore {
   uploadAvatar(file: File): Promise<{ path: string; url: string }>;
 }
 
-export const ENTRY_COLUMNS = 'id, title, reflection, category_id, scripture_ref, photo_path, is_pinned, entry_date, created_at, updated_at';
+export const ENTRY_COLUMNS = 'id, title, reflection, category_id, scripture_ref, photo_path, is_pinned, on_wall, entry_date, created_at, updated_at';
 export const PROFILE_COLUMNS = 'id, name, timezone, reminder_frequency, reminder_time, onboarded_at, avatar_path, notify_on_this_day';
 export const WALL_PAGE_SIZE = 60;

@@ -25,6 +25,8 @@ export type Theme = 'light' | 'dark' | 'system';
 interface AppContextValue {
   store: AppStore;
   basePath: string;
+  /** The public try-it demo on the website: nothing is saved and account actions point to sign-up. */
+  demo: boolean;
   userId: string;
   email: string;
   profile: Profile;
@@ -85,7 +87,7 @@ function deviceStorage(): OutboxStorage {
   }
 }
 
-export function AppProvider({ userId, email, profile: initialProfile, avatarUrl: initialAvatarUrl, categories: initialCategories, summary, basePath = '', store: givenStore, children }: {
+export function AppProvider({ userId, email, profile: initialProfile, avatarUrl: initialAvatarUrl, categories: initialCategories, summary, basePath = '', demo = false, store: givenStore, children }: {
   userId: string;
   email: string;
   profile: Profile;
@@ -93,6 +95,7 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
   categories: Category[];
   summary: WallSummary;
   basePath?: string;
+  demo?: boolean;
   store?: AppStore;
   children: React.ReactNode;
 }) {
@@ -196,6 +199,7 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
   const value = useMemo<AppContextValue>(() => ({
     store,
     basePath,
+    demo,
     userId,
     email,
     profile,
@@ -221,7 +225,8 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
     setTheme(next) {
       setThemeState(next);
       document.documentElement.dataset.theme = next;
-      try { localStorage.setItem('grawal-theme', next); } catch { /* the choice lasts for this visit */ }
+      // The demo shares the site's storage, so its choice isn't kept for the real app.
+      if (!demo) try { localStorage.setItem('grawal-theme', next); } catch { /* the choice lasts for this visit */ }
     },
     saveEntry(entry, { fresh = false } = {}) {
       if (fresh) setFreshId(entry.id);
@@ -253,7 +258,7 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
     remember(key, data) {
       try { storage?.setItem(`grawal.${key}.${userId}`, JSON.stringify(data)); } catch { /* kept for this visit only */ }
     },
-  }), [store, basePath, userId, email, profile, avatarUrl, categories, summary, overlay, waiting, freshId, panel, filter, theme, apply, refresh, storage]);
+  }), [store, basePath, demo, userId, email, profile, avatarUrl, categories, summary, overlay, waiting, freshId, panel, filter, theme, apply, refresh, storage]);
 
   return (
     <AppContext.Provider value={value}>
