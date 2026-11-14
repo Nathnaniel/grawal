@@ -40,7 +40,7 @@ export function LegalPage({ title, intro, sections }: { title: string; intro: st
             <span className="rounded-lg bg-[#f5f5f5] px-3 py-2">{SITE_NAME}</span>
             <span className="rounded-lg bg-[#f5f5f5] px-3 py-2">Updated {LEGAL_UPDATED}</span>
           </div>
-          <h1 className="font-tusker text-[40px] leading-[44px] font-medium tracking-[1.6px] text-[#1a1a1a] uppercase lg:text-[56px] lg:leading-[64px] lg:tracking-[2.24px]">{title}</h1>
+          <h1 className="font-tusker text-[32px] leading-[36px] font-medium tracking-[1.28px] text-[#1a1a1a] uppercase lg:text-[44px] lg:leading-[50px] lg:tracking-[1.76px]">{title}</h1>
           <p className="font-avenir text-base leading-[22px] text-[#4d4d4d]">{intro}</p>
         </div>
       </header>
