@@ -36,7 +36,8 @@ export function SideNav() {
       className={`group relative grid size-12 place-items-center rounded-[40px] transition-colors duration-[250ms] ${active ? 'bg-[#1568d4]' : 'hover:bg-[var(--d-field)]'}`}
     >
       <img src={active ? activeIcon : icon} alt="" width={24} height={24} className={active ? '' : 'dash-icon'} />
-      <Tip text={label} offset="17px" />
+      {/* The tab you're already on shows nothing on hover. */}
+      {!active && <Tip text={label} offset="17px" />}
     </Link>
   );
 
