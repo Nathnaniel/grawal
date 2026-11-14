@@ -249,6 +249,13 @@ export default function Landing() {
   return (
     <>
       {/* landing-home turns the page behind the sections blue (globals.css). */}
+      {/* Blue under the status bar and the home indicator on every phone browser. The page
+          already sets a blue theme colour (Chrome, Samsung Internet) and a blue background
+          (Safari reads it for its bars); fixed strips at the edges are what Safari, Firefox and
+          the rest follow too. They take the height of the phone's safe areas, so on desktop
+          they're zero tall and nothing shows. */}
+      <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] bg-[#1568d4]" />
+      <div aria-hidden className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-[env(safe-area-inset-bottom)] bg-[#1568d4]" />
       <main className="landing-home">
         <Hero />
         <WhyWeGiveThanks />
