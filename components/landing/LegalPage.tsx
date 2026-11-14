@@ -9,13 +9,13 @@ export const legalViewport: Viewport = { themeColor: '#ffffff', viewportFit: 'co
 
 export const ContactEmail = () => <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
 
-/** A table that scrolls sideways on narrow screens instead of squashing. */
+/** A table. On phones each row becomes a small card, with the column names as labels, so nothing scrolls sideways. */
 export function LegalTable({ head, rows }: { head: string[]; rows: React.ReactNode[][] }) {
   return (
-    <div className="legal-table">
+    <div className="legal-table legal-stack">
       <table>
         <thead><tr>{head.map((cell) => <th key={cell} scope="col">{cell}</th>)}</tr></thead>
-        <tbody>{rows.map((row, index) => <tr key={index}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>)}</tbody>
+        <tbody>{rows.map((row, index) => <tr key={index}>{row.map((cell, cellIndex) => <td key={cellIndex} data-label={head[cellIndex]}>{cell}</td>)}</tr>)}</tbody>
       </table>
     </div>
   );

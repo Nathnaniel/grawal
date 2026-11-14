@@ -230,6 +230,18 @@ html:has(.landing) { scroll-padding-top: 0; }
 .legal td.yes, .legal td.no { text-align: center; font-weight: 800; white-space: nowrap; }
 .legal td.yes { color: #1568d4; }
 .legal td.no { color: #999; }
+@media (max-width: 1023px) {
+  .legal .legal-stack { overflow: visible; }
+  .legal .legal-stack thead { display: none; }
+  .legal .legal-stack table, .legal .legal-stack tbody, .legal .legal-stack tr, .legal .legal-stack td { display: block; }
+  .legal .legal-stack tr { padding: 14px 16px; }
+  .legal .legal-stack tr + tr { border-top: 1px solid #ededed; }
+  .legal .legal-stack td { border: 0; padding: 0; }
+  .legal .legal-stack td + td { margin-top: 10px; }
+  .legal .legal-stack td::before { content: attr(data-label); display: block; font-size: 13px; line-height: 18px; font-weight: 800; color: #808080; }
+  .legal .legal-stack td:first-child { font-weight: 800; color: #1a1a1a; }
+  .legal .legal-stack td:first-child::before { display: none; }
+}
 .legal-toc[open] .legal-toc-arrow { rotate: 180deg; }
 .legal-toc-arrow { transition: rotate 300ms cubic-bezier(0.32, 0.72, 0, 1); }
 .legal-toc summary::-webkit-details-marker { display: none; }
