@@ -248,7 +248,8 @@ function StartYourWall() {
 export default function Landing() {
   return (
     <>
-      <main>
+      {/* landing-home turns the page behind the sections blue (globals.css). */}
+      <main className="landing-home">
         <Hero />
         <WhyWeGiveThanks />
         <HowItWorks />
