@@ -13,13 +13,15 @@ export function NoteDetail({ entry }: { entry: Entry }) {
   const [confirming, setConfirming] = useState(false);
   const category = categories.find((item) => item.id === entry.category_id);
   const { heading, story } = noteText(entry, category?.name);
+  const colour = noteColour(entry.id);
 
   return (
     <div role="dialog" aria-modal="true" aria-label={heading} className="pointer-events-none fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 px-5">
-      <div className="pointer-events-auto panel-in w-[min(400px,100%)]">
-        <StickyNote note={{ category: heading, story, colour: noteColour(entry.id) }} className="w-full" />
+      {/* Springs open from a small squeezed note; see .note-unfold in globals.css. */}
+      <div className="note-unfold pointer-events-auto w-[min(400px,100%)]">
+        <StickyNote note={{ category: heading, story, colour }} className="w-full" />
       </div>
-      <div className="pointer-events-auto flex items-center gap-2 rounded-xl bg-[var(--d-surface)] px-2 py-1.5 font-avenir text-sm dash-pop">
+      <div className="note-actions-in pointer-events-auto flex items-center gap-2 rounded-xl bg-[var(--d-surface)] px-2 py-1.5 font-avenir text-sm dash-pop">
         {confirming ? (
           <>
             <span className="px-2 text-[var(--d-soft)]">Delete this win? This can’t be undone.</span>

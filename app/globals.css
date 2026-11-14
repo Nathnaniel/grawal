@@ -69,6 +69,16 @@ body:has(.dash) { background: #f5f5f5; }
 .note-fresh { animation: pin-drop 450ms cubic-bezier(0.2, 0.9, 0.3, 1.1); }
 .panel-in { animation: rise-in 180ms ease-out; }
 
+/* Opening a win: the note opens straight out of a squeezed shape in one slow, smooth
+   move, on Lenis's timing (1.2s, easing out exponentially), with no bounce or turn. */
+@keyframes note-unfold {
+  from { opacity: 0; transform: scale(0.55, 0.12); }
+  20%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
+}
+.note-unfold { animation: note-unfold 1200ms cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: 50% 50%; }
+.note-actions-in { animation: rise-in 500ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both; }
+
 /* The landing page has its own white canvas instead of the app's sky. */
 /* The page stays white; the blue behind it shows when the page is pulled past the
    top or bottom, where it meets the hero and the footer. */
@@ -135,7 +145,7 @@ html:has(.landing) { scroll-padding-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   .faq-motion { transition: none; }
   .landing-menu, .landing-menu .menu-item { transition: none; transform: none; }
-  .note-fresh, .panel-in { animation: none; }
+  .note-fresh, .panel-in, .note-unfold, .note-actions-in { animation: none; }
 }
 
 /* Two versions of the logo: dark text for the light theme, light text for dark. */
