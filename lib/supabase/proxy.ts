@@ -40,7 +40,8 @@ export async function updateSession(request: NextRequest) {
   };
 
   if (!signedIn && !isPublic(pathname)) return keepCookies(redirectTo('/sign-in'));
-  // Signed-in visitors skip the landing page and sign-in, straight to their wall.
-  if (signedIn && (pathname === '/' || pathname === '/sign-in')) return keepCookies(redirectTo('/wall'));
+  // Everyone sees the website at /; its Sign in turns into Dashboard once signed in.
+  // Signed-in visitors who open sign-in go straight to their wall instead.
+  if (signedIn && pathname === '/sign-in') return keepCookies(redirectTo('/wall'));
   return response;
 }

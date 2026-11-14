@@ -2,7 +2,22 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { isSupabaseConfigured } from '@/lib/supabase/config';
+import { createClient } from '@/lib/supabase/browser';
 import { smoothScroll } from './SmoothScroll';
+
+// Signed-in visitors see Dashboard where everyone else sees Sign in. The page stays
+// static, so this is read from the saved session in the browser after it loads.
+function useAccountLink() {
+  const [signedIn, setSignedIn] = useState(false);
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    let live = true;
+    createClient().auth.getSession().then(({ data }) => { if (live) setSignedIn(Boolean(data.session)); });
+    return () => { live = false; };
+  }, []);
+  return signedIn ? { href: '/wall', label: 'Dashboard' } : { href: '/sign-in', label: 'Sign in' };
+}
 
 const LINKS = [
   { href: '#how-it-works', label: 'How it works' },
@@ -11,7 +26,7 @@ const LINKS = [
 
 // Figma: Grawal / Landing Page / Mobile menu (node 2938:1900). A full-screen white
 // page whose grey header bar sits exactly where the closed header's white bar was.
-function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+function MobileMenu({ open, onClose, account }: { open: boolean; onClose: () => void; account: { href: string; label: string } }) {
   const dialog = useRef<HTMLDialogElement>(null);
   // Closing hands focus back to the menu button. Keyboard users need that, but after
   // a tap it would leave the button outlined, so it's only kept for the keyboard.
@@ -95,12 +110,12 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </nav>
 
         <Link
-          href="/sign-in"
+          href={account.href}
           onClick={onClose}
           style={{ '--i': LINKS.length } as React.CSSProperties}
           className="menu-item mt-7 ml-5 inline-flex h-12 items-center justify-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-12 font-avenir text-base font-medium text-white"
         >
-          Sign In
+          {account.label === 'Sign in' ? 'Sign In' : account.label}
         </Link>
       </div>
     </dialog>
@@ -109,6 +124,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 export function LandingNav() {
   const [open, setOpen] = useState(false);
+  const account = useAccountLink();
 
   // The menu itself returns focus to the button when that helps; see MobileMenu.
   const close = () => setOpen(false);
@@ -121,7 +137,7 @@ export function LandingNav() {
         <div className="ml-[58px] flex items-center font-avenir text-base leading-4 font-medium">
           {LINKS.map(({ href, label }) => <a key={href} href={href} className="p-2.5">{label}</a>)}
         </div>
-        <Link href="/sign-in" className="ml-auto flex h-12 items-center rounded-[40px] px-10 font-avenir text-base font-medium">Sign in</Link>
+        <Link href={account.href} className="ml-auto flex h-12 items-center rounded-[40px] px-10 font-avenir text-base font-medium">{account.label}</Link>
       </nav>
 
       {/* Mobile: logo and a menu button that opens the full-screen menu. */}
@@ -131,7 +147,7 @@ export function LandingNav() {
           <img src="/landing/icon-menu.svg" alt="" width={24} height={24} />
         </button>
       </div>
-      <MobileMenu open={open} onClose={close} />
+      <MobileMenu open={open} onClose={close} account={account} />
     </header>
   );
 }
