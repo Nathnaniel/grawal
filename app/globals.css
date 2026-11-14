@@ -80,6 +80,16 @@ body:has(.dash) { background: #f5f5f5; }
 @keyframes pin-drop { from { opacity: 0; transform: translateY(-16px) scale(1.04); } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(8px); } }
 .note-fresh { animation: pin-drop 450ms cubic-bezier(0.2, 0.9, 0.3, 1.1); }
+/* The burst from the pin as a new win lands (it starts as the drop settles). */
+@keyframes pin-burst {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(0) scale(0.3); }
+  12%  { opacity: 1; }
+  45%  { opacity: 1; transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + 34px)) rotate(calc(var(--r) * 2)) scale(0.9); }
+}
+.pin-burst > span { position: absolute; left: 0; top: 0; opacity: 0; animation: pin-burst 950ms cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+.pin-burst-paper { width: 5px; height: 7px; margin: -3.5px 0 0 -2.5px; border-radius: 1px; box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.08); }
+.pin-burst-spark { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: radial-gradient(circle, #fff 0 25%, #ffd970 35%, transparent 70%); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
 .panel-in { animation: rise-in 180ms ease-out; }
 
 /* Opening a win: the note opens straight out of a squeezed shape in one slow, smooth
@@ -184,6 +194,7 @@ html:has(.landing) { scroll-padding-top: 0; }
   .faq-motion { transition: none; }
   .landing-menu, .landing-menu .menu-item { transition: none; transform: none; }
   .note-fresh, .panel-in, .note-unfold, .note-actions-in, .note-breeze, .note-fall { animation: none !important; }
+  .pin-burst { display: none; }
   :where(a, button, summary, [role="button"], label):active { scale: none !important; }
 }
 

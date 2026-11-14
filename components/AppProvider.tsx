@@ -229,7 +229,11 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
       if (!demo) try { localStorage.setItem('grawal-theme', next); } catch { /* the choice lasts for this visit */ }
     },
     saveEntry(entry, { fresh = false } = {}) {
-      if (fresh) setFreshId(entry.id);
+      if (fresh) {
+        setFreshId(entry.id);
+        // The drop and the burst play once; clear it so they don't replay on the next visit to the wall.
+        window.setTimeout(() => setFreshId((current) => (current === entry.id ? null : current)), 1600);
+      }
       setAnnouncement(fresh ? 'Win pinned to your wall.' : 'Changes saved.');
       return apply(entry.id, entry).then(refresh);
     },
