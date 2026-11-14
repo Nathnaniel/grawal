@@ -49,7 +49,7 @@ const config: NextConfig = {
       },
       // The site's images, icons and fonts: browsers keep them for a day and refresh them
       // quietly in the background for a week, instead of re-checking on every visit.
-      ...['/landing/:file*', '/app/:file*', '/fonts/:file*'].map((source) => ({
+      ...['/landing/:file*', '/app/:file*', '/fonts/:file*', '/icons/:file*'].map((source) => ({
         source,
         headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
       })),

@@ -6,5 +6,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!$|demo|_next/static|_next/image|manifest.webmanifest|icon.svg|apple-icon|opengraph-image|sky.jpg|landing/|app/|fonts/|favicon.ico).*)'],
+  matcher: ['/((?!$|demo|_next/static|_next/image|manifest.webmanifest|manifest-dark.webmanifest|icons/|opengraph-image|sky.jpg|landing/|app/|fonts/|favicon.ico).*)'],
 };
