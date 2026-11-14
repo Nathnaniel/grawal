@@ -131,8 +131,8 @@ function StartCard() {
     <div aria-hidden="true" data-reveal className="relative h-[359px] w-full shrink-0 overflow-hidden bg-[#f5f5f5] lg:h-[400px] lg:w-[616px]">
       <img src="/landing/start-card.webp" alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
       <img src="/landing/start-texture.svg" alt="" loading="lazy" decoding="async" className="absolute top-1/2 left-1/2 h-[554.828px] w-[616px] max-w-none -translate-x-1/2 -translate-y-1/2" />
-      <StickyNote note={first} className="!absolute top-[21.7px] left-[33.73px] w-[143.715px] lg:top-[70px] lg:left-[87px] lg:w-[186.667px]" />
-      <StickyNote note={second} className="!absolute top-[117.81px] left-[191.82px] w-[143.715px] lg:top-[116px] lg:left-[305px] lg:w-[186.667px]" />
+      <StickyNote note={first} breeze className="!absolute top-[21.7px] left-[33.73px] w-[143.715px] lg:top-[70px] lg:left-[87px] lg:w-[186.667px]" />
+      <StickyNote note={second} breeze className="!absolute top-[117.81px] left-[191.82px] w-[143.715px] lg:top-[116px] lg:left-[305px] lg:w-[186.667px]" />
     </div>
   );
 }
