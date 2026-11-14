@@ -119,8 +119,7 @@ function HowItWorks() {
             <p className="pt-4 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
             <p className="pt-1 font-avenir text-sm leading-4 text-[#1a1a1a]">Mum’s surgery went well and she’s home recovering.</p>
             <div className="flex items-center gap-2 pt-4 font-avenir text-xs leading-[14px] text-[#333]">
-              <span className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1"><span className="size-2 rounded-full bg-[#f0322a]" />Family</span>
-              <span className="rounded-full bg-white px-2.5 py-1">Today</span>
+              <span className="rounded-full bg-white px-2.5 py-1">Family</span>
               <span className="ml-auto flex h-[38px] items-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-5 text-base leading-[18px] font-medium text-white shadow-[inset_0_-4px_4px_rgba(179,208,245,0.25),0_4px_4px_rgba(204,204,204,0.14)]">Pin it</span>
             </div>
           </div>
@@ -180,8 +179,7 @@ function HowItWorks() {
             <p className="pt-4 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
             <p className="pt-1 font-avenir text-sm leading-4 text-[#1a1a1a]">Mum’s surgery went well and she’s home recovering.</p>
             <div className="flex items-center gap-2 pt-4 font-avenir text-xs leading-[14px] text-[#333]">
-              <span className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1"><span className="size-2 rounded-full bg-[#f0322a]" />Family</span>
-              <span className="rounded-full bg-white px-2.5 py-1">Today</span>
+              <span className="rounded-full bg-white px-2.5 py-1">Family</span>
               <span className="ml-auto flex h-[38px] items-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-6 text-base leading-[18px] font-medium text-white shadow-[inset_0_-4px_4px_rgba(179,208,245,0.25),0_4px_4px_rgba(204,204,204,0.14)]">Pin it</span>
             </div>
           </div>
