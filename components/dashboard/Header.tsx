@@ -6,7 +6,7 @@ import { Avatar } from './Avatar';
 
 /** Logo on the left; search, notifications and the account on the right. */
 export function Header() {
-  const { basePath, panel, open, close } = useApp();
+  const { panel, open, close } = useApp();
   const toggle = (kind: 'search' | 'notifications' | 'account') => (panel?.kind === kind ? close() : open({ kind }));
   // The dropdowns sit above the wash, as in Figma; the larger panels cover the header.
   const raised = panel && ['search', 'notifications', 'account'].includes(panel.kind);
@@ -14,7 +14,8 @@ export function Header() {
   return (
     <header className={`sticky top-0 px-5 pt-[var(--dash-top)] pb-[26px] lg:px-6 lg:py-[26px] ${raised ? 'z-[45]' : 'z-30'}`}>
       <div className="relative mx-auto flex h-12 items-center justify-between lg:max-w-[748px]">
-        <Link href={basePath || '/wall'} aria-label="Grawal, your wall">
+        {/* The logo goes to the website on every screen size; the nav's Wall button goes to the wall. */}
+        <Link href="/" aria-label="Grawal website">
           <img src="/app/logo.svg" alt="" width={97} height={24} className="logo-light" />
           <img src="/app/logo-dark.svg" alt="" width={97} height={24} className="logo-dark" />
         </Link>
