@@ -27,7 +27,7 @@ export function DesktopWallPreview() {
   return (
     <div className="mx-auto w-full max-w-[1200px] [container-type:inline-size]">
       <div className="relative overflow-hidden bg-[#f5f5f5] [--u:calc(100cqw/1200)]" style={{ height: u(800) }}>
-        <img src="/landing/wave-texture.svg" alt="" className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: u(1200), height: u(1080.833), top: `calc(50% + ${u(0.42)})` }} />
+        <img src="/landing/wave-texture.svg" alt="" loading="lazy" decoding="async" className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: u(1200), height: u(1080.833), top: `calc(50% + ${u(0.42)})` }} />
         <div className="absolute overflow-hidden bg-[#f5f5f5]" style={{ left: u(40), top: u(40), width: u(1120), height: u(796.444) }}>
           <div className="absolute inset-x-0 top-0 flex items-center justify-between" style={{ padding: `${u(20.222)} ${u(269.111)}`, height: u(77.777) }}>
             <img src="/landing/logo-app.svg" alt="" style={{ width: u(75.444) }} />
@@ -71,7 +71,7 @@ export function MobileWallPreview() {
   return (
     <div className="mx-auto w-full max-w-[353px] [container-type:inline-size]">
       <div className="relative overflow-hidden bg-[#f5f5f5] [--u:calc(100cqw/353)]" style={{ height: u(612) }}>
-        <img src="/landing/wave-texture.svg" alt="" className="absolute max-w-none" style={{ left: u(-274.05), top: u(-46.07), width: u(902.24), height: u(812.01) }} />
+        <img src="/landing/wave-texture.svg" alt="" loading="lazy" decoding="async" className="absolute max-w-none" style={{ left: u(-274.05), top: u(-46.07), width: u(902.24), height: u(812.01) }} />
         <div className="absolute overflow-hidden bg-[#f5f5f5]" style={{ left: u(20), top: u(20), width: u(313), height: u(592) }}>
           <div className="absolute left-1/2 -translate-x-1/2" style={{ top: k(33.344), width: k(245.214), height: k(33.344) }}>
             <img src="/landing/logo-app.svg" alt="" className="absolute left-0" style={{ top: k(7.99), width: k(67.382) }} />

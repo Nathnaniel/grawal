@@ -19,7 +19,7 @@ function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[850px] overflow-hidden bg-[#1568d4]">
-        <img src="/landing/hero-glow.svg" alt="" className="absolute inset-0 size-full max-w-none object-fill" />
+        <img src="/landing/hero-glow.svg" alt="" fetchPriority="high" className="absolute inset-0 size-full max-w-none object-fill" />
         <img src="/landing/hero-lines.svg" alt="" className="absolute top-0 left-1/2 hidden h-[856px] w-[1440px] max-w-none -translate-x-1/2 lg:block" />
         <img src="/landing/hero-lines-mobile.svg" alt="" className="absolute top-0 left-1/2 h-[854px] w-[394px] max-w-none -translate-x-1/2 lg:hidden" />
       </div>
@@ -76,7 +76,7 @@ function WhyWeGiveThanks() {
                 <p className="inline text-base leading-[18px] lg:block">{card.quote}</p>{' '}
                 <footer className="inline text-xs leading-[18px] lg:block">{card.reference}</footer>
               </blockquote>
-              <img src={card.art} alt="" className="absolute top-[var(--art-top-m)] left-1/2 w-[240px] -translate-x-1/2 lg:top-[var(--art-top)]" style={{ height: card.artHeight }} />
+              <img src={card.art} alt="" loading="lazy" decoding="async" className="absolute top-[var(--art-top-m)] left-1/2 w-[240px] -translate-x-1/2 lg:top-[var(--art-top)]" style={{ height: card.artHeight }} />
               <h3 className="absolute top-[416px] left-5 w-[241px] text-2xl leading-[26px] font-semibold tracking-[-0.072px] lg:top-[496px] lg:left-[30px]">{card.title}</h3>
             </li>
           ))}
@@ -100,7 +100,7 @@ function HowItWorks() {
               className={`flex h-[284px] w-[321px] shrink-0 flex-col rounded-3xl bg-[#f5f5f5] px-5 pt-7 lg:h-[348px] lg:w-auto lg:flex-1 lg:justify-center lg:pt-0 lg:pb-[48.5px] ${index === 2 ? 'max-lg:mt-2' : ''}`}
             >
               <div className="mx-auto flex w-[281px] max-w-full flex-col gap-10">
-                <img src={step.icon} alt="" width={60} height={60} className="size-10 lg:size-[60px]" />
+                <img src={step.icon} alt="" loading="lazy" decoding="async" width={60} height={60} className="size-10 lg:size-[60px]" />
                 <div className="flex flex-col gap-3">
                   <h3 className="font-tusker text-2xl leading-[26px] font-medium">{step.title}</h3>
                   <p className="font-avenir text-base leading-[18px] tracking-[-0.048px] text-[#333]">{step.body}</p>
@@ -129,8 +129,8 @@ function StartCard() {
   const [first, second] = [WALL_NOTES[8], WALL_NOTES[5]];
   return (
     <div aria-hidden="true" data-reveal className="relative h-[359px] w-full shrink-0 overflow-hidden bg-[#f5f5f5] lg:h-[400px] lg:w-[616px]">
-      <img src="/landing/start-card.jpg" alt="" className="absolute inset-0 size-full object-cover" />
-      <img src="/landing/start-texture.svg" alt="" className="absolute top-1/2 left-1/2 h-[554.828px] w-[616px] max-w-none -translate-x-1/2 -translate-y-1/2" />
+      <img src="/landing/start-card.webp" alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+      <img src="/landing/start-texture.svg" alt="" loading="lazy" decoding="async" className="absolute top-1/2 left-1/2 h-[554.828px] w-[616px] max-w-none -translate-x-1/2 -translate-y-1/2" />
       <StickyNote note={first} className="!absolute top-[21.7px] left-[33.73px] w-[143.715px] lg:top-[70px] lg:left-[87px] lg:w-[186.667px]" />
       <StickyNote note={second} className="!absolute top-[117.81px] left-[191.82px] w-[143.715px] lg:top-[116px] lg:left-[305px] lg:w-[186.667px]" />
     </div>
@@ -159,7 +159,7 @@ const FOOTER_LINK = 'p-2.5 whitespace-nowrap font-avenir text-base leading-4 fon
 function Footer() {
   return (
     <footer className="relative mt-7 h-[439px] overflow-hidden px-5 lg:mt-16 lg:h-[470px] lg:px-0">
-      <img src="/landing/footer-satin.svg" alt="" className="absolute inset-0 size-full max-w-none object-cover" />
+      <img src="/landing/footer-satin.webp" alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full max-w-none object-cover" />
       <div className="relative mx-auto flex w-full max-w-[353px] flex-col gap-5 pt-[60px] lg:w-[800px] lg:max-w-none lg:pt-[62px]">
         <div data-reveal className="flex w-[242px] flex-wrap items-end gap-10 lg:w-auto">
           <div className="flex flex-col gap-1">

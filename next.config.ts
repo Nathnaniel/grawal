@@ -47,6 +47,12 @@ const config: NextConfig = {
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
         ],
       },
+      // The site's images, icons and fonts: browsers keep them for a day and refresh them
+      // quietly in the background for a week, instead of re-checking on every visit.
+      ...['/landing/:file*', '/app/:file*', '/fonts/:file*'].map((source) => ({
+        source,
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
+      })),
       // The try-it demo is the one page that may be framed, and only by this site:
       // the website shows it inside its phone and desktop shots. (Later entries win.)
       ...['/demo', '/demo/:path*'].map((source) => ({

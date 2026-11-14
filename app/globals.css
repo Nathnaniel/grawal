@@ -46,9 +46,9 @@ main:focus, dialog:focus-visible { outline: none; }
      the whole screen, status bar and home indicator included, which puts the header
      just under the clock and the nav just above the home bar. In a browser the page
      already starts below the status bar and ends above the toolbar, so the gaps are
-     taken from the safe edges instead: 12px below the top and 16px above the bottom,
+     taken from the safe edges instead: 20px below the top and 16px above the bottom,
      or the notch and home-indicator sizes when the app fills the whole screen. */
-  --dash-top: max(12px, env(safe-area-inset-top));
+  --dash-top: max(20px, env(safe-area-inset-top));
   --dash-bottom: max(16px, calc(env(safe-area-inset-bottom) + 6px));
   --dash-head: calc(var(--dash-top) + 74px);
   color-scheme: light; background: var(--d-bg); color: var(--d-text); min-height: 100dvh;
