@@ -160,7 +160,7 @@ html:has(.landing) { scroll-padding-top: 0; }
 @layer components {
   /* A pinned note from the Figma wall. Text scales with the note's width. */
   .sticky-note { position: relative; aspect-ratio: 145.185 / 172.652; container-type: inline-size; flex-shrink: 0; }
-  .sticky-note > img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sticky-note > img, .sticky-note > .note-breeze > img { position: absolute; inset: 0; width: 100%; height: 100%; }
   .sticky-note-text {
     position: absolute; inset: 33.21% 7.84% 39.06% 5.21%;
     display: flex; align-items: center; justify-content: center;
