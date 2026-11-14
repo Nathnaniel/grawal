@@ -1,5 +1,4 @@
 import type { Viewport } from 'next';
-import { CookieNotice } from '@/components/landing/CookieNotice';
 import { ScrollAnimations } from '@/components/landing/ScrollAnimations';
 import { SmoothScroll } from '@/components/landing/SmoothScroll';
 
@@ -13,7 +12,6 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <SmoothScroll />
       <ScrollAnimations />
       {children}
-      <CookieNotice />
     </div>
   );
 }
