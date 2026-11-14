@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { SCRIPTURES, STEPS, WALL_NOTES } from '@/components/landing/content';
 import { Faq } from '@/components/landing/Faq';
 import { Footer } from '@/components/landing/Footer';
+import { HeroLines } from '@/components/landing/HeroLines';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { LandingNav } from '@/components/landing/LandingNav';
 import { StickyNote } from '@/components/landing/StickyNote';
@@ -20,8 +21,7 @@ function Hero() {
     <section className="relative overflow-hidden">
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[850px] overflow-hidden bg-[#1568d4]">
         <img src="/landing/hero-glow.svg" alt="" fetchPriority="high" className="absolute inset-0 size-full max-w-none object-fill" />
-        <img src="/landing/hero-lines.svg" alt="" className="absolute top-0 left-1/2 hidden h-[856px] w-[1440px] max-w-none -translate-x-1/2 lg:block" />
-        <img src="/landing/hero-lines-mobile.svg" alt="" className="absolute top-0 left-1/2 h-[854px] w-[394px] max-w-none -translate-x-1/2 lg:hidden" />
+        <HeroLines />
       </div>
       <LandingNav />
 
