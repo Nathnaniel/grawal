@@ -45,7 +45,7 @@ export function LegalPage({ title, intro, sections }: { title: string; intro: st
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-[1218px] gap-6 px-5 pt-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10 lg:px-6 lg:pt-12">
+      <main className="mx-auto grid max-w-[1218px] grid-cols-1 gap-6 px-5 pt-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10 lg:px-6 lg:pt-12">
         <LegalContents sections={sections.map((section, index) => ({
           id: section.id,
           label: `${index + 1}. ${section.title}`,
