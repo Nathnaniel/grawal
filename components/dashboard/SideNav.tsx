@@ -23,7 +23,7 @@ export function SideNav() {
     <nav
       aria-label="Main"
       // Phones: hidden while the create page fills the screen, which has its own close button.
-      className={`fixed bottom-10 left-[calc(50%+0.5px)] z-50 flex -translate-x-1/2 items-center gap-3.5 lg:top-1/2 lg:bottom-auto lg:left-10 lg:w-[65px] lg:translate-x-0 lg:-translate-y-1/2 lg:flex-col ${creating ? 'max-lg:hidden' : ''}`}
+      className={`fixed bottom-[var(--dash-bottom)] left-[calc(50%+0.5px)] z-50 flex -translate-x-1/2 items-center gap-3.5 lg:top-1/2 lg:bottom-auto lg:left-10 lg:w-[65px] lg:translate-x-0 lg:-translate-y-1/2 lg:flex-col ${creating ? 'max-lg:hidden' : ''}`}
     >
       <div className="flex gap-0 rounded-[40px] lg:gap-1 bg-[var(--d-surface)] p-1.5 dash-lift lg:w-full lg:flex-col lg:items-center">
         {tab(wall, !onHistory, '/app/home.svg', '/app/home-active.svg', 'Wall')}

@@ -78,9 +78,9 @@ export function SettingsPanel() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="settings-heading"
-      className="panel-in fixed inset-y-0 right-0 left-10 z-50 overflow-y-auto bg-[var(--d-surface)] px-10 pt-[120px] pb-10 lg:inset-auto lg:top-[156px] lg:left-1/2 lg:h-[712px] lg:max-h-[calc(100dvh-176px)] lg:w-[500px] lg:-translate-x-1/2 lg:px-[46px] lg:pt-10"
+      className="panel-in fixed inset-y-0 right-0 left-10 z-50 overflow-y-auto bg-[var(--d-surface)] px-10 pt-[calc(var(--dash-top)+72px)] pb-[calc(var(--dash-bottom)+16px)] lg:inset-auto lg:top-[156px] lg:left-1/2 lg:h-[712px] lg:max-h-[calc(100dvh-176px)] lg:w-[500px] lg:-translate-x-1/2 lg:px-[46px] lg:pt-10"
     >
-      <button type="button" onClick={close} aria-label="Close settings" className="absolute top-12 right-5 grid size-8 place-items-center rounded-full bg-[var(--d-field)] lg:hidden">
+      <button type="button" onClick={close} aria-label="Close settings" className="absolute top-[var(--dash-top)] right-5 grid size-8 place-items-center rounded-full bg-[var(--d-field)] lg:hidden">
         <img src="/app/close.svg" alt="" width={18} height={18} className="dash-icon" />
       </button>
 

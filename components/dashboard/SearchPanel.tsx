@@ -76,7 +76,7 @@ export function SearchPanel() {
 
   return (
     // Figma: a 400px search box at 94px and a 380px panel 12px below it on desktop; 353px wide on phones.
-    <div className="fixed top-[122px] left-1/2 z-50 w-[min(353px,calc(100vw-40px))] -translate-x-1/2 lg:top-[94px] lg:w-[400px]">
+    <div className="fixed top-[var(--dash-head)] left-1/2 z-50 w-[calc(100vw-40px)] -translate-x-1/2 lg:top-[94px] lg:w-[400px]">
       <div className="panel-in relative h-10 rounded-xl bg-[var(--d-surface)] dash-pop">
         <img src="/app/search-sm.svg" alt="" width={20} height={20} className="dash-icon absolute top-2.5 left-3" />
         <input

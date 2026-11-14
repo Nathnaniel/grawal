@@ -67,9 +67,9 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="create-heading"
-      className="panel-in fixed inset-0 z-50 overflow-y-auto bg-[var(--d-surface)] px-5 pt-[120px] pb-10 lg:inset-auto lg:top-[108px] lg:left-1/2 lg:max-h-[calc(100dvh-128px)] lg:w-[640px] lg:-translate-x-1/2 lg:px-[120px] lg:py-20"
+      className="panel-in fixed inset-0 z-50 overflow-y-auto bg-[var(--d-surface)] px-5 pt-[calc(var(--dash-top)+72px)] pb-[calc(var(--dash-bottom)+16px)] lg:inset-auto lg:top-[108px] lg:left-1/2 lg:max-h-[calc(100dvh-128px)] lg:w-[640px] lg:-translate-x-1/2 lg:px-[120px] lg:py-20"
     >
-      <button type="button" onClick={close} aria-label="Close" className="absolute top-12 right-5 grid size-8 place-items-center rounded-full bg-[var(--d-field)] lg:hidden">
+      <button type="button" onClick={close} aria-label="Close" className="absolute top-[var(--dash-top)] right-5 grid size-8 place-items-center rounded-full bg-[var(--d-field)] lg:hidden">
         <img src="/app/close.svg" alt="" width={18} height={18} className="dash-icon" />
       </button>
       <form onSubmit={submit} noValidate className="mx-auto flex max-w-[400px] flex-col gap-10">

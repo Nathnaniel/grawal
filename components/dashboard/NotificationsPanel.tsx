@@ -46,7 +46,7 @@ export function NotificationsPanel() {
     close();
   }
 
-  const frame = 'panel-in fixed top-[122px] left-1/2 z-50 w-[min(353px,calc(100vw-40px))] -translate-x-1/2 overflow-hidden rounded-xl bg-[var(--d-surface)] dash-pop lg:top-[94px] lg:w-[400px]';
+  const frame = 'panel-in fixed top-[var(--dash-head)] left-1/2 z-50 w-[calc(100vw-40px)] -translate-x-1/2 overflow-hidden rounded-xl bg-[var(--d-surface)] dash-pop lg:top-[94px] lg:w-[400px]';
   const title = <h2 className="absolute top-3 left-3 px-3 py-1 font-avenir text-base leading-[14px] font-medium tracking-[-0.048px] text-[var(--d-text)]">Notifications</h2>;
   const expand = (
     <button type="button" aria-label={expanded ? 'Show fewer' : 'Show all'} aria-pressed={expanded} onClick={() => setExpanded(!expanded)} className="absolute top-3 right-3 flex h-5 items-center rounded-md border-[0.5px] border-[rgb(204_204_204/0.5)] px-1">
@@ -70,7 +70,7 @@ export function NotificationsPanel() {
 
   const shown = expanded ? items : items.slice(0, 5);
   return (
-    <section aria-label="Notifications" className={`${frame} ${expanded ? 'max-h-[calc(100dvh-140px)] overflow-y-auto' : ''} pb-12`}>
+    <section aria-label="Notifications" className={`${frame} ${expanded ? 'max-h-[calc(100dvh-var(--dash-head)-var(--dash-bottom))] lg:max-h-[calc(100dvh-140px)] overflow-y-auto' : ''} pb-12`}>
       {title}
       {expand}
       <div className="mx-auto mt-[52px] flex w-[calc(100%-44px)] flex-col items-end gap-5">

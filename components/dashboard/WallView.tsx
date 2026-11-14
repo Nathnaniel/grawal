@@ -10,7 +10,9 @@ import { WinNote } from './WinNote';
 
 // Figma: 186.67px notes, five across with 20px gaps from 160px down on desktop;
 // 168px notes, two across with 12px gaps on phones.
-export const GRID = 'grid justify-center gap-3 [grid-template-columns:repeat(auto-fill,168px)] lg:gap-5 lg:[grid-template-columns:repeat(auto-fill,186.67px)] xl:justify-start';
+// Phones always get two columns, 168px as in Figma and narrower on smaller screens
+// (the note's text scales with it). Tablets and up fit as many full notes as they can.
+export const GRID = 'grid justify-center gap-3 [grid-template-columns:repeat(2,minmax(0,168px))] sm:[grid-template-columns:repeat(auto-fill,168px)] lg:gap-5 lg:[grid-template-columns:repeat(auto-fill,186.67px)] xl:justify-start';
 
 export function WallView({ entries: firstPage, hasMore: initialHasMore }: { entries: Entry[]; hasMore: boolean }) {
   const { store, filter, setFilter } = useApp();
