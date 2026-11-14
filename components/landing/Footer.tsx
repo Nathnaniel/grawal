@@ -14,8 +14,11 @@ export function Footer({ base = '' }: { base?: string }) {
             <div className="flex"><a href={`${base}#how-it-works`} className={FOOTER_LINK}>How it works</a><a href={`${base}#faq`} className={FOOTER_LINK}>FAQs</a></div>
             <div className="flex"><Link href="/privacy" className={FOOTER_LINK}>Privacy Policy</Link><Link href="/terms" className={FOOTER_LINK}>Terms of service</Link></div>
           </div>
-          {/* The design names the channels but has no addresses for them yet. */}
-          <div className="flex"><span className={FOOTER_LINK}>Tiktok</span><span className={FOOTER_LINK}>Instagram</span><span className={FOOTER_LINK}>Youtube</span><span className={FOOTER_LINK}>X</span></div>
+          {/* The design names the channels but has no addresses for them yet, so they're dimmed
+              and do nothing until the accounts exist. */}
+          <div className="flex cursor-default opacity-50 select-none" aria-disabled="true" title="Coming soon">
+            <span className={FOOTER_LINK}>Tiktok</span><span className={FOOTER_LINK}>Instagram</span><span className={FOOTER_LINK}>Youtube</span><span className={FOOTER_LINK}>X</span>
+          </div>
         </div>
         <div data-reveal className="flex flex-col items-center gap-5">
           <FooterWordmark />
