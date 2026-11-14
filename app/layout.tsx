@@ -26,8 +26,10 @@ const THEME_SCRIPT = `try{document.documentElement.dataset.theme=localStorage.ge
 
 // Home screens take the icon the page points at when someone adds the site, and can't
 // switch it later. So while the device is in dark mode, point at the dark icon, including
-// links Next adds to the head after the page loads.
-const ICON_SCRIPT = `(function(){var q=matchMedia('(prefers-color-scheme: dark)');function point(sel,url){document.querySelectorAll(sel).forEach(function(l){if(l.getAttribute('href')!==url)l.setAttribute('href',url)})}function set(){var d=q.matches;point('link[rel="apple-touch-icon"]',d?'/icons/apple-touch-icon-dark.png':'/icons/apple-touch-icon.png');point('link[rel="manifest"]',d?'/manifest-dark.webmanifest':'/manifest.webmanifest')}new MutationObserver(set).observe(document.head,{childList:true});document.addEventListener('DOMContentLoaded',set);q.addEventListener('change',set)})()`;
+// links Next adds to the head later. It waits until a moment after the page has loaded:
+// changing those links while React is still taking over the page makes React warn that
+// the server's HTML didn't match. Phones only read them when someone adds the site.
+const ICON_SCRIPT = `(function(){var q=matchMedia('(prefers-color-scheme: dark)');function point(sel,url){document.querySelectorAll(sel).forEach(function(l){if(l.getAttribute('href')!==url)l.setAttribute('href',url)})}function set(){var d=q.matches;point('link[rel="apple-touch-icon"]',d?'/icons/apple-touch-icon-dark.png':'/icons/apple-touch-icon.png');point('link[rel="manifest"]',d?'/manifest-dark.webmanifest':'/manifest.webmanifest')}function start(){set();new MutationObserver(set).observe(document.head,{childList:true});q.addEventListener('change',set)}function later(){setTimeout(start,1000)}if(document.readyState==='complete')later();else addEventListener('load',later)})()`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
