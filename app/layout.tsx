@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   // Browser tabs follow the device's light or dark mode; so does the home screen icon (see ICON_SCRIPT).
   icons: {
     icon: [
-      { url: '/icons/icon.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
-      { url: '/icons/icon-dark.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
+      { url: '/icons/favicon.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
+      { url: '/icons/favicon-dark.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
     ],
     apple: '/icons/apple-touch-icon.png',
   },

@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { SCRIPTURES, STEPS, WALL_NOTES } from '@/components/landing/content';
 import { Faq } from '@/components/landing/Faq';
 import { Footer } from '@/components/landing/Footer';
@@ -7,9 +7,6 @@ import { LandingButton } from '@/components/landing/LandingButton';
 import { LandingNav } from '@/components/landing/LandingNav';
 import { StickyNote } from '@/components/landing/StickyNote';
 import { DesktopWallPreview, MobileWallPreview } from '@/components/landing/WallPreview';
-
-// Chrome and Samsung Internet colour their bar with this: the top edge of the hero.
-export const viewport: Viewport = { themeColor: '#1f6fd7', viewportFit: 'cover' };
 
 export const metadata: Metadata = {
   title: { absolute: 'Grawal: remember everything God has done' },
@@ -252,11 +249,6 @@ export default function Landing() {
   return (
     <>
       {/* landing-home turns the page behind the sections blue (globals.css). */}
-      {/* On phones, the strip under the status bar takes the header's blue and the strip by the
-          home indicator takes the footer's, on every browser (Safari and Firefox follow fixed
-          elements at the edges). They're as tall as the phone's safe areas, so zero on desktop. */}
-      <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] bg-[#1f6fd7]" />
-      <div aria-hidden className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-[env(safe-area-inset-bottom)] bg-[#60a3e9]" />
       <main className="landing-home">
         <Hero />
         <WhyWeGiveThanks />

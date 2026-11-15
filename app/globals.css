@@ -128,12 +128,11 @@ body:has(.dash) { background: #f5f5f5; }
 .note-actions-in { animation: rise-in 500ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both; }
 
 /* The landing page has its own white canvas instead of the app's sky. */
-/* The sections stay white (.landing paints them). Behind them the home page is the hero's
-   blue, which Safari also uses for its bars. The privacy and terms pages stay white. */
+/* The sections stay white (.landing paints them). On desktop the home page behind them is
+   Grawal blue, which shows when the page is pulled past the hero or the footer. Phones keep
+   the plain white background. The privacy and terms pages stay white. */
 body:has(.landing) { background: #fff; }
-html:has(.landing-home), body:has(.landing-home) { background: #1f6fd7; }
-/* Pulling past the top shows the header's blue, past the bottom the footer's lighter blue. */
-body:has(.landing-home)::before { content: ""; position: fixed; inset: 0; z-index: -1; background: linear-gradient(#1f6fd7 50%, #60a3e9 50%); }
+@media (min-width: 1024px) { html:has(.landing-home), body:has(.landing-home) { background: #1568d4; } }
 /* The app keeps room for its sticky header when jumping to a section; the landing page has none. */
 html:has(.landing) { scroll-padding-top: 0; }
 /* No outline on the menu panel itself, and no grey flash on tapped links and buttons.
