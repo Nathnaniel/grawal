@@ -112,13 +112,13 @@ function HowItWorks() {
 
           {/* Step 1: pinning a win. */}
           <div className="relative w-full rounded-2xl border border-white/70 bg-white p-4 shadow-[0_24px_24px_rgba(9,45,110,0.22)]">
-            <div className="flex items-center gap-2 border-b border-[#1a1a1a]/10 pb-3">
-              <img src="/landing/step-pin.svg" alt="" width={20} height={20} className="size-5" />
-              <p className="font-tusker text-xl leading-6 font-medium text-[#1a1a1a]">Pin your win</p>
+            <div className="flex items-center gap-2">
+              <img src="/landing/step-pin.svg" alt="" width={16} height={16} className="size-4" />
+              <p className="font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Pin your win</p>
             </div>
-            <p className="pt-4 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
+            <p className="pt-3 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
             <p className="pt-1 font-avenir text-sm leading-4 text-[#1a1a1a]">Mum’s surgery went well and she’s home recovering.</p>
-            <div className="flex items-center gap-2 pt-4 font-avenir text-xs leading-[14px] text-[#333]">
+            <div className="flex items-center gap-2 pt-3 font-avenir text-xs leading-[14px] text-[#333]">
               <span className="rounded-full bg-white px-2.5 py-1">Family</span>
               <span className="ml-auto flex h-[38px] items-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-5 text-base leading-[18px] font-medium text-white shadow-[inset_0_-4px_4px_rgba(179,208,245,0.25),0_4px_4px_rgba(204,204,204,0.14)]">Pin it</span>
             </div>
@@ -133,7 +133,7 @@ function HowItWorks() {
               <img src="/app/n-calendar.svg" alt="" width={16} height={16} className="size-4" />
               On this day, a year ago
             </div>
-            <p className="pt-3 font-tusker text-lg leading-[22px] font-medium text-[#1a1a1a]">Answered Prayer</p>
+            <p className="pt-3 font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Answered Prayer</p>
             <p className="pt-1 font-avenir text-sm leading-4 text-[#333]">Got the job offer I prayed about for three months.</p>
             <span className="mt-4 inline-flex rounded-lg border-[0.5px] border-[#ccc]/40 bg-white px-3 py-1.5 font-avenir text-xs leading-[14px] font-medium text-[#1a1a1a]">Give thanks again</span>
           </div>
@@ -172,13 +172,13 @@ function HowItWorks() {
 
           {/* Step 1: pinning a win. */}
           <div className={`${PANEL_CARD} top-[168px] left-[64px] w-[340px] p-5`}>
-            <div className="flex items-center gap-2 border-b border-[#1a1a1a]/10 pb-3">
-              <img src="/landing/step-pin.svg" alt="" width={20} height={20} className="size-5" />
-              <p className="font-tusker text-xl leading-6 font-medium text-[#1a1a1a]">Pin your win</p>
+            <div className="flex items-center gap-2">
+              <img src="/landing/step-pin.svg" alt="" width={16} height={16} className="size-4" />
+              <p className="font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Pin your win</p>
             </div>
-            <p className="pt-4 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
+            <p className="pt-3 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
             <p className="pt-1 font-avenir text-sm leading-4 text-[#1a1a1a]">Mum’s surgery went well and she’s home recovering.</p>
-            <div className="flex items-center gap-2 pt-4 font-avenir text-xs leading-[14px] text-[#333]">
+            <div className="flex items-center gap-2 pt-3 font-avenir text-xs leading-[14px] text-[#333]">
               <span className="rounded-full bg-white px-2.5 py-1">Family</span>
               <span className="ml-auto flex h-[38px] items-center rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] px-6 text-base leading-[18px] font-medium text-white shadow-[inset_0_-4px_4px_rgba(179,208,245,0.25),0_4px_4px_rgba(204,204,204,0.14)]">Pin it</span>
             </div>
@@ -195,7 +195,7 @@ function HowItWorks() {
               <img src="/app/n-calendar.svg" alt="" width={16} height={16} className="size-4" />
               On this day, a year ago
             </div>
-            <p className="pt-3 font-tusker text-lg leading-[22px] font-medium text-[#1a1a1a]">Answered Prayer</p>
+            <p className="pt-3 font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Answered Prayer</p>
             <p className="pt-1 font-avenir text-sm leading-4 text-[#333]">Got the job offer I prayed about for three months.</p>
             <span className="mt-4 inline-flex rounded-lg border-[0.5px] border-[#ccc]/40 bg-white px-3 py-1.5 font-avenir text-xs leading-[14px] font-medium text-[#1a1a1a]">Give thanks again</span>
           </div>
