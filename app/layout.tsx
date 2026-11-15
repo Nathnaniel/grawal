@@ -8,12 +8,10 @@ export const metadata: Metadata = {
   title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: SITE_PITCH,
   robots: { index: false },
-  // Browser tabs follow the device's light or dark mode; so does the home screen icon (see ICON_SCRIPT).
+  // The home screen icon follows the device's light or dark mode (see ICON_SCRIPT).
   icons: {
-    icon: [
-      { url: '/icons/favicon.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
-      { url: '/icons/favicon-dark.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
-    ],
+    // The app icon (white tile, blue mark) in every mode, so it reads on any tab bar.
+    icon: [{ url: '/icons/favicon-app.svg', type: 'image/svg+xml' }],
     apple: '/icons/apple-touch-icon.png',
   },
   appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: 'default' },
