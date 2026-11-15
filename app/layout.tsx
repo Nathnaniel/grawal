@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   robots: { index: false },
   // The home screen icon follows the device's light or dark mode (see ICON_SCRIPT).
   icons: {
-    // The app icon (white tile, blue mark) in every mode, so it reads on any tab bar.
-    icon: [{ url: '/icons/favicon-app.svg', type: 'image/svg+xml' }],
+    // Grawal's favicon (white tile, blue mark), drawn for 16px tabs, in every mode.
+    icon: [{ url: '/icons/favicon-16.svg', type: 'image/svg+xml' }],
     apple: '/icons/apple-touch-icon.png',
   },
   appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: 'default' },
