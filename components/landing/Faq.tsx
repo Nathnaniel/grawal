@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { FAQS } from './content';
+import { Icon } from '@/components/ui/Icon';
 
 // Opening is slow and soft, as on the Email Verifier site: the answer grows from
 // nothing and fades in while the arrow turns from ↙ to ↗, all over 900ms.
@@ -27,7 +28,7 @@ export function Faq() {
               >
                 <span className="font-tusker text-base leading-[18px] font-medium capitalize">{question}</span>
                 <span className="grid size-10 shrink-0 place-items-center bg-[#eaeaea]">
-                  <img src="/landing/arrow-down-left.svg" alt="" width={24} height={24} className={`faq-motion transition-transform ${EASE} ${expanded ? 'rotate-180' : ''}`} />
+                  <Icon src="/landing/arrow-down-left.svg" size={24} className={`faq-motion transition-transform ${EASE} ${expanded ? 'rotate-180' : ''}`} />
                 </span>
               </button>
             </h3>

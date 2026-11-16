@@ -206,3 +206,17 @@ test('wins start on the wall and can be taken off without deleting them', async 
   assert.deepEqual(after, [{ on_wall: false }]);
   await as(A, 'update public.entries set on_wall = true where id = $1', [ENTRY_A]);
 });
+
+test('new wins and wins pinned back go to the top of the wall; moved wins keep their place', async () => {
+  const NEW = '10000000-0000-4000-8000-0000000000aa';
+  const rankOf = async (id: string) => (await as<{ wall_rank: number }>(A, 'select wall_rank from public.entries where id = $1', [id])).rows[0].wall_rank;
+  const existing = await rankOf(ENTRY_A);
+  assert.equal(typeof existing, 'number');
+  await as(A, "insert into public.entries (id, user_id, title) values ($1, $2, 'New win')", [NEW, A]);
+  assert.ok((await rankOf(NEW)) < existing);
+  await as(A, 'update public.entries set wall_rank = $1, stack_id = $2 where id = $3', [existing + 5000, ENTRY_A, NEW]);
+  assert.equal(await rankOf(NEW), existing + 5000);
+  await as(A, 'update public.entries set wall_rank = null where id = $1', [NEW]);
+  assert.ok((await rankOf(NEW)) < existing);
+  await as(A, 'delete from public.entries where id = $1', [NEW]);
+});

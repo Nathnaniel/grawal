@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { remember, suggest, type Suggestion } from '@/lib/search-suggestions';
 import type { Entry } from '@/lib/types';
 import { useApp } from '../AppProvider';
+import { Icon } from '@/components/ui/Icon';
 
 const TYPE_LABEL = { category: 'category', win: 'win', text: 'search' } as const;
 
@@ -66,7 +67,7 @@ export function SearchPanel() {
       >
         <span className="truncate text-sm leading-4 text-[var(--d-text)]">{item.label}</span>
         {index === active
-          ? <img src="/app/enter.svg" alt="" width={12} height={12} className="dash-icon" />
+          ? <Icon src="/app/enter.svg" size={12} className="dash-icon" />
           : <span className="text-xs leading-[14px] text-[var(--d-muted)]">{TYPE_LABEL[item.kind]}</span>}
       </button>
     </li>
@@ -78,7 +79,7 @@ export function SearchPanel() {
     // Figma: a 400px search box at 94px and a 380px panel 12px below it on desktop; 353px wide on phones.
     <div className="fixed top-[var(--dash-head)] left-1/2 z-50 w-[calc(100vw-40px)] -translate-x-1/2 lg:top-[94px] lg:w-[400px]">
       <div className="panel-in relative h-10 rounded-xl bg-[var(--d-surface)] dash-pop">
-        <img src="/app/search-sm.svg" alt="" width={20} height={20} className="dash-icon absolute top-2.5 left-3" />
+        <Icon src="/app/search-sm.svg" size={20} className="dash-icon absolute top-2.5 left-3" />
         <input
           ref={input}
           role="combobox"
@@ -92,14 +93,14 @@ export function SearchPanel() {
           className="size-full rounded-xl bg-transparent pr-16 pl-10 font-avenir text-base tracking-[-0.036px] text-[var(--d-soft)] outline-none placeholder:text-[var(--d-faint)] lg:text-xs"
         />
         <span aria-hidden="true" className="absolute top-1/2 right-3 hidden h-5 -translate-y-1/2 items-center gap-1 rounded-md border-[0.5px] border-[rgb(204_204_204/0.5)] px-1 py-0.5 text-xs text-[var(--d-muted)] lg:flex">
-          <img src="/app/command.svg" alt="" width={12} height={12} className="dash-icon" />k
+          <Icon src="/app/command.svg" size={12} className="dash-icon" />k
         </span>
       </div>
 
       <div className="panel-in relative mt-3 h-[380px] rounded-xl bg-[var(--d-surface)] p-3 dash-pop">
         {empty ? (
           <div className="flex h-[300px] flex-col items-center justify-center gap-2 text-center">
-            <span className="grid size-10 place-items-center rounded-xl bg-[var(--d-field)]"><img src="/app/search-empty.svg" alt="" width={20} height={20} className="dash-icon" /></span>
+            <span className="grid size-10 place-items-center rounded-xl bg-[var(--d-field)]"><Icon src="/app/search-empty.svg" size={20} className="dash-icon" /></span>
             <p className="font-avenir text-sm leading-[14px] tracking-[-0.042px] text-[var(--d-text)]">No results found</p>
             <p className="w-[203px] font-avenir text-xs leading-[14px] tracking-[-0.036px] text-[var(--d-muted)]">Your search did not match any results. Please try again.</p>
           </div>
@@ -124,8 +125,8 @@ export function SearchPanel() {
           <hr className="w-[350px] max-w-full border-0 border-t-[0.5px] border-[var(--d-line)]" />
           <div className="flex w-full items-center justify-between font-avenir text-[10px] leading-3 font-medium text-[var(--d-muted)]">
             <span className="flex items-center gap-1">
-              <span className="flex items-center gap-1 px-2 py-1"><img src="/app/arrow-up.svg" alt="" width={12} height={12} className="dash-icon" /><img src="/app/arrow-down.svg" alt="" width={12} height={12} className="dash-icon" /> to navigate</span>
-              <span className="flex items-center gap-1 px-2 py-1"><img src="/app/enter.svg" alt="" width={12} height={12} className="dash-icon" /> select</span>
+              <span className="flex items-center gap-1 px-2 py-1"><Icon src="/app/arrow-up.svg" size={12} className="dash-icon" /><Icon src="/app/arrow-down.svg" size={12} className="dash-icon" /> to navigate</span>
+              <span className="flex items-center gap-1 px-2 py-1"><Icon src="/app/enter.svg" size={12} className="dash-icon" /> select</span>
             </span>
             <span className="px-2 py-1">esc to close</span>
           </div>

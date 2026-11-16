@@ -28,13 +28,13 @@ test('blank filters count as no search', () => {
   assert.ok(hasFilters({ ...none, year: '2025' }));
 });
 
-test('pinned entries come first, then newest first', () => {
-  const at = (id: string, is_pinned: boolean, entry_date: string, created_at = '2026-01-01T00:00:00Z') => ({ id, is_pinned, entry_date, created_at });
+test('the wall goes by place, with unplaced new wins on top', () => {
+  const at = (id: string, wall_rank: number | null, entry_date: string, created_at = '2026-01-01T00:00:00Z') => ({ id, is_pinned: false, wall_rank, entry_date, created_at });
   const sorted = [
-    at('old', false, '2024-01-01'),
-    at('pinned-old', true, '2020-01-01'),
-    at('new-early', false, '2026-01-01', '2026-01-01T08:00:00Z'),
-    at('new-late', false, '2026-01-01', '2026-01-01T09:00:00Z'),
+    at('third', 2048, '2026-03-01'),
+    at('first', -1024, '2020-01-01'),
+    at('new', null, '2026-01-01'),
+    at('second', 1024, '2024-01-01'),
   ].sort(wallOrder);
-  assert.deepEqual(sorted.map((e) => e.id), ['pinned-old', 'new-late', 'new-early', 'old']);
+  assert.deepEqual(sorted.map((e) => e.id), ['new', 'first', 'second', 'third']);
 });

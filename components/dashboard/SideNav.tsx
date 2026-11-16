@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useApp } from '../AppProvider';
+import { Icon } from '@/components/ui/Icon';
 
 /** The desktop hover label: a dark pill with a small point, beside the rail. It shows
  *  at once, like the design's recording; screen readers use the control's own label. */
@@ -46,8 +47,8 @@ export function SideNav() {
     >
       {/* Both icons are drawn and cross-fade as the highlight passes underneath. */}
       <span className="relative size-6">
-        <img src={icon} alt="" width={24} height={24} className={`dash-icon absolute inset-0 transition-opacity ${GLIDE} ${active ? 'opacity-0' : 'opacity-100'}`} />
-        <img src={activeIcon} alt="" width={24} height={24} className={`absolute inset-0 transition-opacity ${GLIDE} ${active ? 'opacity-100' : 'opacity-0'}`} />
+        <Icon src={icon} size={24} className={`dash-icon absolute inset-0 transition-opacity ${GLIDE} ${active ? 'opacity-0' : 'opacity-100'}`} />
+        <Icon src={activeIcon} size={24} className={`absolute inset-0 transition-opacity ${GLIDE} ${active ? 'opacity-100' : 'opacity-0'}`} />
       </span>
       {/* The tab you're already on shows nothing on hover. */}
       {!active && <Tip text={label} offset="17px" />}
@@ -75,7 +76,7 @@ export function SideNav() {
         onClick={() => (creating ? close() : open({ kind: 'create' }))}
         className="group relative grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a]"
       >
-        <img src={creating ? '/app/close.svg' : '/app/add.svg'} alt="" width={24} height={24} className={creating ? 'invert' : ''} />
+        <Icon src={creating ? '/app/close.svg' : '/app/add.svg'} size={24} className={creating ? 'invert' : ''} />
         <Tip text={creating ? 'Close' : 'Pin a win'} offset="19px" />
       </button>
     </nav>

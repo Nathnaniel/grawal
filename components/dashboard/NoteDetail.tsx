@@ -20,7 +20,8 @@ export function NoteDetail({ entry }: { entry: Entry }) {
   // History); on a win that's already off, it pins it back.
   function togglePin() {
     if (motion) return;
-    const finish = () => { saveEntry({ ...entry, on_wall: !onWall }); close(); };
+    // Off the wall it leaves any stack; pinned back, it goes to the top of the wall.
+    const finish = () => { saveEntry({ ...entry, on_wall: !onWall, stack_id: null, wall_rank: onWall ? entry.wall_rank : null }); close(); };
     if (still()) return finish();
     setMotion(onWall ? 'falling' : 'pinning');
     window.setTimeout(finish, onWall ? 850 : 500);

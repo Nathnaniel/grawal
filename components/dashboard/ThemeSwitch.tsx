@@ -1,6 +1,7 @@
 'use client';
 
 import { useApp, type Theme } from '../AppProvider';
+import { Icon } from '@/components/ui/Icon';
 
 const OPTIONS: { value: Theme; label: string; icon: string }[] = [
   { value: 'dark', label: 'Dark', icon: '/app/moon.svg' },
@@ -23,7 +24,7 @@ export function ThemeSwitch() {
           onClick={() => setTheme(value)}
           className={`grid size-8 place-items-center rounded-3xl ${theme === value ? 'bg-[var(--d-surface)]' : ''}`}
         >
-          <img src={icon} alt="" width={20} height={20} className="dash-icon" />
+          <Icon src={icon} size={20} className="dash-icon" />
         </button>
       ))}
     </div>

@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useApp } from '../AppProvider';
 import { Avatar } from './Avatar';
 import { ThemeSwitch } from './ThemeSwitch';
+import { Icon } from '@/components/ui/Icon';
 
 const FIELD = 'h-10 w-full rounded-xl bg-[var(--d-field)] px-3 font-avenir text-base tracking-[-0.036px] text-[var(--d-mid)] lg:text-xs';
 const MAX_PHOTO = 5 * 1024 * 1024;
@@ -81,7 +82,7 @@ export function SettingsPanel() {
       className="panel-in fixed inset-y-0 right-0 left-10 z-50 overflow-y-auto bg-[var(--d-surface)] px-10 pt-[calc(var(--dash-top)+72px)] pb-[calc(var(--dash-bottom)+16px)] lg:inset-auto lg:top-[156px] lg:left-1/2 lg:h-[712px] lg:max-h-[calc(100dvh-176px)] lg:w-[500px] lg:-translate-x-1/2 lg:px-[46px] lg:pt-10"
     >
       <button type="button" onClick={close} aria-label="Close settings" className="absolute top-[var(--dash-top)] right-5 grid size-8 place-items-center rounded-full bg-[var(--d-field)] lg:hidden">
-        <img src="/app/close.svg" alt="" width={18} height={18} className="dash-icon" />
+        <Icon src="/app/close.svg" size={18} className="dash-icon" />
       </button>
 
       <div className="flex flex-col gap-10">
@@ -149,12 +150,12 @@ export function SettingsPanel() {
                 </div>
               ) : (
                 <button type="button" onClick={() => setConfirmDelete(true)} className="flex items-center gap-1 self-start p-2 font-avenir text-base leading-[18px] text-[var(--d-danger)]">
-                  <img src="/app/delete.svg" alt="" width={20} height={20} /> Delete account
+                  <Icon src="/app/delete.svg" size={20} /> Delete account
                 </button>
               )}
               <form action="/auth/sign-out" method="post">
                 <button type="submit" className="flex items-center gap-1 p-2 font-avenir text-base leading-[18px] text-[var(--d-danger)]">
-                  <img src="/app/logout-red.svg" alt="" width={20} height={20} /> Log out
+                  <Icon src="/app/logout-red.svg" size={20} /> Log out
                 </button>
               </form>
             </div>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { orderCategories } from '@/lib/notes';
 import type { Entry } from '@/lib/types';
 import { useApp } from '../AppProvider';
+import { Icon } from '@/components/ui/Icon';
 
 const CUSTOM = 'custom';
 const CUSTOM_COLOUR = '#1568D4';
@@ -49,6 +50,8 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
         photo_path: entry?.photo_path ?? null,
         is_pinned: entry?.is_pinned ?? false,
         on_wall: entry?.on_wall ?? true,
+        wall_rank: entry?.wall_rank ?? null,
+        stack_id: entry?.stack_id ?? null,
         entry_date: entry?.entry_date ?? today(),
         created_at: entry?.created_at ?? now,
         updated_at: now,
@@ -71,7 +74,7 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
       className="panel-in fixed inset-0 z-50 overflow-y-auto bg-[var(--d-surface)] px-5 pt-[calc(var(--dash-top)+72px)] pb-[calc(var(--dash-bottom)+16px)] lg:inset-auto lg:top-[108px] lg:left-1/2 lg:max-h-[calc(100dvh-128px)] lg:w-[640px] lg:-translate-x-1/2 lg:px-[120px] lg:py-20"
     >
       <button type="button" onClick={close} aria-label="Close" className="absolute top-[var(--dash-top)] right-5 grid size-8 place-items-center rounded-full bg-[var(--d-field)] lg:hidden">
-        <img src="/app/close.svg" alt="" width={18} height={18} className="dash-icon" />
+        <Icon src="/app/close.svg" size={18} className="dash-icon" />
       </button>
       <form onSubmit={submit} noValidate className="mx-auto flex max-w-[400px] flex-col gap-10">
         <h2 id="create-heading" className="font-tusker text-2xl leading-[26px] font-medium text-[var(--d-text)]">
@@ -101,7 +104,7 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
                   <label key={option.id} className="flex items-center gap-2.5 rounded-xl bg-[var(--d-field)] px-3 py-2 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#1568d4]">
                     <input type="radio" name="category" className="sr-only" checked={checked} onChange={() => setCategoryId(option.id)} onClick={() => checked && setCategoryId(null)} />
                     <span className="font-avenir text-sm leading-4 tracking-[-0.042px] text-[var(--d-text)]">{option.name}</span>
-                    <img src={checked ? '/app/radio-on.svg' : '/app/radio-off.svg'} alt="" width={20} height={20} className={checked ? '' : 'dash-icon'} />
+                    <Icon src={checked ? '/app/radio-on.svg' : '/app/radio-off.svg'} size={20} className={checked ? '' : 'dash-icon'} />
                   </label>
                 );
               })}
@@ -137,7 +140,7 @@ export function CreatePanel({ entry }: { entry?: Entry }) {
           disabled={saving}
           className="mx-auto mt-10 flex h-12 w-[313px] max-w-full items-center justify-center gap-1 rounded-xl border-t-2 border-r-2 border-[#3788f1] bg-[#1568d4] font-avenir text-base font-medium text-white disabled:opacity-70"
         >
-          {!entry && <img src="/landing/pin.svg" alt="" width={24} height={24} />}
+          {!entry && <Icon src="/app/pin-white.svg" size={24} />}
           {entry ? 'Save changes' : 'Pin your win'}
         </button>
       </form>

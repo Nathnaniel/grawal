@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Icon } from '@/components/ui/Icon';
 
 type Entry = { id: string; label: string; parts?: { id: string; label: string }[] };
 
@@ -52,7 +53,7 @@ export function LegalContents({ sections }: { sections: Entry[] }) {
       <details ref={fold} className="legal-toc sticky top-[calc(var(--legal-top)+60px)] z-10 rounded-2xl border border-[#ebebeb] bg-white shadow-[0_8px_24px_rgba(26,26,26,0.06)] lg:hidden">
         <summary className="flex cursor-pointer items-center justify-between px-5 py-4 font-avenir text-base font-medium">
           On this page
-          <img src="/app/arrow-down.svg" alt="" width={20} height={20} className="legal-toc-arrow" />
+          <Icon src="/app/arrow-down.svg" size={20} className="legal-toc-arrow" />
         </summary>
         <nav aria-label="On this page" data-lenis-prevent className="max-h-[calc(100dvh-200px)] overflow-y-auto px-3 pb-4" onClick={(event) => { if ((event.target as HTMLElement).closest('a') && fold.current) fold.current.open = false; }}>{list}</nav>
       </details>

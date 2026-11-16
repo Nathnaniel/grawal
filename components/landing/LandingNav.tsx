@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { createClient } from '@/lib/supabase/browser';
 import { smoothScroll } from './SmoothScroll';
+import { Icon } from '@/components/ui/Icon';
 
 // Signed-in visitors see Dashboard where everyone else sees Sign in. The page stays
 // static, so this is read from the saved session in the browser after it loads.
@@ -97,7 +98,7 @@ function MobileMenu({ open, onClose, account, base }: { open: boolean; onClose: 
         <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
           <Link href="/" onClick={onClose}><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
           <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={(event) => { byKeyboard.current = event.detail === 0; onClose(); }}>
-            <img src="/landing/icon-close.svg" alt="" width={24} height={24} />
+            <Icon src="/landing/icon-close.svg" size={24} />
           </button>
         </div>
 
@@ -162,7 +163,7 @@ export function LandingNav({ base = '', floating = false, grey = false }: { base
       <div className={`mx-auto flex max-w-[353px] items-center justify-between rounded-xl px-5 lg:hidden ${grey ? 'bg-[#f5f5f5]' : 'bg-white'}`}>
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <button type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
-          <img src="/landing/icon-menu.svg" alt="" width={24} height={24} />
+          <Icon src="/landing/icon-menu.svg" size={24} />
         </button>
       </div>
       <MobileMenu open={open} onClose={close} account={account} base={base} />

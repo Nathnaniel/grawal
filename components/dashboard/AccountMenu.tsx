@@ -3,6 +3,7 @@
 import { useApp } from '../AppProvider';
 import { Avatar } from './Avatar';
 import { ThemeSwitch } from './ThemeSwitch';
+import { Icon } from '@/components/ui/Icon';
 
 const ROW = 'flex items-center gap-1 py-2 pr-3 font-avenir text-[var(--d-text)]';
 
@@ -27,10 +28,10 @@ export function AccountMenu() {
           <hr className="border-0 border-t-[0.5px] border-[var(--d-line)]" />
         </div>
         <button type="button" role="menuitem" onClick={() => open({ kind: 'settings' })} className={`${ROW} text-sm leading-4 font-medium`}>
-          <img src="/app/settings.svg" alt="" width={20} height={20} className="dash-icon" /> Settings
+          <Icon src="/app/settings.svg" size={20} className="dash-icon" /> Settings
         </button>
         <a role="menuitem" href="/#faq" target={demo ? '_top' : undefined} className={`${ROW} text-base leading-[18px]`}>
-          <img src="/app/help.svg" alt="" width={20} height={20} className="dash-icon" /> Help center
+          <Icon src="/app/help.svg" size={20} className="dash-icon" /> Help center
         </a>
         <div className="flex flex-col gap-2">
           <hr className="border-0 border-t-[0.5px] border-[var(--d-line)]" />
@@ -46,7 +47,7 @@ export function AccountMenu() {
           ) : (
             <form action="/auth/sign-out" method="post">
               <button type="submit" role="menuitem" className={`${ROW} pr-2 text-base leading-[18px]`}>
-                <img src="/app/logout.svg" alt="" width={20} height={20} className="dash-icon" /> Log out
+                <Icon src="/app/logout.svg" size={20} className="dash-icon" /> Log out
               </button>
             </form>
           )}

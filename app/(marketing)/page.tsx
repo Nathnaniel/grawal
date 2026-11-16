@@ -7,6 +7,7 @@ import { LandingButton } from '@/components/landing/LandingButton';
 import { LandingNav } from '@/components/landing/LandingNav';
 import { StickyNote } from '@/components/landing/StickyNote';
 import { DesktopWallPreview, MobileWallPreview } from '@/components/landing/WallPreview';
+import { Icon } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: { absolute: 'Grawal: remember everything God has done' },
@@ -98,7 +99,7 @@ function HowItWorks() {
         <ol className="flex flex-col gap-7 px-4">
           {STEPS.map((step) => (
             <li key={step.title} data-reveal className="flex items-start gap-4">
-              <img src={step.icon} alt="" loading="lazy" decoding="async" width={28} height={28} className="size-7 shrink-0" />
+              <Icon src={step.icon} size={28} className="size-7 shrink-0" />
               <div className="flex flex-col gap-2">
                 <h3 className="font-tusker text-xl leading-[26px] font-medium">{step.title}</h3>
                 <p className="font-avenir text-base leading-[18px] tracking-[-0.048px] text-[#333]">{step.body}</p>
@@ -113,7 +114,7 @@ function HowItWorks() {
           {/* Step 1: pinning a win. */}
           <div className="relative w-full rounded-2xl border border-white/70 bg-white p-4 shadow-[0_24px_24px_rgba(9,45,110,0.22)]">
             <div className="flex items-center gap-2">
-              <img src="/landing/step-pin.svg" alt="" width={16} height={16} className="size-4" />
+              <Icon src="/landing/step-pin.svg" size={16} className="size-4" />
               <p className="font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Pin your win</p>
             </div>
             <p className="pt-3 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
@@ -130,7 +131,7 @@ function HowItWorks() {
           {/* Step 3: looking back. */}
           <div className="relative w-full rounded-2xl border border-white/70 bg-white p-4 shadow-[0_24px_24px_rgba(9,45,110,0.22)]">
             <div className="flex items-center gap-2 font-avenir text-xs leading-[14px] text-[#666]">
-              <img src="/app/n-calendar.svg" alt="" width={16} height={16} className="size-4" />
+              <Icon src="/app/n-calendar.svg" size={16} className="size-4" />
               On this day, a year ago
             </div>
             <p className="pt-3 font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Answered Prayer</p>
@@ -147,7 +148,7 @@ function HowItWorks() {
           <ol className="flex flex-col gap-7">
             {STEPS.map((step) => (
               <li key={step.title} data-reveal className="flex items-start gap-5">
-                <img src={step.icon} alt="" loading="lazy" decoding="async" width={28} height={28} className="size-7" />
+                <Icon src={step.icon} size={28} className="size-7" />
                 <div className="flex w-[444px] flex-col gap-3">
                   <h3 className="font-tusker text-xl leading-[26px] font-medium">{step.title}</h3>
                   <p className="font-avenir text-base leading-[18px] tracking-[-0.048px] text-[#333]">{step.body}</p>
@@ -173,7 +174,7 @@ function HowItWorks() {
           {/* Step 1: pinning a win. */}
           <div className={`${PANEL_CARD} top-[168px] left-[64px] w-[340px] p-5`}>
             <div className="flex items-center gap-2">
-              <img src="/landing/step-pin.svg" alt="" width={16} height={16} className="size-4" />
+              <Icon src="/landing/step-pin.svg" size={16} className="size-4" />
               <p className="font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Pin your win</p>
             </div>
             <p className="pt-3 font-avenir text-xs leading-[14px] text-[#666]">What happened?</p>
@@ -192,7 +193,7 @@ function HowItWorks() {
           {/* Step 3: looking back. */}
           <div className={`${PANEL_CARD} top-[206px] left-[668px] w-[260px] p-4`}>
             <div className="flex items-center gap-2 font-avenir text-xs leading-[14px] text-[#666]">
-              <img src="/app/n-calendar.svg" alt="" width={16} height={16} className="size-4" />
+              <Icon src="/app/n-calendar.svg" size={16} className="size-4" />
               On this day, a year ago
             </div>
             <p className="pt-3 font-tusker text-base leading-5 font-medium text-[#1a1a1a]">Answered Prayer</p>

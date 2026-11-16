@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useApp } from '../AppProvider';
 import { Avatar } from './Avatar';
+import { Icon } from '@/components/ui/Icon';
 
 /** Logo on the left; search, notifications and the account on the right. */
 export function Header() {
@@ -22,10 +23,10 @@ export function Header() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-3.5 rounded-[39px] bg-[var(--d-surface)] p-3">
             <button type="button" aria-label="Search your wins" aria-expanded={panel?.kind === 'search'} onClick={() => toggle('search')} className="block size-6">
-              <img src="/app/search.svg" alt="" width={24} height={24} className="dash-icon" />
+              <Icon src="/app/search.svg" size={24} className="dash-icon" />
             </button>
             <button type="button" aria-label="Notifications" aria-expanded={panel?.kind === 'notifications'} onClick={() => toggle('notifications')} className="block size-6">
-              <img src="/app/bell.svg" alt="" width={24} height={24} className="dash-icon" />
+              <Icon src="/app/bell.svg" size={24} className="dash-icon" />
             </button>
           </div>
           <button type="button" aria-label="Account" aria-expanded={panel?.kind === 'account'} onClick={() => toggle('account')} className="rounded-full">

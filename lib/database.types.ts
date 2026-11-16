@@ -33,6 +33,10 @@ export type EntryRow = {
   is_pinned: boolean;
   /** False once unpinned: off the wall, still in History. */
   on_wall: boolean;
+  /** Place on the wall, smallest first. Null until the database gives a new win one. */
+  wall_rank: number | null;
+  /** Wins with the same stack_id sit in one pile on the wall. */
+  stack_id: string | null;
   entry_date: string;
   created_at: string;
   updated_at: string;

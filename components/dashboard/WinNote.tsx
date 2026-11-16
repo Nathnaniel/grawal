@@ -68,3 +68,42 @@ export function WinNote({ entry }: { entry: Entry }) {
     </button>
   );
 }
+
+const PILE_TILT = ['-rotate-[5deg] -translate-x-[6%] translate-y-[3%]', 'rotate-[4deg] translate-x-[6%] translate-y-[2%]'];
+// The pin sits in the note image (x 44–57%, down to 19%). Cutting it out of the wins underneath
+// leaves one pin holding the whole pile; the notch is hidden behind the top win.
+const NO_PIN = { clipPath: 'polygon(0 0, 44% 0, 44% 19%, 57% 19%, 57% 0, 100% 0, 100% 100%, 0 100%)' };
+
+/** Several wins stacked in one pile. Tapping it fans the pile out on the wall. */
+export function WinPile({ entries, onOpen }: { entries: Entry[]; onOpen: () => void }) {
+  const { categories } = useApp();
+  const [top, ...under] = entries;
+  const text = (entry: Entry) => noteText(entry, categories.find((item) => item.id === entry.category_id)?.name);
+  const { heading, story } = text(top);
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`Stack of ${entries.length} wins, ${heading} on top. Open the stack`}
+      className="group relative block w-full max-w-[168px] rounded-sm text-left lg:w-[186.67px] lg:max-w-none"
+    >
+      {/* The wins underneath peek out at an angle, like papers pinned on top of each other. */}
+      {under.slice(0, 2).map((entry, index) => {
+        const words = text(entry);
+        return (
+          <StickyNote
+            key={entry.id}
+            note={{ category: words.heading, story: words.story, colour: noteColour(entry.id) }}
+            className={`!absolute inset-0 w-full ${PILE_TILT[index]}`}
+            style={NO_PIN}
+          />
+        );
+      })}
+      <StickyNote note={{ category: heading, story, colour: noteColour(top.id) }} className="note-breeze w-full" />
+      <span className="absolute top-[14%] -right-1 grid h-6 min-w-6 place-items-center rounded-full bg-[#1568d4] px-1.5 font-avenir text-xs font-medium text-white shadow-[0_2px_6px_rgba(9,45,110,0.3)]">
+        {entries.length}
+      </span>
+    </button>
+  );
+}

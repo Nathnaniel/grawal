@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { buildNotifications, type NotificationItem, type NotificationKind } from '@/lib/notifications';
 import { useApp } from '../AppProvider';
+import { Icon } from '@/components/ui/Icon';
 
 const ICONS: Record<NotificationKind, string> = {
   week: '/app/n-bell.svg',
@@ -50,7 +51,7 @@ export function NotificationsPanel() {
   const title = <h2 className="absolute top-3 left-3 px-3 py-1 font-avenir text-base leading-[14px] font-medium tracking-[-0.048px] text-[var(--d-text)]">Notifications</h2>;
   const expand = (
     <button type="button" aria-label={expanded ? 'Show fewer' : 'Show all'} aria-pressed={expanded} onClick={() => setExpanded(!expanded)} className="absolute top-3 right-3 flex h-5 items-center rounded-md border-[0.5px] border-[rgb(204_204_204/0.5)] px-1">
-      <img src="/app/expand.svg" alt="" width={12} height={12} className="dash-icon" />
+      <Icon src="/app/expand.svg" size={12} className="dash-icon" />
     </button>
   );
 
@@ -60,7 +61,7 @@ export function NotificationsPanel() {
         {title}
         {expand}
         <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-          <span className="grid size-10 place-items-center rounded-xl bg-[var(--d-field)]"><img src="/app/bell-empty.svg" alt="" width={20} height={20} className="dash-icon" /></span>
+          <span className="grid size-10 place-items-center rounded-xl bg-[var(--d-field)]"><Icon src="/app/bell-empty.svg" size={20} className="dash-icon" /></span>
           <p className="font-avenir text-sm leading-4 text-[var(--d-text)]">All quiet for now.</p>
           <p className="w-[236px] font-avenir text-xs leading-[14px] text-[var(--d-muted)]">Reminders and memories from your wall will show up here.</p>
         </div>
@@ -82,7 +83,7 @@ export function NotificationsPanel() {
               <li key={item.id}>
                 <button type="button" onClick={() => choose(item)} className={`flex w-full items-start gap-3 rounded-xl p-2 text-left ${unread ? 'bg-[var(--d-field)]' : ''}`}>
                   <span className={`grid size-10 shrink-0 place-items-center rounded-3xl ${unread ? 'bg-[var(--d-icon-bg)]' : 'bg-[var(--d-field)]'}`}>
-                    <img src={ICONS[item.kind]} alt="" width={16} height={16} className="dash-icon" />
+                    <Icon src={ICONS[item.kind]} size={16} className="dash-icon" />
                   </span>
                   <span className="flex flex-col gap-2">
                     <span className="font-avenir text-sm leading-4 text-[var(--d-text)]">{item.title}{unread && <span className="sr-only"> (unread)</span>}</span>

@@ -23,13 +23,13 @@ export function createSupabaseStore(): AppStore {
     },
 
     async entriesBefore(last, limit) {
+      // The wall goes by place; the next page is everything placed after the last one shown.
       const { data, error } = await supabase
         .from('entries')
         .select(ENTRY_COLUMNS)
         .eq('on_wall', true)
-        .or(`entry_date.lt.${last.entry_date},and(entry_date.eq.${last.entry_date},created_at.lt."${last.created_at}")`)
-        .order('entry_date', { ascending: false })
-        .order('created_at', { ascending: false })
+        .gt('wall_rank', last.wall_rank ?? Number.MIN_SAFE_INTEGER)
+        .order('wall_rank', { ascending: true })
         .limit(limit);
       if (error) throw error;
       return data;

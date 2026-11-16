@@ -46,6 +46,7 @@ export async function getWall(): Promise<{ entries: Entry[]; hasMore: boolean }>
     .from('entries')
     .select(ENTRY_COLUMNS)
     .eq('on_wall', true)
+    .order('wall_rank', { ascending: true, nullsFirst: true })
     .order('entry_date', { ascending: false })
     .order('created_at', { ascending: false })
     .limit(WALL_PAGE_SIZE + 1);
