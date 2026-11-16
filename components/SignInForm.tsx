@@ -11,7 +11,7 @@ const BUTTON = 'flex h-12 w-full items-center justify-center gap-1 rounded-xl fo
 function Legal() {
   return (
     <p className="absolute bottom-[70px] left-1/2 w-[266px] -translate-x-1/2 text-center text-xs leading-[18px] tracking-[-0.036px] text-[#666] lg:static lg:mx-auto lg:mt-[46px] lg:translate-x-0">
-      By continuing, you agree to our <span className="text-[#1568d4] underline">Terms of Use</span> and <span className="text-[#1568d4] underline">Privacy Policy.</span>
+      By continuing, you agree to our <Link href="/terms" className="text-[#1568d4] underline">Terms of Use</Link> and <Link href="/privacy" className="text-[#1568d4] underline">Privacy Policy</Link>.
     </p>
   );
 }
