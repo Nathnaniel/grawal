@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useApp } from '../AppProvider';
 import { Icon } from '@/components/ui/Icon';
+import { ExportMenu } from './ExportMenu';
 
 /** The desktop hover label: a dark pill with a small point, beside the rail. It shows
  *  at once, like the design's recording; screen readers use the control's own label. */
@@ -70,15 +71,20 @@ export function SideNav() {
           {tab(history, onHistory, '/app/history.svg', '/app/history-active.svg', 'History', true)}
         </div>
       </div>
-      <button
-        type="button"
-        aria-label={creating ? 'Close' : 'Pin a win'}
-        onClick={() => (creating ? close() : open({ kind: 'create' }))}
-        className="group relative grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a]"
-      >
-        <Icon src={creating ? '/app/close.svg' : '/app/add.svg'} size={24} className={creating ? 'invert' : ''} />
-        <Tip text={creating ? 'Close' : 'Pin a win'} offset="19px" />
-      </button>
+      {onHistory && !creating ? (
+        // History is for looking back, so its black button exports instead of adding.
+        <ExportMenu tip={<Tip text="Export" offset="19px" />} />
+      ) : (
+        <button
+          type="button"
+          aria-label={creating ? 'Close' : 'Pin a win'}
+          onClick={() => (creating ? close() : open({ kind: 'create' }))}
+          className="group relative grid size-11 place-items-center rounded-[40px] bg-[#1a1a1a]"
+        >
+          <Icon src={creating ? '/app/close.svg' : '/app/add.svg'} size={24} className={creating ? 'invert' : ''} />
+          <Tip text={creating ? 'Close' : 'Pin a win'} offset="19px" />
+        </button>
+      )}
     </nav>
   );
 }

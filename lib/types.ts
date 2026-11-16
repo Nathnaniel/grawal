@@ -25,6 +25,8 @@ export interface AppStore {
   entriesBefore(last: Entry, limit: number): Promise<Entry[]>;
   /** Wins matching a keyword, a category, or both. */
   search(filters: EntryFilters): Promise<Entry[]>;
+  /** Every win, on the wall or not, newest first. For exports. */
+  allEntries(): Promise<Entry[]>;
   saveProfile(patch: ProfilePatch): Promise<void>;
   addCategory(name: string, colour: string): Promise<Category>;
   removeCategory(id: string): Promise<void>;

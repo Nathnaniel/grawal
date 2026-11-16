@@ -47,6 +47,23 @@ export function createSupabaseStore(): AppStore {
       return data;
     },
 
+    async allEntries() {
+      // Supabase sends at most 1000 rows at a time, so read in pages until a short one comes back.
+      const all: Entry[] = [];
+      for (let from = 0; ; from += 1000) {
+        const { data, error } = await supabase
+          .from('entries')
+          .select(ENTRY_COLUMNS)
+          .order('entry_date', { ascending: false })
+          .order('created_at', { ascending: false })
+          .order('id')
+          .range(from, from + 999);
+        if (error) throw error;
+        all.push(...data);
+        if (data.length < 1000) return all;
+      }
+    },
+
     async saveProfile(patch) {
       const { error } = await supabase.from('profiles').update(patch).eq('id', await userId());
       if (error) throw error;

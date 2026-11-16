@@ -21,6 +21,9 @@ export function createMemoryStore(initial: Entry[] = sampleEntries): AppStore {
     async search({ q, categoryId }) {
       return [...entries.values()].filter((entry) => matchesSearch(entry, { q, category: categoryId, year: '' })).sort(newestFirst);
     },
+    async allEntries() {
+      return [...entries.values()].sort(newestFirst);
+    },
     async saveProfile() {},
     async addCategory(name, colour) {
       return { id: crypto.randomUUID(), user_id: SAMPLE_USER, name, colour };
