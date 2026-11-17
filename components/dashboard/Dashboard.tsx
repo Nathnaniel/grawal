@@ -2,6 +2,7 @@
 
 import { useApp } from '../AppProvider';
 import { AccountMenu } from './AccountMenu';
+import { AppSmoothScroll } from './AppSmoothScroll';
 import { CreatePanel } from './CreatePanel';
 import { Header } from './Header';
 import { NoteDetail } from './NoteDetail';
@@ -16,6 +17,7 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
   const { panel } = useApp();
   return (
     <div className="dash">
+      <AppSmoothScroll />
       <Header />
       <main id="main" tabIndex={-1}>{children}</main>
       <SideNav />
