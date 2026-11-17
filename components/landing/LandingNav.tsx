@@ -185,8 +185,8 @@ export function LandingNav({ base = '', floating = false, grey = false }: { base
         <Link href={account.href} className={`mr-4 ml-auto flex h-10 items-center rounded-xl px-6 font-avenir text-base font-medium transition-colors duration-200 ${grey ? 'hover:bg-white' : 'hover:bg-[#f5f5f5]'}`}>{account.label}</Link>
       </nav>
 
-      {/* Mobile: logo and a menu button that opens the full-screen menu. */}
-      <div className={`mx-auto flex max-w-[353px] items-center justify-between rounded-xl px-5 lg:hidden ${grey ? 'bg-[#f5f5f5]' : 'bg-white'}`}>
+      {/* Mobile: logo and a menu button that opens the full-screen menu, on the same grey bar the menu shows. */}
+      <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-[#f5f5f5] px-5 lg:hidden">
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <button type="button" className="-mr-3 rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
           {/* Kubai's menu icon turns into an X on hover, and a phone keeps the hover after a tap,
