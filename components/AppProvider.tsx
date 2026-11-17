@@ -147,9 +147,20 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
   }, [userId, store, flush]);
 
   // The theme was applied before the page drew; read it back so the switches match.
+  // It also follows a mode picked anywhere else on this device: another tab, the real app
+  // or the demo on the website, and a page brought back with the Back button.
   useEffect(() => {
-    const saved = document.documentElement.dataset.theme;
-    if (saved === 'dark' || saved === 'system' || saved === 'light') setThemeState(saved);
+    const show = (value: string | null | undefined) => {
+      const next: Theme = value === 'dark' || value === 'system' ? value : 'light';
+      document.documentElement.dataset.theme = next;
+      setThemeState(next);
+    };
+    show(document.documentElement.dataset.theme);
+    const changed = (event: StorageEvent) => { if (event.key === 'grawal-theme') show(event.newValue); };
+    const returned = (event: PageTransitionEvent) => { if (event.persisted) try { show(localStorage.getItem('grawal-theme')); } catch { /* storage blocked */ } };
+    window.addEventListener('storage', changed);
+    window.addEventListener('pageshow', returned);
+    return () => { window.removeEventListener('storage', changed); window.removeEventListener('pageshow', returned); };
   }, []);
 
   // New accounts start on UTC; pick up the device's timezone so "today" is right.
@@ -225,8 +236,8 @@ export function AppProvider({ userId, email, profile: initialProfile, avatarUrl:
     setTheme(next) {
       setThemeState(next);
       document.documentElement.dataset.theme = next;
-      // The demo shares the site's storage, so its choice isn't kept for the real app.
-      if (!demo) try { localStorage.setItem('grawal-theme', next); } catch { /* the choice lasts for this visit */ }
+      // A device-wide choice: the real app and the website's demo share it.
+      try { localStorage.setItem('grawal-theme', next); } catch { /* the choice lasts for this visit */ }
     },
     saveEntry(entry, { fresh = false } = {}) {
       if (fresh) {
