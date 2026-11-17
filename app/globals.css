@@ -92,6 +92,14 @@ body:has(.dash) { background: #f5f5f5; }
 .pin-burst-spark { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: radial-gradient(circle, #fff 0 25%, #ffd970 35%, transparent 70%); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
 .panel-in { animation: rise-in 180ms ease-out; }
 
+/* Picking a note up on the wall: it pops out of the slight press, on a springy ease. */
+@keyframes lift-in { from { scale: 0.95; rotate: 0deg; } }
+.lift-in { animation: lift-in 220ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* Dropping it: notes glide to their new places, and the page itself doesn't flicker. */
+::view-transition-group(*) { animation-duration: 300ms; animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+
 /* Opening a win: the note opens straight out of a squeezed shape in one slow, smooth
    move, on Lenis's timing (1.2s, easing out exponentially), with no bounce or turn. */
 @keyframes note-unfold {
@@ -194,7 +202,7 @@ html:has(.landing) { scroll-padding-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   .faq-motion { transition: none; }
   .landing-menu, .landing-menu .menu-item { transition: none; transform: none; }
-  .note-fresh, .panel-in, .note-unfold, .note-actions-in, .note-breeze, .note-fall { animation: none !important; }
+  .note-fresh, .panel-in, .lift-in, .note-unfold, .note-actions-in, .note-breeze, .note-fall { animation: none !important; }
   .pin-burst { display: none; }
   :where(a, button, summary, [role="button"], label):active { scale: none !important; }
 }

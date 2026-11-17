@@ -1,7 +1,8 @@
 'use client';
 
-import { DndContext, DragOverlay, MouseSensor, TouchSensor, pointerWithin, useDraggable, useDroppable, useSensor, useSensors, type DragMoveEvent } from '@dnd-kit/core';
+import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCenter, pointerWithin, useDraggable, useDroppable, useSensor, useSensors, type CollisionDetection, type DragMoveEvent, type Modifier } from '@dnd-kit/core';
 import { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { newestFirst, wallOrder } from '@/lib/order';
 import { matchesSearch } from '@/lib/search';
 import { WALL_PAGE_SIZE, type Entry } from '@/lib/types';
@@ -24,16 +25,39 @@ function dropMode(x: number, y: number, rect: { left: number; top: number; width
   return across < 0.5 ? 'before' : 'after';
 }
 
+// The note under the finger, or failing that the nearest one, so a drop in the gap between notes still lands.
+const nearest: CollisionDetection = (args) => {
+  const under = pointerWithin(args);
+  return under.length ? under : closestCenter(args);
+};
+
+const isTouch = (event: Event | null) => !!event && 'touches' in event;
+
+// A finger hides what it holds, so on touch the lifted note rides just above it.
+const aboveFinger: Modifier = ({ transform, activatorEvent }) => (isTouch(activatorEvent) ? { ...transform, y: transform.y - 36 } : transform);
+
+/** A short tap of the phone's vibration, where the device has one. Browsers only allow it
+ *  once the page has been tapped, so it stays quiet before that rather than logging an error. */
+const buzz = (ms: number) => {
+  if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
+  try { navigator.vibrate?.(ms); } catch {}
+};
+
+/** A name for the note's spot, so a view transition can glide it to its new one. */
+const glideName = (key: string) => `tile-${key.replace(/[^a-zA-Z0-9-]/g, '-')}`;
+
 function TileFace({ tile, onOpenStack }: { tile: Tile<Entry>; onOpenStack: (stackId: string) => void }) {
   if (tile.entries.length > 1 && tile.stackId) return <WinPile entries={tile.entries} onOpen={() => onOpenStack(tile.stackId!)} />;
   return <WinNote entry={tile.entries[0]} />;
 }
 
 /** One spot on the wall that can be picked up and dropped onto. */
-function WallTile({ tile, drop, dragging, enabled, style, onOpenStack }: {
+function WallTile({ tile, drop, dragging, pressing, enabled, style, onOpenStack }: {
   tile: Tile<Entry>;
   drop: Drop | null;
   dragging: boolean;
+  /** A finger is resting on it, about to pick it up. */
+  pressing: boolean;
   enabled: boolean;
   style?: React.CSSProperties;
   onOpenStack: (stackId: string) => void;
@@ -47,10 +71,13 @@ function WallTile({ tile, drop, dragging, enabled, style, onOpenStack }: {
     <li
       ref={(node) => { draggable.setNodeRef(node); droppable.setNodeRef(node); }}
       {...draggable.listeners}
-      style={style}
+      // While lifted, the drag overlay carries the glide name instead.
+      style={{ ...style, viewTransitionName: dragging ? undefined : glideName(tile.key) }}
+      onContextMenu={enabled ? (event) => event.preventDefault() : undefined}
       className={`relative touch-manipulation select-none [-webkit-touch-callout:none] ${inOpenStack ? 'rounded-md outline-2 outline-offset-4 outline-dashed outline-[#1568d4]/35' : ''}`}
     >
-      <div className={`transition-[opacity,scale] duration-150 ${dragging ? 'opacity-30' : ''} ${target === 'stack' ? 'scale-[1.04]' : ''}`}>
+      {/* Held down, the note sinks a little over the hold time, so people feel it about to lift. */}
+      <div className={`transition-[opacity,scale] [&_img]:[-webkit-user-drag:none] ${pressing ? 'scale-[0.95] duration-[250ms] ease-out' : 'duration-150'} ${dragging ? 'opacity-30' : ''} ${target === 'stack' ? 'scale-[1.04]' : ''}`}>
         <TileFace tile={tile} onOpenStack={onOpenStack} />
       </div>
       {target === 'stack' && <span aria-hidden className="pointer-events-none absolute inset-[-6px] rounded-lg border-2 border-[#1568d4] bg-[#1568d4]/8" />}
@@ -69,6 +96,7 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore, stagger 
   const [results, setResults] = useState<Entry[] | null>(null);
   const [openStacks, setOpenStacks] = useState<ReadonlySet<string>>(new Set());
   const [activeKey, setActiveKey] = useState<string | null>(null);
+  const [pendingKey, setPendingKey] = useState<string | null>(null);
   const [drop, setDrop] = useState<Drop | null>(null);
   const droppedAt = useRef(0);
   const loading = useRef(false);
@@ -132,17 +160,30 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore, stagger 
   function onDragMove({ active, over, delta, activatorEvent }: DragMoveEvent) {
     if (!over || over.id === active.id) return setDrop(null);
     const start = 'touches' in activatorEvent ? (activatorEvent as TouchEvent).touches[0] : (activatorEvent as MouseEvent);
-    setDrop({ key: String(over.id), mode: dropMode(start.clientX + delta.x, start.clientY + delta.y, over.rect) });
+    const next: Drop = { key: String(over.id), mode: dropMode(start.clientX + delta.x, start.clientY + delta.y, over.rect) };
+    // A light tick each time the drop would stack, so a finger feels it without seeing under itself.
+    if (next.mode === 'stack' && (drop?.mode !== 'stack' || drop.key !== next.key) && isTouch(activatorEvent)) buzz(8);
+    setDrop(next);
+  }
+
+  function start(key: string, touch: boolean) {
+    setPendingKey(null);
+    setActiveKey(key);
+    if (touch) buzz(12);
   }
 
   function finish() {
-    if (activeKey && drop) {
-      const changes = applyDrop(tiles, activeKey, drop);
-      for (const entry of changes) void saveEntry(entry);
-    }
+    const changes = activeKey && drop ? applyDrop(tiles, activeKey, drop) : [];
     droppedAt.current = Date.now();
-    setActiveKey(null);
-    setDrop(null);
+    const settle = () => {
+      for (const entry of changes) void saveEntry(entry);
+      setActiveKey(null);
+      setDrop(null);
+    };
+    // Notes glide from where they were to where they land, and the dropped one from under the finger.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (document.startViewTransition && !reduced) document.startViewTransition(() => flushSync(settle));
+    else settle();
   }
 
   const activeTile = tiles.find((tile) => tile.key === activeKey);
@@ -163,11 +204,13 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore, stagger 
       ) : (
         <DndContext
           sensors={sensors}
-          collisionDetection={pointerWithin}
-          onDragStart={({ active }) => setActiveKey(String(active.id))}
+          collisionDetection={nearest}
+          onDragPending={({ id, constraint }) => { if ('delay' in constraint) setPendingKey(String(id)); }}
+          onDragAbort={() => setPendingKey(null)}
+          onDragStart={({ active, activatorEvent }) => start(String(active.id), isTouch(activatorEvent))}
           onDragMove={onDragMove}
           onDragEnd={finish}
-          onDragCancel={() => { setActiveKey(null); setDrop(null); }}
+          onDragCancel={() => { setPendingKey(null); setActiveKey(null); setDrop(null); }}
         >
           {/* A drag ends with a click on the note underneath; swallow it so the note doesn't open. */}
           <ul className={GRID} onClickCapture={(event) => { if (Date.now() - droppedAt.current < 300) { event.preventDefault(); event.stopPropagation(); } }}>
@@ -177,6 +220,7 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore, stagger 
                 tile={tile}
                 drop={drop}
                 dragging={tile.key === activeKey}
+                pressing={tile.key === pendingKey}
                 enabled={arranging}
                 style={stagger && index === 1 ? { marginTop: 'var(--stagger, 0px)' } : undefined}
                 onOpenStack={openStack}
@@ -201,9 +245,9 @@ export function WallView({ entries: firstPage, hasMore: initialHasMore, stagger 
               ),
             ])}
           </ul>
-          <DragOverlay dropAnimation={null}>
+          <DragOverlay dropAnimation={null} modifiers={[aboveFinger]}>
             {activeTile && (
-              <div className="rotate-[-3deg] scale-105 cursor-grabbing drop-shadow-[0_18px_24px_rgba(9,45,110,0.25)]">
+              <div style={{ viewTransitionName: glideName(activeTile.key) }} className="lift-in rotate-[-3deg] scale-105 cursor-grabbing drop-shadow-[0_18px_24px_rgba(9,45,110,0.25)]">
                 <TileFace tile={activeTile} onOpenStack={() => {}} />
               </div>
             )}
