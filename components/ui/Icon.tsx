@@ -74,7 +74,8 @@ const ICONS: Record<string, Spec> = {
   '/landing/step-pray.svg': [HandHeart, '#141B34'],
 };
 
-export function Icon({ src, size = 24, className, style }: { src: string; size?: number; className?: string; style?: CSSProperties }) {
+/** `still` turns the hover motion off, for icons whose hover shape would mean something else. */
+export function Icon({ src, size = 24, className, style, still = false }: { src: string; size?: number; className?: string; style?: CSSProperties; still?: boolean }) {
   const spec = ICONS[src];
   // Anything not in the list (illustrations, logos) stays a plain image.
   if (!spec) return <img src={src} alt="" width={size} height={size} className={className} style={style} />;
@@ -83,7 +84,7 @@ export function Icon({ src, size = 24, className, style }: { src: string; size?:
     <Glyph
       size={size}
       color={color}
-      trigger="parent"
+      trigger={still ? 'none' : 'parent'}
       className={className}
       style={marks ? { ...style, ['--ki-w' as string]: marks } : style}
     />

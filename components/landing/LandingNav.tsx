@@ -163,7 +163,9 @@ export function LandingNav({ base = '', floating = false, grey = false }: { base
       <div className={`mx-auto flex max-w-[353px] items-center justify-between rounded-xl px-5 lg:hidden ${grey ? 'bg-[#f5f5f5]' : 'bg-white'}`}>
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
         <button type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
-          <Icon src="/landing/icon-menu.svg" size={24} />
+          {/* Kubai's menu icon turns into an X on hover, and a phone keeps the hover after a tap,
+              so it would still show an X once the menu closed. It stays three lines. */}
+          <Icon src="/landing/icon-menu.svg" size={24} still />
         </button>
       </div>
       <MobileMenu open={open} onClose={close} account={account} base={base} />
