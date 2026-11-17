@@ -163,6 +163,13 @@ html:has(.landing) { scroll-padding-top: 0; }
   opacity: 1; transform: none;
   transition-delay: calc(150ms + var(--i, 0) * 90ms);
 }
+/* Closing plays the opening backwards: the links drift down, last one first, then the page fades.
+   The menu stays open until this finishes (see LandingNav), so every browser shows it. */
+.landing-menu[open].closing { opacity: 0; transition-delay: 150ms; }
+.landing-menu[open].closing .menu-item {
+  opacity: 0; transform: translateY(14px);
+  transition-delay: calc((var(--n, 3) - 1 - var(--i, 0)) * 70ms);
+}
 @starting-style {
   .landing-menu[open] { opacity: 0; }
   .landing-menu[open] .menu-item { opacity: 0; transform: translateY(14px); }

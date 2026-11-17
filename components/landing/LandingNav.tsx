@@ -41,9 +41,33 @@ function MobileMenu({ open, onClose, account, base }: { open: boolean; onClose: 
       // Focus goes to the menu itself, so the close button isn't outlined the moment it opens.
       element.focus();
     }
+    // Undoes a close still playing, so reopening fades the menu straight back in.
+    let cancel = () => {};
     if (!open && element.open) {
-      element.close();
-      if (!byKeyboard.current) (document.activeElement as HTMLElement | null)?.blur();
+      // Play the closing motion first, then take the menu away once the page has faded out.
+      const keyboard = byKeyboard.current;
+      let timer = 0;
+      cancel = () => {
+        window.clearTimeout(timer);
+        element.removeEventListener('transitionend', faded);
+        element.classList.remove('closing');
+      };
+      const finish = () => {
+        window.clearTimeout(timer);
+        element.removeEventListener('transitionend', faded);
+        element.classList.remove('closing');
+        if (!element.open) return;
+        element.close();
+        if (!keyboard) (document.activeElement as HTMLElement | null)?.blur();
+      };
+      const faded = (event: TransitionEvent) => { if (event.target === element && event.propertyName === 'opacity') finish(); };
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) finish();
+      else {
+        element.classList.add('closing');
+        element.addEventListener('transitionend', faded);
+        // In case the transition never reports back.
+        timer = window.setTimeout(finish, 1100);
+      }
     }
     if (!open) byKeyboard.current = false;
     // The page behind stays put while the menu covers it.
@@ -52,6 +76,7 @@ function MobileMenu({ open, onClose, account, base }: { open: boolean; onClose: 
     else lenis?.start();
     document.documentElement.style.overflow = open ? 'hidden' : '';
     return () => {
+      cancel();
       lenis?.start();
       document.documentElement.style.overflow = '';
     };
@@ -90,14 +115,15 @@ function MobileMenu({ open, onClose, account, base }: { open: boolean; onClose: 
       aria-label="Menu"
       tabIndex={-1}
       data-lenis-prevent
-      onCancel={() => { byKeyboard.current = true; }}
+      onCancel={(event) => { event.preventDefault(); byKeyboard.current = true; onClose(); }}
       onClose={onClose}
+      style={{ '--n': LINKS.length + 1 } as React.CSSProperties}
       className="landing-menu m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-transparent"
     >
       <div className="px-5 pt-[60px]">
         <div className="mx-auto flex max-w-[353px] items-center justify-between rounded-xl bg-[#f5f5f5] px-5">
           <Link href="/" onClick={onClose}><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
-          <button type="button" className="rounded-[40px] p-3" aria-label="Close menu" onClick={(event) => { byKeyboard.current = event.detail === 0; onClose(); }}>
+          <button type="button" className="-mr-3 rounded-[40px] p-3" aria-label="Close menu" onClick={(event) => { byKeyboard.current = event.detail === 0; onClose(); }}>
             <Icon src="/landing/icon-close.svg" size={24} />
           </button>
         </div>
@@ -162,7 +188,7 @@ export function LandingNav({ base = '', floating = false, grey = false }: { base
       {/* Mobile: logo and a menu button that opens the full-screen menu. */}
       <div className={`mx-auto flex max-w-[353px] items-center justify-between rounded-xl px-5 lg:hidden ${grey ? 'bg-[#f5f5f5]' : 'bg-white'}`}>
         <Link href="/"><img src="/landing/logo.svg" alt="Grawal" width={102} height={24} /></Link>
-        <button type="button" className="rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
+        <button type="button" className="-mr-3 rounded-[40px] p-3" aria-expanded={open} aria-controls="landing-menu" aria-label="Open menu" onClick={() => setOpen(true)}>
           {/* Kubai's menu icon turns into an X on hover, and a phone keeps the hover after a tap,
               so it would still show an X once the menu closed. It stays three lines. */}
           <Icon src="/landing/icon-menu.svg" size={24} still />
